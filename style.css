@@ -44,6 +44,68 @@ font-weight:500;
 transition:.2s;
 }
 
+/* =========================
+   MKAI SAFE BASE FIX
+========================= */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fff;
+  color: #111;
+}
+
+/* PHONE SAFE */
+.phone-image {
+  width: 320px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 25px 50px rgba(0,0,0,0.2));
+}
+
+/* HERO SAFE FLEX */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 80px 10%;
+  flex-wrap: wrap;
+}
+
+/* DASHBOARD SAFE */
+.dashboard {
+  display: flex;
+  gap: 40px;
+  padding: 80px 10%;
+  flex-wrap: wrap;
+}
+
+/* BUTTON SAFE */
+.btn-primary,
+.btn-secondary,
+.nav-btn {
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* HOVER SAFE */
+.btn-primary:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* MOBILE SAFE */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .phone-image {
+    width: 240px;
+  }
+}
+
 .nav a:hover{
 opacity:.6;
 }
