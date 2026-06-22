@@ -7,15 +7,17 @@ export default async function handler(req, res) {
     const { style, weather, gender, hasWardrobe } = req.body || {};
 
     const prompt = `
-Tu es un styliste IA.
+Tu es un styliste IA expert.
 
-Dressing utilisateur : ${hasWardrobe ? "OUI" : "NON"}.
+Le client a un dressing : ${hasWardrobe ? "OUI" : "NON"}.
+
+Crée une tenue complète réaliste.
 
 Style: ${style}
 Météo: ${weather}
 Genre: ${gender}
 
-Réponds UNIQUEMENT en JSON :
+Réponds UNIQUEMENT en JSON valide :
 
 {
   "haut": "string",
@@ -34,25 +36,38 @@ Réponds UNIQUEMENT en JSON :
       },
       body: JSON.stringify({
         model: "llama-3.3-70b-versatile",
-        messages: [{ role: "user", content: prompt }]
+        messages: [
+          { role: "user", content: prompt }
+        ],
+        temperature: 0.8
       })
     });
 
     const data = await response.json();
 
     if (!response.ok) {
-      return res.status(500).json({ error: data });
+      return res.status(500).json({
+        error: "Groq API error",
+        details: data
+      });
     }
 
-    const text = data.choices?.[0]?.message?.content;
+    const text = data?.choices?.[0]?.message?.content;
+
+    if (!text) {
+      return res.status(500).json({
+        error: "No content from AI"
+      });
+    }
 
     return res.status(200).json({
       outfit: JSON.parse(text)
     });
 
-  } catch (e) {
+  } catch (err) {
     return res.status(500).json({
-      error: e.message
+      error: "Server crash",
+      message: err.message
     });
   }
 }
