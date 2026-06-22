@@ -1,5 +1,5 @@
 /* =========================
-   MKAI - FIX TOTAL DESIGN
+   MKAI - DESIGN RESTAURÉ AVEC COULEURS
 ========================= */
 
 * {
@@ -12,7 +12,6 @@ body {
   font-family: Arial, sans-serif;
   background: #ffffff;
   color: #111;
-  line-height: 1.5;
 }
 
 /* HEADER */
@@ -21,17 +20,20 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 25px 10%;
+  background: white;
 }
 
 .logo {
   font-size: 22px;
   font-weight: bold;
+  color: #111;
 }
 
 .nav a {
   margin-left: 20px;
   text-decoration: none;
   color: #111;
+  font-weight: 500;
 }
 
 .nav-btn {
@@ -40,13 +42,16 @@ body {
   border-radius: 10px;
 }
 
-/* HERO */
+/* HERO - AJOUT COULEUR SUBTILE */
 .hero {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 80px 10%;
+  padding: 90px 10%;
   gap: 40px;
+
+  /* 🔥 couleur douce comme ton ancien site */
+  background: linear-gradient(to bottom, #ffffff, #f7f7f7);
 }
 
 .hero-left {
@@ -55,23 +60,24 @@ body {
 
 .hero h1 {
   font-size: 52px;
-  line-height: 1.1;
-  margin-bottom: 15px;
+  line-height: 1.05;
 }
 
 .hero p {
   color: #555;
   font-size: 18px;
+  margin-top: 15px;
 }
 
 /* BADGE */
 .badge {
   display: inline-block;
-  background: #f3f3f3;
+  background: #111;
+  color: white;
   padding: 8px 14px;
   border-radius: 999px;
-  margin-bottom: 15px;
   font-size: 13px;
+  margin-bottom: 15px;
 }
 
 /* BUTTONS */
@@ -80,12 +86,10 @@ body {
 }
 
 .btn-primary {
-  background: #000;
+  background: #111;
   color: white;
   padding: 12px 18px;
   border-radius: 10px;
-  text-decoration: none;
-  display: inline-block;
   border: none;
   cursor: pointer;
 }
@@ -108,6 +112,7 @@ body {
 
 .stat h3 {
   font-size: 22px;
+  color: #111;
 }
 
 /* PHONE */
@@ -119,7 +124,7 @@ body {
 
 .phone-image {
   width: 320px;
-  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.2));
+  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.25));
   animation: float 4s ease-in-out infinite;
 }
 
@@ -131,9 +136,10 @@ body {
 
 /* SECTIONS */
 .section {
-  padding: 80px 10%;
+  padding: 90px 10%;
 }
 
+/* HOW / CARDS */
 .cards {
   display: flex;
   gap: 20px;
@@ -141,13 +147,17 @@ body {
 
 .card {
   flex: 1;
-  padding: 20px;
-  border: 1px solid #eee;
+  padding: 22px;
   border-radius: 12px;
-  background: #fff;
+  background: #ffffff;
+  border: 1px solid #eee;
 }
 
-/* BENEFITS */
+/* BENEFITS - COULEUR IMPORTANTE */
+.beige {
+  background: #f6f3ee;
+}
+
 .benefits-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -156,21 +166,28 @@ body {
 
 .benefit-card {
   padding: 20px;
-  background: #f7f7f7;
+  background: white;
   border-radius: 12px;
 }
 
 /* OUTFIT */
 .outfit-card {
   padding: 20px;
-  background: #f6f6f6;
+  background: #f7f7f7;
   border-radius: 12px;
 }
 
-/* CTA */
+/* CTA - COULEUR FORTE */
 .cta {
   text-align: center;
-  padding: 80px 10%;
+  padding: 90px 10%;
+  background: #111;
+  color: white;
+}
+
+.cta .btn-primary {
+  background: white;
+  color: black;
 }
 
 /* FOOTER */
