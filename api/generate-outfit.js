@@ -5,47 +5,59 @@ export default async function handler(req, res) {
 
   try {
 
-    const { weather = "sunny", wardrobe = [] } = req.body;
+    const { images = [], weather = "sunny" } = req.body;
 
-    const prompt = `
-Tu es un styliste mode expert pour jeunes 20-25 ans (TikTok / Pinterest aesthetic).
+    // 1️⃣ STEP VISION ANALYSIS
+    const visionPrompt = `
+Analyse ces vêtements et décris-les précisément.
+
+Retourne JSON :
+{
+  "items": [
+    {
+      "type": "t-shirt | pantalon | shoes | jacket | accessory",
+      "color": "string",
+      "style": "streetwear | minimal | classy | techwear",
+      "description": "short"
+    }
+  ]
+}
+`;
+
+    // ⚠️ IMPORTANT : on simule ici vision (V1 stable)
+    // VRAIE VISION = upgrade futur (OpenAI Vision / Replicate)
+    const fakeVision = {
+      items: images.map((img, i) => ({
+        type: i === 0 ? "t-shirt" : i === 1 ? "pants" : "shoes",
+        color: "neutral",
+        style: "streetwear",
+        description: img
+      }))
+    };
+
+    // 2️⃣ STEP STYLIST AI
+    const stylePrompt = `
+Tu es un styliste mode 20-25 ans TikTok / Pinterest.
+
+DRESSING UTILISATEUR :
+${JSON.stringify(fakeVision.items)}
+
+MÉTÉO :
+${weather}
 
 OBJECTIF :
-Créer une tenue complète cohérente et stylée.
+Créer une tenue cohérente avec les vêtements disponibles.
 
-CONTEXTE :
-- météo: ${weather}
-- dressing utilisateur: ${JSON.stringify(wardrobe)}
-
-STYLES AUTORISÉS :
-- streetwear clean
-- minimal aesthetic
-- classy casual
-- techwear soft
-- workwear moderne
-
-RÈGLES ABSOLUES :
-- tenue réaliste (Zara / Nike / Uniqlo vibe)
-- couleurs harmonisées
-- adaptée météo
-- uniquement vêtements portables IRL
-
-IMPORTANT :
-Si wardrobe contient des vêtements → utilise-les obligatoirement.
-
-Réponds en JSON STRICT :
+Réponds JSON :
 
 {
-  "style": "string",
-  "weather_fit": "string",
-
-  "top": "string",
-  "bottom": "string",
-  "shoes": "string",
-  "accessories": "string",
-
-  "color_palette": "string",
-  "vibe": "string"
+  "outfit": {
+    "top": "...",
+    "bottom": "...",
+    "shoes": "...",
+    "accessories": "...",
+    "vibe": "..."
+  }
 }
 `;
 
@@ -57,27 +69,26 @@ Réponds en JSON STRICT :
       },
       body: JSON.stringify({
         model: "llama-3.3-70b-versatile",
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.8
+        messages: [{ role: "user", content: stylePrompt }],
+        temperature: 0.9
       })
     });
 
     const data = await response.json();
-
-    const text = data?.choices?.0?.message?.content;
+    const text = data?.choices?.[0]?.message?.content;
 
     if (!text) {
       return res.status(500).json({ error: "No AI response", raw: data });
     }
 
-    let outfit;
+    let result;
     try {
-      outfit = JSON.parse(text);
+      result = JSON.parse(text);
     } catch (e) {
-      return res.status(500).json({ error: "JSON error", raw: text });
+      return res.status(500).json({ error: "JSON parse error", raw: text });
     }
 
-    return res.status(200).json({ outfit });
+    return res.status(200).json(result);
 
   } catch (err) {
     return res.status(500).json({ error: err.message });
