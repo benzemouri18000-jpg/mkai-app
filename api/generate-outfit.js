@@ -4,45 +4,29 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { style, weather, gender, hasWardrobe } = req.body || {};
+    const { style, weather, gender } = req.body || {};
 
     const prompt = `
-Tu es un styliste mode expert (niveau Zara / Nike / Pinterest).
+Tu es un styliste mode expert.
 
-RÈGLES IMPORTANTES :
-- Les vêtements DOIVENT matcher ensemble
-- Cohérence obligatoire (couleurs + style)
-- Pas de mélange bizarre
-- Tenue moderne 2024-2026 uniquement
-- Style global unique par outfit
+OBJECTIF :
+Créer UNE tenue cohérente et moderne.
 
-Tu dois construire UNE TENUE COHÉRENTE.
+RÈGLES :
+- Tenue 100% moderne (2024-2026)
+- Aucun mélange incohérent
+- Couleurs harmonisées
+- Style unique par outfit
 
-IMPORTANT :
-- Ajoute des keywords visuels précis pour chaque pièce
-- Harmonise les couleurs (ex: noir + blanc, beige + crème, bleu + blanc)
-- Même vibe sur toute la tenue
-
-Réponds UNIQUEMENT en JSON :
+Tu dois répondre en JSON STRICT :
 
 {
-  "style_global": "string",
-
-  "color_theme": "string (ex: monochrome noir/blanc, beige minimal, streetwear blue/white)",
-
-  "haut": "string",
-  "haut_keywords": "string",
-
-  "bas": "string",
-  "bas_keywords": "string",
-
-  "chaussures": "string",
-  "shoes_keywords": "string",
-
-  "accessoires": ["string"],
-  "acc_keywords": "string",
-
-  "description": "string"
+  "haut": "string simple",
+  "bas": "string simple",
+  "shoes": "string simple",
+  "accessories": "string simple",
+  "color_theme": "string",
+  "style_global": "string"
 }
 `;
 
@@ -64,7 +48,7 @@ Réponds UNIQUEMENT en JSON :
     const text = data?.choices?.[0]?.message?.content;
 
     if (!text) {
-      return res.status(500).json({ error: "Empty AI response" });
+      return res.status(500).json({ error: "No AI response" });
     }
 
     let outfit;
@@ -73,7 +57,7 @@ Réponds UNIQUEMENT en JSON :
       outfit = JSON.parse(text);
     } catch (e) {
       return res.status(500).json({
-        error: "Invalid JSON",
+        error: "JSON parse error",
         raw: text
       });
     }
