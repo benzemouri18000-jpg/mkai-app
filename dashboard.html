@@ -41,20 +41,6 @@ button {
   margin-bottom: 20px;
 }
 
-.preview {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 10px;
-}
-
-.preview img {
-  width: 80px;
-  height: 80px;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
@@ -89,12 +75,9 @@ button {
 <div class="container">
 
 <h1>🧠 MKAI Stylist AI</h1>
-<div class="subtitle">Outfits cohérents + matching couleurs</div>
+<div class="subtitle">IA mode stylist cohérent</div>
 
-<input type="file" id="upload" multiple>
-<div class="preview" id="preview"></div>
-
-<button onclick="generateOutfit()">✨ Générer outfit cohérent</button>
+<button onclick="generateOutfit()">✨ Générer outfit</button>
 
 <div id="result" class="grid"></div>
 
@@ -102,44 +85,27 @@ button {
 
 <script>
 
-let uploadedImages = [];
+// 🎯 IMAGES FIABLES (mapping FIXE = cohérence garantie)
+function getImage(value) {
 
-document.getElementById("upload").addEventListener("change", (e) => {
-  const preview = document.getElementById("preview");
-  preview.innerHTML = "";
-  uploadedImages = [];
+  const map = {
+    "t-shirt blanc": "https://images.unsplash.com/photo-1520975916090-3105956dac38",
+    "t-shirt noir": "https://images.unsplash.com/photo-1523381210434-271e8be1f52b",
+    "jean noir": "https://images.unsplash.com/photo-1506629905607-d9c297d8e73c",
+    "jean bleu": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a",
+    "sneakers blanches": "https://images.unsplash.com/photo-1549298916-b41d501d3772",
+    "sneakers noires": "https://images.unsplash.com/photo-1600269452121-4f2416e55c28",
+    "watch": "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3",
+    "cap": "https://images.unsplash.com/photo-1511499767150-a48a237f3871"
+  };
 
-  [...e.target.files].forEach(file => {
-    const url = URL.createObjectURL(file);
-    uploadedImages.push(file);
-
-    const img = document.createElement("img");
-    img.src = url;
-    preview.appendChild(img);
-  });
-});
-
-
-// 🧠 IMAGES INTELLIGENTES COHÉRENTES
-function getImage(keywords) {
-
-  const base = "https://source.unsplash.com/800x800/?fashion,";
-
-  const clean = (keywords || "outfit")
-    .toLowerCase()
-    .replace(/,/g, " ")
-    .split(" ")
-    .slice(0, 6)
-    .join(",");
-
-  return base + clean + "&sig=" + Math.random();
+  return map[value?.toLowerCase()] || "https://images.unsplash.com/photo-1520975916090-3105956dac38";
 }
-
 
 async function generateOutfit() {
 
   const result = document.getElementById("result");
-  result.innerHTML = "⏳ Création tenue cohérente...";
+  result.innerHTML = "⏳ IA en cours...";
 
   try {
 
@@ -149,8 +115,7 @@ async function generateOutfit() {
       body: JSON.stringify({
         style: "streetwear",
         weather: "soleil",
-        gender: "homme",
-        hasWardrobe: uploadedImages.length > 0
+        gender: "homme"
       })
     });
 
@@ -165,15 +130,11 @@ async function generateOutfit() {
     const o = data.outfit;
 
     const items = [
-      { t: "Style global", v: o.style_global, i: getImage(o.style_global + " outfit") },
-      { t: "Couleur thème", v: o.color_theme, i: getImage(o.color_theme) },
-
-      { t: "Haut", v: o.haut, i: getImage(o.haut_keywords) },
-      { t: "Bas", v: o.bas, i: getImage(o.bas_keywords) },
-      { t: "Chaussures", v: o.chaussures, i: getImage(o.shoes_keywords) },
-      { t: "Accessoires", v: o.accessoires?.join(", "), i: getImage(o.acc_keywords) },
-
-      { t: "Description", v: o.description, i: getImage(o.style_global) }
+      { t: "Style", v: o.style_global || "modern", i: getImage("t-shirt blanc") },
+      { t: "Haut", v: o.haut, i: getImage(o.haut) },
+      { t: "Bas", v: o.bas, i: getImage(o.bas) },
+      { t: "Shoes", v: o.shoes, i: getImage(o.shoes) },
+      { t: "Accessoires", v: o.accessories, i: getImage(o.accessories) }
     ];
 
     result.innerHTML = "";
