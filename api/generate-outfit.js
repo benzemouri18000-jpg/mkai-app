@@ -6,26 +6,6 @@ export default async function handler(req, res) {
   try {
     const { style, weather, gender } = req.body || {};
 
-    const prompt = `
-Tu es un styliste expert.
-Crée une tenue complète réaliste et portable.
-
-Contexte :
-- Style : ${style || "streetwear"}
-- Météo : ${weather || "inconnue"}
-- Genre : ${gender || "homme"}
-
-Réponds UNIQUEMENT en JSON valide, sans texte avant ou après :
-
-{
-  "haut": "string",
-  "bas": "string",
-  "chaussures": "string",
-  "accessoires": ["string"],
-  "description": "string"
-}
-`;
-
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -37,43 +17,56 @@ Réponds UNIQUEMENT en JSON valide, sans texte avant ou après :
         messages: [
           {
             role: "user",
-            content: prompt
+            content: `
+Donne une tenue complète.
+
+Style: ${style}
+Météo: ${weather}
+Genre: ${gender}
+
+Réponds UNIQUEMENT en JSON:
+{
+  "haut": "string",
+  "bas": "string",
+  "chaussures": "string",
+  "accessoires": [],
+  "description": "string"
+}
+            `
           }
-        ],
-        temperature: 0.8
+        ]
       })
     });
 
     const data = await response.json();
 
-    // 🔥 DEBUG ULTRA IMPORTANT
-    console.log("OPENAI RESPONSE =>", JSON.stringify(data, null, 2));
+    // 🔥 ULTRA IMPORTANT : on affiche TOUT
+    console.log("OPENAI RAW RESPONSE:", data);
 
-    // ❌ Si OpenAI renvoie une erreur
+    // ❌ erreur OpenAI explicite
     if (!response.ok) {
       return res.status(500).json({
-        error: "OpenAI request failed",
+        error: "OpenAI FAILED",
+        status: response.status,
         details: data
       });
     }
 
-    // ❌ sécurité structure réponse
-    if (!data.choices || !data.choices[0]?.message?.content) {
+    const text = data?.choices?.[0]?.message?.content;
+
+    if (!text) {
       return res.status(500).json({
-        error: "Invalid OpenAI response structure",
+        error: "No content from OpenAI",
         details: data
       });
     }
 
-    const text = data.choices[0].message.content;
-
-    // ❌ sécurité JSON
     let outfit;
     try {
       outfit = JSON.parse(text);
     } catch (e) {
       return res.status(500).json({
-        error: "Invalid JSON returned by model",
+        error: "JSON parse failed",
         raw: text
       });
     }
@@ -82,7 +75,7 @@ Réponds UNIQUEMENT en JSON valide, sans texte avant ou après :
 
   } catch (error) {
     return res.status(500).json({
-      error: "Server crash",
+      error: "SERVER CRASH",
       message: error.message
     });
   }
