@@ -5,36 +5,47 @@ export default async function handler(req, res) {
 
   try {
 
+    const { weather = "sunny", wardrobe = [] } = req.body;
+
     const prompt = `
-Tu es un styliste mode expert pour jeunes 20-25 ans (TikTok / Pinterest style).
+Tu es un styliste mode expert pour jeunes 20-25 ans (TikTok / Pinterest aesthetic).
 
 OBJECTIF :
-Créer une tenue ULTRA COHÉRENTE et stylée.
+Créer une tenue complète cohérente et stylée.
+
+CONTEXTE :
+- météo: ${weather}
+- dressing utilisateur: ${JSON.stringify(wardrobe)}
 
 STYLES AUTORISÉS :
 - streetwear clean
 - minimal aesthetic
 - classy casual
 - techwear soft
-- pinterest fashion
+- workwear moderne
 
-RÈGLES :
-- tenue cohérente (couleurs harmonisées)
-- portable IRL
-- pas de styles dépassés
-- pas de mélange incohérent
+RÈGLES ABSOLUES :
+- tenue réaliste (Zara / Nike / Uniqlo vibe)
+- couleurs harmonisées
+- adaptée météo
+- uniquement vêtements portables IRL
 
 IMPORTANT :
-Réponds UNIQUEMENT en JSON valide :
+Si wardrobe contient des vêtements → utilise-les obligatoirement.
+
+Réponds en JSON STRICT :
 
 {
-  "style": "streetwear | minimal | classy | techwear",
-  "color_theme": "black/white | beige | blue/white | monochrome",
+  "style": "string",
+  "weather_fit": "string",
 
-  "top": "t-shirt blanc oversize",
-  "bottom": "jean bleu loose",
-  "shoes": "sneakers blanches",
-  "accessories": "watch minimal silver"
+  "top": "string",
+  "bottom": "string",
+  "shoes": "string",
+  "accessories": "string",
+
+  "color_palette": "string",
+  "vibe": "string"
 }
 `;
 
@@ -53,20 +64,17 @@ Réponds UNIQUEMENT en JSON valide :
 
     const data = await response.json();
 
-    const text = data?.choices?.[0]?.message?.content;
+    const text = data?.choices?.0?.message?.content;
 
     if (!text) {
-      return res.status(500).json({ error: "No AI response" });
+      return res.status(500).json({ error: "No AI response", raw: data });
     }
 
     let outfit;
     try {
       outfit = JSON.parse(text);
     } catch (e) {
-      return res.status(500).json({
-        error: "JSON parse error",
-        raw: text
-      });
+      return res.status(500).json({ error: "JSON error", raw: text });
     }
 
     return res.status(200).json({ outfit });
