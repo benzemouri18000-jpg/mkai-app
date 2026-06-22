@@ -10,56 +10,132 @@ body {
   font-family: system-ui;
   background: radial-gradient(circle at top, #0f172a, #020617);
   color: white;
-  padding: 30px;
+  overflow-x: hidden;
+}
+
+/* glow background */
+body::before {
+  content: "";
+  position: fixed;
+  top: -200px;
+  left: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(168,85,247,0.25), transparent 60%);
+  filter: blur(80px);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  bottom: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(59,130,246,0.25), transparent 60%);
+  filter: blur(80px);
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: auto;
+  padding: 40px;
+  position: relative;
+  z-index: 2;
 }
 
 h1 {
-  font-size: 44px;
+  font-size: 48px;
+  font-weight: 800;
   background: linear-gradient(90deg,#60a5fa,#a78bfa,#f472b6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
 }
 
+.subtitle {
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
+
+/* button */
 button {
   background: linear-gradient(90deg,#3b82f6,#a855f7);
   border: none;
-  padding: 14px 18px;
-  border-radius: 12px;
+  padding: 14px 22px;
+  border-radius: 14px;
   color: white;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
-  margin-bottom: 20px;
+  transition: 0.3s;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+/* GRID */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap: 18px;
+  margin-top: 30px;
 }
 
+/* CARD STYLE PREMIUM */
 .card {
   background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: 12px;
-  border-radius: 16px;
-  transition: 0.2s;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 14px;
+  backdrop-filter: blur(12px);
+  transition: 0.3s;
+  position: relative;
+  overflow: hidden;
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
+  border-color: rgba(168,85,247,0.4);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
 }
 
+/* image */
 .card img {
   width: 100%;
-  height: 220px;
+  height: 240px;
   object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 10px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  transition: 0.3s;
+}
+
+.card:hover img {
+  transform: scale(1.03);
+}
+
+/* title */
+.card h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* text */
+.card p {
+  opacity: 0.75;
+  font-size: 13px;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* loader */
+.loader {
+  opacity: 0.6;
+  font-size: 16px;
+  padding: 20px;
 }
 </style>
 </head>
@@ -69,8 +145,9 @@ button {
 <div class="container">
 
 <h1>🧠 MKAI Fashion AI</h1>
+<div class="subtitle">Ton styliste IA personnel — outfits 20–25 ans</div>
 
-<button onclick="generateOutfit()">✨ Générer outfit</button>
+<button onclick="generateOutfit()">✨ Générer une tenue</button>
 
 <div id="result" class="grid"></div>
 
@@ -78,8 +155,7 @@ button {
 
 <script>
 
-// 🎯 IMAGES COHÉRENTES (FIXES + VARIÉES)
-function getImage(type, value) {
+function getImage(value) {
 
   const bank = {
     "t-shirt blanc oversize": [
@@ -103,13 +179,13 @@ function getImage(type, value) {
     "https://images.unsplash.com/photo-1520975916090-3105956dac38"
   ];
 
-  return list[Math.floor(Math.random() * list.length)] + "?auto=format&fit=crop&w=800&q=80";
+  return list[Math.floor(Math.random() * list.length)] + "?auto=format&fit=crop&w=900&q=80";
 }
 
 async function generateOutfit() {
 
   const result = document.getElementById("result");
-  result.innerHTML = "⏳ IA en cours...";
+  result.innerHTML = `<div class="loader">⏳ Création de ta tenue...</div>`;
 
   const res = await fetch("/api/generate-outfit", {
     method: "POST",
@@ -128,11 +204,11 @@ async function generateOutfit() {
   const o = data.outfit;
 
   const items = [
-    { t: "Style", v: o.style, i: getImage("style", o.top) },
-    { t: "Top", v: o.top, i: getImage("top", o.top) },
-    { t: "Bottom", v: o.bottom, i: getImage("bottom", o.bottom) },
-    { t: "Shoes", v: o.shoes, i: getImage("shoes", o.shoes) },
-    { t: "Accessories", v: o.accessories, i: getImage("acc", o.accessories) }
+    { t: "Style", v: o.style, i: getImage(o.top) },
+    { t: "Haut", v: o.top, i: getImage(o.top) },
+    { t: "Bas", v: o.bottom, i: getImage(o.bottom) },
+    { t: "Chaussures", v: o.shoes, i: getImage(o.shoes) },
+    { t: "Accessoires", v: o.accessories, i: getImage(o.accessories) }
   ];
 
   result.innerHTML = "";
