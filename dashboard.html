@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>MKAI Stylist</title>
+<title>MKAI Stylist AI</title>
 
 <style>
 body {
@@ -41,10 +41,6 @@ button {
   margin-bottom: 20px;
 }
 
-button:hover {
-  opacity: 0.9;
-}
-
 .preview {
   display: flex;
   gap: 10px;
@@ -63,7 +59,6 @@ button:hover {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
   gap: 15px;
-  margin-top: 20px;
 }
 
 .card {
@@ -72,7 +67,7 @@ button:hover {
   padding: 12px;
   border-radius: 16px;
   backdrop-filter: blur(12px);
-  animation: fade 0.4s ease;
+  animation: fade 0.3s ease;
 }
 
 .card img {
@@ -99,14 +94,14 @@ input {
 <div class="container">
 
 <h1>🧠 MKAI Stylist AI</h1>
-<div class="subtitle">IA fashion + outfits visuels</div>
+<div class="subtitle">IA mode stylist intelligent + visuel outfits</div>
 
 <input type="file" id="upload" multiple>
 <div class="preview" id="preview"></div>
 
 <button onclick="generateOutfit()">✨ Générer outfit</button>
 
-<div class="grid" id="result"></div>
+<div id="result" class="grid"></div>
 
 </div>
 
@@ -129,21 +124,27 @@ document.getElementById("upload").addEventListener("change", (e) => {
   });
 });
 
-// 🔥 IMAGES ULTRA FIABLES (CDN UNSPLASH DIRECT)
-function img(type) {
-  const base = "https://images.unsplash.com/photo-";
+// 🎯 IMAGES ULTRA VARIÉES (ANTI-RÉPÉTITION)
+function getImage(type, seed = "") {
+
+  const random = Math.floor(Math.random() * 9999);
+
+  const base = "https://source.unsplash.com/800x800/?fashion,streetwear,";
 
   const map = {
-    haut: "1520975916090-3105956dac38",
-    bas: "1473966968600-fa801b869a1a",
-    shoes: "1549298916-b41d501d3772",
-    acc: "1511499767150-a48a237f3871"
+    haut: "hoodie,tshirt,jacket,urban",
+    bas: "jeans,pants,cargo,streetwear",
+    shoes: "sneakers,nike,shoes,street",
+    acc: "watch,cap,bag,minimal,accessories"
   };
 
-  return base + map[type] + "?auto=format&fit=crop&w=800&q=80";
+  return base + map[type] + "," + seed + "," + random;
 }
 
 async function generateOutfit() {
+
+  const result = document.getElementById("result");
+  result.innerHTML = "⏳ IA en cours...";
 
   const res = await fetch("/api/generate-outfit", {
     method: "POST",
@@ -158,36 +159,36 @@ async function generateOutfit() {
 
   const data = await res.json();
 
-  const o = data.outfit;
-  const result = document.getElementById("result");
-
-  if (!o) {
+  if (!data.outfit) {
     result.innerHTML = "Erreur IA ❌";
     console.log(data);
     return;
   }
 
-  result.innerHTML = "";
+  const o = data.outfit;
 
   const items = [
-    { t: "Haut", v: o.haut, i: img("haut") },
-    { t: "Bas", v: o.bas, i: img("bas") },
-    { t: "Chaussures", v: o.chaussures, i: img("shoes") },
-    { t: "Accessoires", v: o.accessoires?.join(", "), i: img("acc") }
+    { t: "Haut", v: o.haut, i: getImage("haut", o.haut) },
+    { t: "Bas", v: o.bas, i: getImage("bas", o.bas) },
+    { t: "Chaussures", v: o.chaussures, i: getImage("shoes", o.chaussures) },
+    { t: "Accessoires", v: o.accessoires?.join(", "), i: getImage("acc", o.accessoires?.join("")) }
   ];
 
-  items.forEach((it, i) => {
+  result.innerHTML = "";
+
+  items.forEach((item, i) => {
     setTimeout(() => {
       const div = document.createElement("div");
       div.className = "card";
       div.innerHTML = `
-        <img src="${it.i}">
-        <h3>${it.t}</h3>
-        <p>${it.v}</p>
+        <img src="${item.i}">
+        <h3>${item.t}</h3>
+        <p>${item.v}</p>
       `;
       result.appendChild(div);
     }, i * 120);
   });
+
 }
 
 </script>
