@@ -2,79 +2,45 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>AI Fashion Studio</title>
+<title>AI Outfit Auto</title>
 
 <style>
 
-/* 🌌 GLOBAL */
 body {
   margin: 0;
-  font-family: Inter, system-ui;
+  font-family: system-ui;
   background: #050816;
   color: white;
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
 }
 
-/* 🧊 SIDEBAR */
-.sidebar {
-  width: 260px;
-  background: rgba(255,255,255,0.03);
-  border-right: 1px solid rgba(255,255,255,0.06);
-  padding: 20px;
-  backdrop-filter: blur(20px);
+/* HEADER */
+.header {
+  padding: 25px;
+  text-align: center;
 }
 
-.logo {
-  font-size: 20px;
-  font-weight: 800;
+h1 {
+  margin: 0;
+  font-size: 32px;
   background: linear-gradient(90deg,#60a5fa,#a78bfa,#f472b6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 30px;
-}
-
-.menu {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.menu div {
-  padding: 10px;
-  border-radius: 10px;
-  opacity: 0.7;
-}
-
-/* 📦 MAIN */
-.main {
-  flex: 1;
-  padding: 30px;
-  overflow-y: auto;
-}
-
-/* 🧠 HEADER */
-h1 {
-  font-size: 34px;
-  margin: 0;
 }
 
 .subtitle {
   opacity: 0.6;
-  margin-bottom: 20px;
 }
 
-/* 📤 UPLOAD */
-.uploadBox {
-  border: 1px dashed rgba(255,255,255,0.2);
+/* UPLOAD */
+.box {
+  margin: 20px auto;
+  max-width: 600px;
+  background: rgba(255,255,255,0.05);
   padding: 20px;
   border-radius: 16px;
-  margin-bottom: 15px;
-  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* 👕 PREVIEW */
 .preview {
   display: flex;
   gap: 10px;
@@ -84,51 +50,27 @@ h1 {
 .preview img {
   width: 70px;
   height: 70px;
-  border-radius: 10px;
   object-fit: cover;
+  border-radius: 10px;
 }
 
-/* 🎛 BUTTON */
-button {
-  background: linear-gradient(90deg,#3b82f6,#a855f7);
-  border: none;
-  padding: 12px 16px;
-  border-radius: 12px;
-  color: white;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-/* 🧊 RESULT GRID */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  margin-top: 20px;
-}
-
-/* CARD ULTRA PRO */
+/* CARD OUTFIT */
 .card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: 15px;
+  margin: 20px auto;
+  max-width: 600px;
+  background: rgba(255,255,255,0.06);
+  padding: 18px;
   border-radius: 16px;
-  backdrop-filter: blur(20px);
-  transition: 0.2s;
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(168,85,247,0.4);
-}
-
-.card h3 {
-  margin: 0 0 5px 0;
-}
-
-.card p {
-  opacity: 0.7;
-  font-size: 13px;
+.badge {
+  display: inline-block;
+  padding: 5px 10px;
+  background: rgba(168,85,247,0.3);
+  border-radius: 999px;
+  font-size: 12px;
+  margin-bottom: 10px;
 }
 
 </style>
@@ -137,40 +79,27 @@ button {
 
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-  <div class="logo">AI Fashion</div>
-
-  <div class="menu">
-    <div>👕 Dressing</div>
-    <div>✨ Outfit IA</div>
-    <div>🔥 Inspirations</div>
-    <div>⚙️ Settings</div>
-  </div>
+<div class="header">
+  <h1>🧠 AI Outfit Daily</h1>
+  <div class="subtitle">Ta tenue générée automatiquement chaque jour</div>
 </div>
 
-<!-- MAIN -->
-<div class="main">
-
-<h1>Ton styliste IA</h1>
-<div class="subtitle">Outfits 20–25 ans / TikTok / Pinterest vibe</div>
-
-<div class="uploadBox">
+<div class="box">
   <input type="file" id="upload" multiple>
   <div class="preview" id="preview"></div>
 </div>
 
-<button onclick="generate()">Générer outfit</button>
-
-<div class="grid" id="result"></div>
-
+<div id="result" class="card">
+  ⏳ Chargement tenue du jour...
 </div>
 
 <script>
 
 let wardrobe = [];
 
-// upload
+/* -------------------------
+   SAVE UPLOAD (LOCAL)
+--------------------------*/
 document.getElementById("upload").addEventListener("change", (e) => {
 
   const preview = document.getElementById("preview");
@@ -178,47 +107,82 @@ document.getElementById("upload").addEventListener("change", (e) => {
   wardrobe = [];
 
   [...e.target.files].forEach(file => {
+
     wardrobe.push(file.name);
 
     const img = document.createElement("img");
     img.src = URL.createObjectURL(file);
     preview.appendChild(img);
   });
+
+  localStorage.setItem("wardrobe", JSON.stringify(wardrobe));
+
+  generateOutfit(); // auto refresh
 });
 
-// weather
-function weather() {
-  return "sunny";
+/* -------------------------
+   LOAD SAVED WARDROBE
+--------------------------*/
+function loadWardrobe() {
+  const saved = localStorage.getItem("wardrobe");
+  if (saved) {
+    wardrobe = JSON.parse(saved);
+  }
 }
 
-// generate
-async function generate() {
+/* -------------------------
+   AUTO GENERATION
+--------------------------*/
+window.addEventListener("load", () => {
+  loadWardrobe();
+  generateOutfit();
+});
+
+/* -------------------------
+   WEATHER SIMPLE
+--------------------------*/
+function getWeather() {
+  const h = new Date().getHours();
+  if (h < 10) return "morning cold";
+  if (h < 18) return "sunny";
+  return "evening cool";
+}
+
+/* -------------------------
+   IA CALL AUTO
+--------------------------*/
+async function generateOutfit() {
+
+  const result = document.getElementById("result");
+  result.innerHTML = "⏳ IA génère ta tenue du jour...";
 
   const res = await fetch("/api/generate-outfit", {
     method: "POST",
-    headers: {"Content-Type":"application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       wardrobe,
-      weather: weather()
+      weather: getWeather()
     })
   });
 
   const data = await res.json();
 
-  if (!data.outfit) return;
+  if (!data.outfit) {
+    result.innerHTML = "❌ erreur IA";
+    console.log(data);
+    return;
+  }
 
   const o = data.outfit;
 
-  const result = document.getElementById("result");
-
   result.innerHTML = `
-    <div class="card">
-      <h3>${o.style}</h3>
-      <p>${o.top}</p>
-      <p>${o.bottom}</p>
-      <p>${o.shoes}</p>
-      <p>${o.accessories}</p>
-    </div>
+    <div class="badge">OUTFIT DU JOUR</div>
+    <h2>${o.style}</h2>
+    <p><b>Top:</b> ${o.top}</p>
+    <p><b>Bottom:</b> ${o.bottom}</p>
+    <p><b>Shoes:</b> ${o.shoes}</p>
+    <p><b>Accessories:</b> ${o.accessories}</p>
+    <p><b>Vibe:</b> ${o.vibe}</p>
   `;
 }
 
