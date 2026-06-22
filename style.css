@@ -155,3 +155,40 @@ body {
     flex-direction: column;
   }
 }
+
+/* =========================
+   MKAI SAFE IMPROVEMENTS
+   (ne casse pas ton design)
+========================= */
+
+/* téléphone flottant sans toucher design */
+.phone-image {
+  animation: mkaiFloat 4s ease-in-out infinite;
+  filter: drop-shadow(0 25px 60px rgba(0,0,0,0.25));
+}
+
+@keyframes mkaiFloat {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+/* micro hover buttons sans changer style */
+.btn-primary,
+.btn-secondary,
+.nav-btn {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+.btn-secondary:hover {
+  opacity: 0.8;
+}
+
+/* scroll smooth fallback */
+html {
+  scroll-behavior: smooth;
+}
