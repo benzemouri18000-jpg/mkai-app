@@ -1,15 +1,13 @@
 // =========================
-// MKAI CLEAN SCRIPT SAFE
+// MKAI SAFE SCRIPT (NO DESIGN CHANGE)
 // =========================
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // =========================
-  // SMOOTH SCROLL
-  // =========================
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener("click", (e) => {
-      const target = document.querySelector(link.getAttribute("href"));
+  // scroll smooth safe
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener("click", (e) => {
+      const target = document.querySelector(a.getAttribute("href"));
       if (!target) return;
       e.preventDefault();
       target.scrollIntoView({ behavior: "smooth" });
@@ -17,9 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  // =========================
-  // OUTFIT GENERATOR
-  // =========================
+  // outfit generator (safe)
   window.generateOutfit = function () {
 
     const title = document.getElementById("outfit-title");
@@ -42,22 +38,20 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     ];
 
-    const random = outfits[Math.floor(Math.random() * outfits.length)];
+    const r = outfits[Math.floor(Math.random() * outfits.length)];
 
-    title.textContent = random.name;
+    title.textContent = r.name;
     list.innerHTML = "";
 
-    random.items.forEach(item => {
+    r.items.forEach(i => {
       const li = document.createElement("li");
-      li.textContent = item;
+      li.textContent = i;
       list.appendChild(li);
     });
   };
 
 
-  // =========================
-  // ADD CLOTHING
-  // =========================
+  // add clothing safe
   window.addClothing = function () {
 
     const input = document.getElementById("fileInput");
@@ -79,20 +73,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     input.value = "";
   };
-
-
-  // =========================
-  // PHONE FLOAT (SAFE)
-  // =========================
-  const phone = document.querySelector(".phone-image");
-
-  if (phone) {
-    document.addEventListener("mousemove", (e) => {
-      const x = (window.innerWidth / 2 - e.clientX) / 60;
-      const y = (window.innerHeight / 2 - e.clientY) / 60;
-
-      phone.style.transform = `translate(${x}px, ${y}px)`;
-    });
-  }
 
 });
