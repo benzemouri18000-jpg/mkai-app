@@ -7,18 +7,15 @@ export default async function handler(req, res) {
     const { style, weather, gender, hasWardrobe } = req.body || {};
 
     const prompt = `
-Tu es un styliste IA expert.
+Tu es un styliste IA.
 
-Le client a un dressing uploadé : ${hasWardrobe ? "OUI" : "NON"}.
+Dressing utilisateur : ${hasWardrobe ? "OUI" : "NON"}.
 
-Tu dois proposer UNE tenue réaliste et portable.
+Style: ${style}
+Météo: ${weather}
+Genre: ${gender}
 
-Contexte :
-- Style : ${style || "streetwear"}
-- Météo : ${weather || "soleil"}
-- Genre : ${gender || "homme"}
-
-Réponds UNIQUEMENT en JSON valide, sans texte autour :
+Réponds UNIQUEMENT en JSON :
 
 {
   "haut": "string",
@@ -37,55 +34,25 @@ Réponds UNIQUEMENT en JSON valide, sans texte autour :
       },
       body: JSON.stringify({
         model: "llama-3.3-70b-versatile",
-        messages: [
-          {
-            role: "user",
-            content: prompt
-          }
-        ],
-        temperature: 0.8
+        messages: [{ role: "user", content: prompt }]
       })
     });
 
     const data = await response.json();
 
-    // 🔥 DEBUG IMPORTANT
-    console.log("GROQ RESPONSE:", JSON.stringify(data, null, 2));
-
-    // erreur API
     if (!response.ok) {
-      return res.status(500).json({
-        error: "Groq API error",
-        details: data
-      });
+      return res.status(500).json({ error: data });
     }
 
-    const text = data?.choices?.[0]?.message?.content;
+    const text = data.choices?.[0]?.message?.content;
 
-    if (!text) {
-      return res.status(500).json({
-        error: "No response content",
-        details: data
-      });
-    }
+    return res.status(200).json({
+      outfit: JSON.parse(text)
+    });
 
-    let outfit;
-
-    try {
-      outfit = JSON.parse(text);
-    } catch (e) {
-      return res.status(500).json({
-        error: "JSON parse error",
-        raw: text
-      });
-    }
-
-    return res.status(200).json({ outfit });
-
-  } catch (error) {
+  } catch (e) {
     return res.status(500).json({
-      error: "Server crash",
-      message: error.message
+      error: e.message
     });
   }
 }
