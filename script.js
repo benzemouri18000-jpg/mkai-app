@@ -1,13 +1,11 @@
-// =========================
-// MKAI SAFE SCRIPT (NO DESIGN CHANGE)
-// =========================
-
 document.addEventListener("DOMContentLoaded", () => {
 
-  // scroll smooth safe
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener("click", (e) => {
-      const target = document.querySelector(a.getAttribute("href"));
+  // =========================
+  // 1. SMOOTH SCROLL (SAFE)
+  // =========================
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener("click", (e) => {
+      const target = document.querySelector(link.getAttribute("href"));
       if (!target) return;
       e.preventDefault();
       target.scrollIntoView({ behavior: "smooth" });
@@ -15,7 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  // outfit generator (safe)
+  // =========================
+  // 2. OUTIFT GENERATOR
+  // =========================
   window.generateOutfit = function () {
 
     const title = document.getElementById("outfit-title");
@@ -26,32 +26,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const outfits = [
       {
         name: "Old Money Casual",
-        items: ["👕 Chemise beige", "👖 Pantalon blanc", "👟 Sneakers", "⌚ Montre"]
+        items: ["👕 Chemise beige oversize", "👖 Pantalon blanc cassé", "👟 New Balance 530", "⌚ Montre minimaliste"]
       },
       {
         name: "Street Minimal",
-        items: ["🧥 Hoodie noir", "👖 Cargo gris", "👟 Air Force 1", "🧢 Casquette"]
+        items: ["🧥 Hoodie noir oversize", "👖 Cargo gris", "👟 Air Force 1", "🧢 Casquette"]
       },
       {
         name: "Summer Clean Fit",
-        items: ["👕 T-shirt blanc", "🩳 Short beige", "👟 Sneakers blanches", "🕶️ Lunettes"]
+        items: ["👕 T-shirt blanc premium", "🩳 Short beige", "👟 Sneakers blanches", "🕶️ Lunettes"]
       }
     ];
 
-    const r = outfits[Math.floor(Math.random() * outfits.length)];
+    const random = outfits[Math.floor(Math.random() * outfits.length)];
 
-    title.textContent = r.name;
+    title.textContent = random.name;
     list.innerHTML = "";
 
-    r.items.forEach(i => {
+    random.items.forEach(item => {
       const li = document.createElement("li");
-      li.textContent = i;
+      li.textContent = item;
       list.appendChild(li);
     });
   };
 
 
-  // add clothing safe
+  // =========================
+  // 3. ADD CLOTHING (UPLOAD SIMULATION)
+  // =========================
   window.addClothing = function () {
 
     const input = document.getElementById("fileInput");
@@ -64,14 +66,50 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const name = input.files[0].name;
+    const file = input.files[0].name;
 
-    const div = document.createElement("div");
-    div.textContent = "👕 " + name;
+    const item = document.createElement("div");
+    item.textContent = "👕 " + file;
 
-    list.appendChild(div);
+    list.appendChild(item);
 
     input.value = "";
   };
+
+
+  // =========================
+  // 4. HEADER SCROLL EFFECT (SAFE)
+  // =========================
+  const header = document.querySelector(".header");
+
+  if (header) {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 20) {
+        header.style.boxShadow = "0 10px 25px rgba(0,0,0,0.08)";
+        header.style.background = "rgba(255,255,255,0.9)";
+        header.style.backdropFilter = "blur(10px)";
+      } else {
+        header.style.boxShadow = "none";
+        header.style.background = "transparent";
+        header.style.backdropFilter = "none";
+      }
+    });
+  }
+
+
+  // =========================
+  // 5. PHONE FLOAT (SAFE VERSION)
+  // =========================
+  const phone = document.querySelector(".phone-image");
+
+  if (phone) {
+    document.addEventListener("mousemove", (e) => {
+
+      const x = (window.innerWidth / 2 - e.clientX) / 80;
+      const y = (window.innerHeight / 2 - e.clientY) / 80;
+
+      phone.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  }
 
 });
