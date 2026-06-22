@@ -1,22 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
+
 <head>
-  <title>MKAI</title>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>MKAI</title>
+
+<link
+rel="stylesheet"
+href="style.css">
+
 </head>
+
 <body>
-  <h1>MKAI</h1>
 
-  <button onclick="genererTenue()">
-    Générer ma tenue
-  </button>
+<header>
 
-  <div id="resultat"></div>
+<div class="logo">
+MKAI
+</div>
 
-  <script>
-    function genererTenue() {
-      document.getElementById("resultat").innerHTML =
-        "Blazer beige, chemise blanche, jean bleu.";
-    }
-  </script>
+<nav>
+Votre styliste IA
+</nav>
+
+</header>
+
+<section class="hero">
+
+<h1>
+Moins d'hésitation.
+Plus de confiance.
+</h1>
+
+<p>
+
+MKAI analyse votre dressing,
+vos habitudes et votre style
+pour vous proposer chaque jour
+la meilleure tenue.
+
+</p>
+
+<button
+class="btn"
+onclick="genererTenue()">
+
+Générer ma tenue
+
+</button>
+
+<div
+id="resultat"
+class="resultat">
+
+Votre tenue apparaîtra ici.
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>
+Pourquoi MKAI ?
+</h2>
+
+<div class="cards">
+
+<div class="card">
+Gain de temps
+</div>
+
+<div class="card">
+Dressing optimisé
+</div>
+
+<div class="card">
+Suggestions personnalisées
+</div>
+
+<div class="card">
+Préparation de voyage
+</div>
+
+</div>
+
+</section>
+
+<script src="script.js"></script>
+
 </body>
 </html>
