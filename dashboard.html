@@ -1,37 +1,114 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard MKAI</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>MKAI Dashboard</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #f5f5f5;
+      padding: 30px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      background: black;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #outfit-container {
+      margin-top: 25px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .card {
+      background: white;
+      padding: 16px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeIn 0.4s forwards;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 13px;
+      color: #888;
+    }
+
+    .card p {
+      margin: 5px 0 0;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-<div class="logo">MKAI</div>
-</header>
+  <h1>🧠 MKAI Outfit Generator</h1>
 
-<section class="hero">
+  <button onclick="generateOutfit()">Générer tenue</button>
 
-<h1>Bonjour Ryad 👋</h1>
+  <div id="outfit-container"></div>
 
-<p>
-Votre styliste personnel est prêt.
-</p>
+  <script>
+    async function generateOutfit() {
+      const res = await fetch("/api/generate-outfit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          style: "streetwear",
+          weather: "soleil",
+          gender: "homme"
+        })
+      });
 
-<button class="btn" onclick="genererTenue()">
-Générer ma tenue du jour
-</button>
+      const data = await res.json();
+      const outfit = data.outfit;
 
-<div id="outfit-container"></div>
-  
-<div id="resultat" class="resultat"></div>
+      const container = document.getElementById("outfit-container");
+      container.innerHTML = "";
 
-</section>
+      const items = [
+        { title: "Haut", value: outfit.haut },
+        { title: "Bas", value: outfit.bas },
+        { title: "Chaussures", value: outfit.chaussures },
+        { title: "Accessoires", value: outfit.accessoires?.join(", ") },
+        { title: "Description", value: outfit.description }
+      ];
 
-<script src="script.js"></script>
+      items.forEach((item, i) => {
+        setTimeout(() => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <h3>${item.title}</h3>
+            <p>${item.value}</p>
+          `;
+          container.appendChild(card);
+        }, i * 120);
+      });
+    }
+  </script>
 
 </body>
 </html>
