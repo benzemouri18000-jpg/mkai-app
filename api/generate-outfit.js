@@ -5,57 +5,36 @@ export default async function handler(req, res) {
 
   try {
 
-    const { weather = "sunny", style = "streetwear", wardrobe = [] } = req.body;
-
     const prompt = `
-Tu es un styliste mode expert pour jeunes 20-25 ans inspiré TikTok / Pinterest.
+Tu es un styliste mode expert pour jeunes 20-25 ans (TikTok / Pinterest style).
 
 OBJECTIF :
-Créer une tenue stylée, portable IRL.
+Créer une tenue ULTRA COHÉRENTE et stylée.
 
-CONTEXTE :
-- météo: ${weather}
-- style demandé: ${style}
-- dressing utilisateur: ${JSON.stringify(wardrobe)}
-
-STYLES POSSIBLES :
-- streetwear (Nike, Adidas vibe)
-- clean minimal
-- classy / workwear
+STYLES AUTORISÉS :
+- streetwear clean
+- minimal aesthetic
+- classy casual
 - techwear soft
-- aesthetic pinterest / Lain vibe
+- pinterest fashion
 
 RÈGLES :
 - tenue cohérente (couleurs harmonisées)
-- adaptée météo
-- pas de style dépassé
-- doit être portable dans la vraie vie
+- portable IRL
+- pas de styles dépassés
+- pas de mélange incohérent
 
-Réponds en JSON STRICT :
+IMPORTANT :
+Réponds UNIQUEMENT en JSON valide :
 
 {
-  "style": "string",
-  "weather_fit": "string",
+  "style": "streetwear | minimal | classy | techwear",
+  "color_theme": "black/white | beige | blue/white | monochrome",
 
-  "top": {
-    "name": "string",
-    "color": "string",
-    "material": "string"
-  },
-
-  "bottom": {
-    "name": "string",
-    "color": "string"
-  },
-
-  "shoes": {
-    "name": "string",
-    "color": "string"
-  },
-
-  "accessories": "string",
-
-  "vibe": "string"
+  "top": "t-shirt blanc oversize",
+  "bottom": "jean bleu loose",
+  "shoes": "sneakers blanches",
+  "accessories": "watch minimal silver"
 }
 `;
 
@@ -76,13 +55,16 @@ Réponds en JSON STRICT :
 
     const text = data?.choices?.[0]?.message?.content;
 
-    let outfit;
+    if (!text) {
+      return res.status(500).json({ error: "No AI response" });
+    }
 
+    let outfit;
     try {
       outfit = JSON.parse(text);
     } catch (e) {
       return res.status(500).json({
-        error: "JSON error",
+        error: "JSON parse error",
         raw: text
       });
     }
