@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>MKAI Stylist AI</title>
+<title>MKAI Stylist</title>
 
 <style>
 body {
@@ -66,7 +66,6 @@ button {
   border: 1px solid rgba(255,255,255,0.1);
   padding: 12px;
   border-radius: 16px;
-  backdrop-filter: blur(12px);
   animation: fade 0.3s ease;
 }
 
@@ -82,10 +81,6 @@ button {
   from {opacity:0; transform: translateY(10px);}
   to {opacity:1; transform: translateY(0);}
 }
-
-input {
-  margin-top: 10px;
-}
 </style>
 </head>
 
@@ -94,7 +89,7 @@ input {
 <div class="container">
 
 <h1>🧠 MKAI Stylist AI</h1>
-<div class="subtitle">IA mode stylist intelligent + visuel outfits</div>
+<div class="subtitle">IA mode stylist intelligent</div>
 
 <input type="file" id="upload" multiple>
 <div class="preview" id="preview"></div>
@@ -124,21 +119,18 @@ document.getElementById("upload").addEventListener("change", (e) => {
   });
 });
 
-// 🎯 IMAGES ULTRA VARIÉES (ANTI-RÉPÉTITION)
-function getImage(type, seed = "") {
-
-  const random = Math.floor(Math.random() * 9999);
-
+// images fiables
+function getImage(type) {
   const base = "https://source.unsplash.com/800x800/?fashion,streetwear,";
 
   const map = {
-    haut: "hoodie,tshirt,jacket,urban",
-    bas: "jeans,pants,cargo,streetwear",
-    shoes: "sneakers,nike,shoes,street",
-    acc: "watch,cap,bag,minimal,accessories"
+    haut: "hoodie,tshirt,jacket",
+    bas: "jeans,cargo,pants",
+    shoes: "sneakers,nike,shoes",
+    acc: "watch,cap,bag,accessories"
   };
 
-  return base + map[type] + "," + seed + "," + random;
+  return base + map[type];
 }
 
 async function generateOutfit() {
@@ -146,49 +138,56 @@ async function generateOutfit() {
   const result = document.getElementById("result");
   result.innerHTML = "⏳ IA en cours...";
 
-  const res = await fetch("/api/generate-outfit", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      style: "streetwear",
-      weather: "soleil",
-      gender: "homme",
-      hasWardrobe: uploadedImages.length > 0
-    })
-  });
+  try {
+    const res = await fetch("/api/generate-outfit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        style: "streetwear",
+        weather: "soleil",
+        gender: "homme",
+        hasWardrobe: uploadedImages.length > 0
+      })
+    });
 
-  const data = await res.json();
+    const data = await res.json();
 
-  if (!data.outfit) {
-    result.innerHTML = "Erreur IA ❌";
-    console.log(data);
-    return;
+    if (!res.ok || !data.outfit) {
+      result.innerHTML = "❌ Erreur IA";
+      console.log(data);
+      return;
+    }
+
+    const o = data.outfit;
+
+    result.innerHTML = "";
+
+    const items = [
+      { t: "Style", v: o.style_global },
+      { t: "Haut", v: o.haut, i: getImage("haut") },
+      { t: "Bas", v: o.bas, i: getImage("bas") },
+      { t: "Chaussures", v: o.chaussures, i: getImage("shoes") },
+      { t: "Accessoires", v: o.accessoires?.join(", "), i: getImage("acc") },
+      { t: "Description", v: o.description, i: getImage("haut") }
+    ];
+
+    items.forEach((item, i) => {
+      setTimeout(() => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `
+          <img src="${item.i}">
+          <h3>${item.t}</h3>
+          <p>${item.v || ""}</p>
+        `;
+        result.appendChild(div);
+      }, i * 120);
+    });
+
+  } catch (e) {
+    console.log(e);
+    result.innerHTML = "❌ Erreur serveur";
   }
-
-  const o = data.outfit;
-
-  const items = [
-    { t: "Haut", v: o.haut, i: getImage("haut", o.haut) },
-    { t: "Bas", v: o.bas, i: getImage("bas", o.bas) },
-    { t: "Chaussures", v: o.chaussures, i: getImage("shoes", o.chaussures) },
-    { t: "Accessoires", v: o.accessoires?.join(", "), i: getImage("acc", o.accessoires?.join("")) }
-  ];
-
-  result.innerHTML = "";
-
-  items.forEach((item, i) => {
-    setTimeout(() => {
-      const div = document.createElement("div");
-      div.className = "card";
-      div.innerHTML = `
-        <img src="${item.i}">
-        <h3>${item.t}</h3>
-        <p>${item.v}</p>
-      `;
-      result.appendChild(div);
-    }, i * 120);
-  });
-
 }
 
 </script>
