@@ -4,21 +4,25 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { style, weather, gender } = req.body;
+    const { style, weather, gender } = req.body || {};
 
     const prompt = `
-Tu es un styliste.
-Style: ${style}
-Météo: ${weather}
-Genre: ${gender}
+Tu es un styliste expert.
+Crée une tenue complète réaliste.
 
-Réponds uniquement en JSON valide :
+Contexte :
+- Style : ${style || "streetwear"}
+- Météo : ${weather || "inconnue"}
+- Genre : ${gender || "homme"}
+
+Réponds UNIQUEMENT en JSON valide, sans texte autour :
+
 {
-  "haut": "exemple",
-  "bas": "exemple",
-  "chaussures": "exemple",
-  "accessoires": ["exemple"],
-  "description": "exemple"
+  "haut": "string",
+  "bas": "string",
+  "chaussures": "string",
+  "accessoires": ["string"],
+  "description": "string"
 }
 `;
 
@@ -30,23 +34,50 @@ Réponds uniquement en JSON valide :
       },
       body: JSON.stringify({
         model: "gpt-4o-mini",
-        messages: [{ role: "user", content: prompt }],
+        messages: [
+          {
+            role: "user",
+            content: prompt
+          }
+        ],
         temperature: 0.8
       })
     });
 
     const data = await response.json();
 
+    // 🔥 DEBUG (très important)
+    console.log("OPENAI RESPONSE:", JSON.stringify(data, null, 2));
+
+    // Vérification sécurité
+    if (!data.choices || !data.choices[0]) {
+      return res.status(500).json({
+        error: "OpenAI API error",
+        details: data
+      });
+    }
+
     const text = data.choices[0].message.content;
 
-    res.status(200).json({
-      outfit: JSON.parse(text)
+    let outfit;
+
+    try {
+      outfit = JSON.parse(text);
+    } catch (e) {
+      return res.status(500).json({
+        error: "JSON parse error",
+        raw: text
+      });
+    }
+
+    return res.status(200).json({
+      outfit
     });
 
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       error: error.message,
-      debug: "API crash"
+      debug: "server crash"
     });
   }
 }
