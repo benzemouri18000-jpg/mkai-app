@@ -4,29 +4,39 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { style, weather, gender } = req.body || {};
-
     const prompt = `
-Tu es un styliste mode expert.
+Tu es un styliste expert mode pour jeunes de 20 à 25 ans.
 
 OBJECTIF :
-Créer UNE tenue cohérente et moderne.
+Créer des outfits PORTABLES dans la vraie vie.
 
-RÈGLES :
-- Tenue 100% moderne (2024-2026)
-- Aucun mélange incohérent
+STYLE ATTENDU :
+- streetwear clean (Nike / Uniqlo / Zara vibe)
+- techwear soft
+- minimal aesthetic
+- pinterest / instagram fashion
+
+INTERDIT :
+- styles années 2000
+- tenues ringardes
+- looks trop old school
+- incohérences homme/femme
+
+IMPORTANT :
+- Les tenues doivent être stylées, simples et modernes
+- Pas trop chargé
+- Très portable IRL
 - Couleurs harmonisées
-- Style unique par outfit
 
-Tu dois répondre en JSON STRICT :
+Réponds en JSON STRICT :
 
 {
-  "haut": "string simple",
-  "bas": "string simple",
-  "shoes": "string simple",
-  "accessories": "string simple",
-  "color_theme": "string",
-  "style_global": "string"
+  "style_global": "string",
+  "haut": "string (ex: t-shirt oversize blanc)",
+  "bas": "string (ex: jean loose bleu)",
+  "shoes": "string (ex: sneakers blanches nike)",
+  "accessories": "string (ex: watch minimal silver)",
+  "vibe": "string (ex: clean streetwear aesthetic)"
 }
 `;
 
@@ -39,34 +49,22 @@ Tu dois répondre en JSON STRICT :
       body: JSON.stringify({
         model: "llama-3.3-70b-versatile",
         messages: [{ role: "user", content: prompt }],
-        temperature: 0.7
+        temperature: 0.9
       })
     });
 
     const data = await response.json();
-
     const text = data?.choices?.[0]?.message?.content;
 
     if (!text) {
       return res.status(500).json({ error: "No AI response" });
     }
 
-    let outfit;
-
-    try {
-      outfit = JSON.parse(text);
-    } catch (e) {
-      return res.status(500).json({
-        error: "JSON parse error",
-        raw: text
-      });
-    }
+    const outfit = JSON.parse(text);
 
     return res.status(200).json({ outfit });
 
   } catch (err) {
-    return res.status(500).json({
-      error: err.message
-    });
+    return res.status(500).json({ error: err.message });
   }
 }
