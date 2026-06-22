@@ -6,13 +6,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>MKAI - Votre Styliste IA</title>
+<title>MKAI - Votre Styliste Personnel</title>
 
 <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
+
+<!-- HEADER -->
 
 <header class="header">
 
@@ -21,9 +23,17 @@ MKAI
 </div>
 
 <nav class="nav">
+
 <a href="#how">Comment ça marche</a>
+
 <a href="#benefits">Avantages</a>
-<a href="dashboard.html" class="nav-btn">Mon dressing</a>
+
+<a href="#testimonials">Avis</a>
+
+<a href="dashboard.html" class="nav-btn">
+Mon Dressing
+</a>
+
 </nav>
 
 </header>
@@ -35,31 +45,34 @@ MKAI
 <div class="hero-left">
 
 <div class="badge">
-✨ Votre styliste personnel alimenté par l'IA
+✨ Styliste IA personnalisé
 </div>
 
 <h1>
-Votre tenue parfaite,
-sans réfléchir.
+La tenue parfaite.<br>
+Chaque matin.
 </h1>
 
 <p>
+
 MKAI analyse votre dressing, la météo,
 vos habitudes et votre style afin de vous
-proposer automatiquement la meilleure tenue
-chaque matin.
+proposer automatiquement la tenue idéale.
+
 </p>
 
 <div class="hero-buttons">
 
 <a href="dashboard.html">
+
 <button class="btn-primary">
 Découvrir ma tenue
 </button>
+
 </a>
 
 <button class="btn-secondary">
-Voir une démo
+Voir comment ça marche
 </button>
 
 </div>
@@ -67,8 +80,8 @@ Voir une démo
 <div class="stats">
 
 <div class="stat">
-<h3>+500</h3>
-<p>Outfits générés</p>
+<h3>+12k</h3>
+<p>Tenues créées</p>
 </div>
 
 <div class="stat">
@@ -77,8 +90,8 @@ Voir une démo
 </div>
 
 <div class="stat">
-<h3>24h</h3>
-<p>Style personnalisé</p>
+<h3>24/7</h3>
+<p>Conseils IA</p>
 </div>
 
 </div>
@@ -87,28 +100,13 @@ Voir une démo
 
 <div class="hero-right">
 
-<div class="phone">
+<div class="phone-container">
 
-<div class="phone-header">
-☀️ 26°C • Sète
-</div>
-
-<div class="phone-card">
-
-<span class="outfit-label">
-OUTFIT DU JOUR
-</span>
-
-<h3>Old Money Casual</h3>
-
-<ul>
-<li>👕 Chemise beige oversize</li>
-<li>👖 Pantalon blanc cassé</li>
-<li>👟 New Balance 530 crème</li>
-<li>⌚ Montre minimaliste</li>
-</ul>
-
-</div>
+<img
+src="assets/hero-phone.png"
+class="phone-image"
+alt="MKAI App"
+>
 
 </div>
 
@@ -116,27 +114,54 @@ OUTFIT DU JOUR
 
 </section>
 
-<!-- HOW IT WORKS -->
+<!-- HOW -->
 
 <section id="how" class="section">
 
-<h2>Comment ça marche ?</h2>
+<h2>Comment ça fonctionne</h2>
 
 <div class="cards">
 
 <div class="card">
-<h3>📸 Scanner</h3>
-<p>Ajoutez vos vêtements à votre dressing.</p>
+
+<div class="icon">
+📸
+</div>
+
+<h3>Scanne ton dressing</h3>
+
+<p>
+Ajoute tes vêtements en quelques secondes.
+</p>
+
 </div>
 
 <div class="card">
-<h3>🧠 Comprendre</h3>
-<p>MKAI analyse votre style et vos habitudes.</p>
+
+<div class="icon">
+🧠
+</div>
+
+<h3>L'IA comprend ton style</h3>
+
+<p>
+Couleurs, coupes, marques, habitudes.
+</p>
+
 </div>
 
 <div class="card">
-<h3>✨ Proposer</h3>
-<p>Une tenue générée automatiquement chaque jour.</p>
+
+<div class="icon">
+✨
+</div>
+
+<h3>Tenue automatique</h3>
+
+<p>
+Chaque matin une tenue adaptée.
+</p>
+
 </div>
 
 </div>
@@ -145,34 +170,84 @@ OUTFIT DU JOUR
 
 <!-- BENEFITS -->
 
-<section id="benefits" class="section">
+<section id="benefits" class="section beige">
 
 <h2>Pourquoi MKAI ?</h2>
 
-<div class="cards">
+<div class="benefits-grid">
 
-<div class="card">
-⏱ Gain de temps
+<div class="benefit-card">
+
+<h3>⏱ Gagne du temps</h3>
+
+<p>
+Ne passe plus 20 minutes devant ton placard.
+</p>
+
 </div>
 
-<div class="card">
-👕 Dressing optimisé
+<div class="benefit-card">
+
+<h3>👕 Redécouvre ton dressing</h3>
+
+<p>
+Utilise enfin les vêtements oubliés.
+</p>
+
 </div>
 
-<div class="card">
-🧠 Suggestions intelligentes
+<div class="benefit-card">
+
+<h3>🌦 Adapté à la météo</h3>
+
+<p>
+Chaque tenue correspond à la journée.
+</p>
+
 </div>
 
-<div class="card">
-🌦 Adapté à la météo
+<div class="benefit-card">
+
+<h3>🔥 Style moderne</h3>
+
+<p>
+Pinterest, TikTok et tendances actuelles.
+</p>
+
 </div>
 
-<div class="card">
-✈️ Préparation voyage
 </div>
 
-<div class="card">
-🔥 Style Pinterest / TikTok
+</section>
+
+<!-- DAILY OUTFIT -->
+
+<section class="section">
+
+<h2>Exemple de tenue du jour</h2>
+
+<div class="outfit-preview">
+
+<div class="outfit-card">
+
+<div class="weather">
+☀️ 26°C • Sète
+</div>
+
+<h3>Old Money Casual</h3>
+
+<ul>
+
+<li>👕 Chemise beige oversize</li>
+
+<li>👖 Pantalon blanc cassé</li>
+
+<li>👟 New Balance 530 crème</li>
+
+<li>⌚ Montre minimaliste</li>
+
+</ul>
+
 </div>
 
 </div>
@@ -181,22 +256,40 @@ OUTFIT DU JOUR
 
 <!-- TESTIMONIALS -->
 
-<section class="section">
+<section id="testimonials" class="section">
 
-<h2>Ils utilisent déjà MKAI</h2>
+<h2>Ils adorent MKAI</h2>
 
 <div class="cards">
 
 <div class="card">
-"Je ne passe plus 20 minutes devant mon placard."
+
+⭐️⭐️⭐️⭐️⭐️
+
+<p>
+Je gagne un temps fou chaque matin.
+</p>
+
 </div>
 
 <div class="card">
-"Les tenues sont vraiment cohérentes."
+
+⭐️⭐️⭐️⭐️⭐️
+
+<p>
+Les tenues sont vraiment cohérentes.
+</p>
+
 </div>
 
 <div class="card">
-"J'ai redécouvert des vêtements oubliés."
+
+⭐️⭐️⭐️⭐️⭐️
+
+<p>
+J'ai redécouvert plein de vêtements.
+</p>
+
 </div>
 
 </div>
@@ -208,16 +301,28 @@ OUTFIT DU JOUR
 <section class="cta">
 
 <h2>
-Prêt à transformer votre dressing ?
+
+Votre styliste personnel est prêt.
+
 </h2>
 
 <a href="dashboard.html">
+
 <button class="btn-primary">
+
 Commencer gratuitement
+
 </button>
+
 </a>
 
 </section>
+
+<footer>
+
+© 2026 MKAI
+
+</footer>
 
 <script src="script.js"></script>
 
