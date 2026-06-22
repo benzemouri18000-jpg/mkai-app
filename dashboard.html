@@ -1,3 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>MKAI AI Stylist</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(135deg,#0f172a,#1e293b);
+  color: white;
+  padding: 30px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  opacity: 0.7;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 15px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  margin-top: 10px;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity:0; transform: translateY(10px);}
+  to {opacity:1; transform: translateY(0);}
+}
+
+button {
+  background: #3b82f6;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #2563eb;
+}
+
+input {
+  margin-top: 10px;
+}
+
+.preview {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.preview img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+#result {
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🧠 MKAI AI Stylist</h1>
+<div class="subtitle">Upload tes vêtements et génère des outfits IA</div>
+
+<!-- UPLOAD -->
+<div class="card">
+  <h3>📸 Ton dressing</h3>
+  <input type="file" id="upload" multiple accept="image/*">
+  <div class="preview" id="preview"></div>
+</div>
+
+<!-- BUTTON -->
+<button onclick="generateOutfit()">🎯 Générer tenue IA</button>
+
+<!-- RESULT -->
+<div id="result"></div>
+
+</div>
+
+<script>
+
 let uploadedImages = [];
 
 const upload = document.getElementById("upload");
@@ -17,43 +125,61 @@ upload.addEventListener("change", (e) => {
   });
 });
 
-// 🔥 IA DRESSING
 async function generateOutfit() {
-
-  // on ne peut pas envoyer directement les images ici (version simple)
-  // donc on envoie juste un "signal dressing actif"
-
-  const res = await fetch("/api/generate-outfit", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      style: "streetwear",
-      weather: "soleil",
-      gender: "homme",
-      hasWardrobe: uploadedImages.length > 0
-    })
-  });
-
-  const data = await res.json();
-  const outfit = data.outfit;
-
   const result = document.getElementById("result");
-  result.innerHTML = "";
+  result.innerHTML = "⏳ IA en cours...";
 
-  const items = [
-    { t: "Haut", v: outfit.haut },
-    { t: "Bas", v: outfit.bas },
-    { t: "Chaussures", v: outfit.chaussures },
-    { t: "Accessoires", v: outfit.accessoires?.join(", ") },
-    { t: "Description", v: outfit.description }
-  ];
+  try {
+    const res = await fetch("/api/generate-outfit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        style: "streetwear",
+        weather: "soleil",
+        gender: "homme",
+        hasWardrobe: uploadedImages.length > 0
+      })
+    });
 
-  items.forEach((item, i) => {
-    setTimeout(() => {
-      const div = document.createElement("div");
-      div.className = "card";
-      div.innerHTML = `<b>${item.t}</b><br>${item.v}`;
-      result.appendChild(div);
-    }, i * 120);
-  });
+    const data = await res.json();
+
+    if (!data.outfit) {
+      result.innerHTML = "Erreur IA ❌";
+      console.log(data);
+      return;
+    }
+
+    const outfit = data.outfit;
+
+    result.innerHTML = "";
+
+    const items = [
+      { t: "Haut", v: outfit.haut },
+      { t: "Bas", v: outfit.bas },
+      { t: "Chaussures", v: outfit.chaussures },
+      { t: "Accessoires", v: outfit.accessoires?.join(", ") },
+      { t: "Description", v: outfit.description }
+    ];
+
+    items.forEach((item, i) => {
+      setTimeout(() => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `
+          <b>${item.t}</b><br>
+          ${item.v}
+        `;
+        result.appendChild(div);
+      }, i * 120);
+    });
+
+  } catch (e) {
+    result.innerHTML = "Erreur serveur ❌";
+    console.log(e);
+  }
 }
+
+</script>
+
+</body>
+</html>
