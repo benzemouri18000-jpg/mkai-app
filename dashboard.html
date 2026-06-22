@@ -2,137 +2,95 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>MKAI Fashion AI</title>
+<title>AI Stylist</title>
 
 <style>
 body {
-  margin: 0;
+  margin:0;
   font-family: system-ui;
   background: radial-gradient(circle at top, #0f172a, #020617);
-  color: white;
-  padding: 30px;
+  color:white;
+  padding:30px;
 }
 
-.container { max-width: 1000px; margin: auto; }
+.container {
+  max-width:900px;
+  margin:auto;
+}
 
 h1 {
-  font-size: 44px;
+  font-size:40px;
   background: linear-gradient(90deg,#60a5fa,#a78bfa,#f472b6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-button {
-  background: linear-gradient(90deg,#3b82f6,#a855f7);
-  border: none;
-  padding: 14px 18px;
-  border-radius: 12px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
-  gap: 15px;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
 .card {
   background: rgba(255,255,255,0.06);
-  border-radius: 16px;
-  padding: 12px;
+  padding:15px;
+  border-radius:16px;
+  margin-top:15px;
 }
 
-.card img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 12px;
+button {
+  background:#7c3aed;
+  border:none;
+  padding:12px 16px;
+  color:white;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+.badge {
+  display:inline-block;
+  padding:5px 10px;
+  background:#1f2937;
+  border-radius:10px;
+  margin-top:5px;
 }
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>🧠 MKAI Fashion AI</h1>
+<h1>🧠 AI Stylist</h1>
 
-<button onclick="generateOutfit()">Générer outfit</button>
+<button onclick="getOutfit()">🎯 Tenue du jour</button>
 
-<div id="result" class="grid"></div>
+<div id="outfit"></div>
 
 </div>
 
 <script>
 
-// 🎯 IMAGE MATCH EXACT (IMPORTANT)
-function getImage(type, color) {
-
-  const base = "https://source.unsplash.com/800x800/?fashion,";
-
-  return base + type + "," + color + "&sig=" + Math.random();
-}
-
-async function generateOutfit() {
-
-  const result = document.getElementById("result");
-  result.innerHTML = "⏳ IA...";
+async function getOutfit() {
 
   const res = await fetch("/api/generate-outfit", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({})
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({
+      weather: "auto",
+      style: "streetwear",
+      wardrobe: ["t-shirt blanc", "jean noir", "sneakers"]
+    })
   });
 
   const data = await res.json();
 
-  if (!data.outfit) {
-    result.innerHTML = "Erreur";
-    return;
-  }
-
   const o = data.outfit;
 
-  const items = [
-    {
-      t: "Top",
-      v: `${o.top.item} ${o.top.color} ${o.top.brand}`,
-      i: getImage(o.top.item, o.top.color)
-    },
-    {
-      t: "Bottom",
-      v: `${o.bottom.item} ${o.bottom.color} ${o.bottom.brand}`,
-      i: getImage(o.bottom.item, o.bottom.color)
-    },
-    {
-      t: "Shoes",
-      v: `${o.shoes.item} ${o.shoes.color} ${o.shoes.brand}`,
-      i: getImage("sneakers", o.shoes.color)
-    },
-    {
-      t: "Accessories",
-      v: `${o.accessories.item} ${o.accessories.color}`,
-      i: getImage(o.accessories.item, o.accessories.color)
-    }
-  ];
-
-  result.innerHTML = "";
-
-  items.forEach((item, i) => {
-    setTimeout(() => {
-      const div = document.createElement("div");
-      div.className = "card";
-      div.innerHTML = `
-        <img src="${item.i}">
-        <h3>${item.t}</h3>
-        <p>${item.v}</p>
-      `;
-      result.appendChild(div);
-    }, i * 120);
-  });
-
+  document.getElementById("outfit").innerHTML = `
+    <div class="card">
+      <h2>${o.style}</h2>
+      <div class="badge">Top: ${o.top.name} - ${o.top.color}</div><br>
+      <div class="badge">Bottom: ${o.bottom.name} - ${o.bottom.color}</div><br>
+      <div class="badge">Shoes: ${o.shoes.name} - ${o.shoes.color}</div><br>
+      <div class="badge">Vibe: ${o.vibe}</div>
+    </div>
+  `;
 }
 
 </script>
