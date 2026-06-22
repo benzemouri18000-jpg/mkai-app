@@ -8,14 +8,14 @@ export default async function handler(req, res) {
 
     const prompt = `
 Tu es un styliste expert.
-Crée une tenue complète réaliste.
+Crée une tenue complète réaliste et portable.
 
 Contexte :
 - Style : ${style || "streetwear"}
 - Météo : ${weather || "inconnue"}
 - Genre : ${gender || "homme"}
 
-Réponds UNIQUEMENT en JSON valide, sans texte autour :
+Réponds UNIQUEMENT en JSON valide, sans texte avant ou après :
 
 {
   "haut": "string",
@@ -46,38 +46,44 @@ Réponds UNIQUEMENT en JSON valide, sans texte autour :
 
     const data = await response.json();
 
-    // 🔥 DEBUG (très important)
-    console.log("OPENAI RESPONSE:", JSON.stringify(data, null, 2));
+    // 🔥 DEBUG ULTRA IMPORTANT
+    console.log("OPENAI RESPONSE =>", JSON.stringify(data, null, 2));
 
-    // Vérification sécurité
-    if (!data.choices || !data.choices[0]) {
+    // ❌ Si OpenAI renvoie une erreur
+    if (!response.ok) {
       return res.status(500).json({
-        error: "OpenAI API error",
+        error: "OpenAI request failed",
+        details: data
+      });
+    }
+
+    // ❌ sécurité structure réponse
+    if (!data.choices || !data.choices[0]?.message?.content) {
+      return res.status(500).json({
+        error: "Invalid OpenAI response structure",
         details: data
       });
     }
 
     const text = data.choices[0].message.content;
 
+    // ❌ sécurité JSON
     let outfit;
-
     try {
       outfit = JSON.parse(text);
     } catch (e) {
       return res.status(500).json({
-        error: "JSON parse error",
+        error: "Invalid JSON returned by model",
         raw: text
       });
     }
 
-    return res.status(200).json({
-      outfit
-    });
+    return res.status(200).json({ outfit });
 
   } catch (error) {
     return res.status(500).json({
-      error: error.message,
-      debug: "server crash"
+      error: "Server crash",
+      message: error.message
     });
   }
 }
