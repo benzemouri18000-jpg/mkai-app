@@ -1,5 +1,6 @@
+
 /* =========================
-   MKAI - DESIGN RESTAURÉ AVEC COULEURS
+   MKAI - STYLE EXACT SAAS CLEAN
 ========================= */
 
 * {
@@ -10,11 +11,11 @@
 
 body {
   font-family: Arial, sans-serif;
-  background: #ffffff;
+  background: #ffffff; /* base blanche comme ton site */
   color: #111;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 .header {
   display: flex;
   justify-content: space-between;
@@ -25,15 +26,13 @@ body {
 
 .logo {
   font-size: 22px;
-  font-weight: bold;
-  color: #111;
+  font-weight: 700;
 }
 
 .nav a {
   margin-left: 20px;
   text-decoration: none;
   color: #111;
-  font-weight: 500;
 }
 
 .nav-btn {
@@ -42,16 +41,14 @@ body {
   border-radius: 10px;
 }
 
-/* HERO - AJOUT COULEUR SUBTILE */
+/* ================= HERO ================= */
 .hero {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 90px 10%;
   gap: 40px;
-
-  /* 🔥 couleur douce comme ton ancien site */
-  background: linear-gradient(to bottom, #ffffff, #f7f7f7);
+  background: #ffffff;
 }
 
 .hero-left {
@@ -64,23 +61,22 @@ body {
 }
 
 .hero p {
-  color: #555;
   font-size: 18px;
+  color: #555;
   margin-top: 15px;
 }
 
-/* BADGE */
+/* badge */
 .badge {
   display: inline-block;
-  background: #111;
-  color: white;
   padding: 8px 14px;
   border-radius: 999px;
+  background: #f3f3f3;
   font-size: 13px;
   margin-bottom: 15px;
 }
 
-/* BUTTONS */
+/* buttons */
 .hero-buttons {
   margin-top: 25px;
 }
@@ -103,7 +99,7 @@ body {
   cursor: pointer;
 }
 
-/* STATS */
+/* ================= STATS ================= */
 .stats {
   display: flex;
   gap: 30px;
@@ -112,19 +108,17 @@ body {
 
 .stat h3 {
   font-size: 22px;
-  color: #111;
 }
 
-/* PHONE */
+/* ================= PHONE ================= */
 .hero-right {
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .phone-image {
   width: 320px;
-  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.25));
+  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.2));
   animation: float 4s ease-in-out infinite;
 }
 
@@ -134,12 +128,13 @@ body {
   100% { transform: translateY(0); }
 }
 
-/* SECTIONS */
+/* ================= SECTIONS ================= */
 .section {
   padding: 90px 10%;
+  background: #ffffff;
 }
 
-/* HOW / CARDS */
+/* ================= CARDS ================= */
 .cards {
   display: flex;
   gap: 20px;
@@ -149,13 +144,13 @@ body {
   flex: 1;
   padding: 22px;
   border-radius: 12px;
-  background: #ffffff;
   border: 1px solid #eee;
+  background: #ffffff;
 }
 
-/* BENEFITS - COULEUR IMPORTANTE */
+/* ================= BENEFITS (CRÈME EXACT) ================= */
 .beige {
-  background: #f6f3ee;
+  background: #f6f1e8; /* ⭐ clé de ton style */
 }
 
 .benefits-grid {
@@ -166,18 +161,20 @@ body {
 
 .benefit-card {
   padding: 20px;
-  background: white;
+  background: #ffffff;
   border-radius: 12px;
+  border: 1px solid #eadfce;
 }
 
-/* OUTFIT */
+/* ================= OUTFIT ================= */
 .outfit-card {
   padding: 20px;
-  background: #f7f7f7;
+  background: #ffffff;
   border-radius: 12px;
+  border: 1px solid #eee;
 }
 
-/* CTA - COULEUR FORTE */
+/* ================= CTA BLACK ================= */
 .cta {
   text-align: center;
   padding: 90px 10%;
@@ -190,14 +187,15 @@ body {
   color: black;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 footer {
   text-align: center;
   padding: 40px;
   color: #777;
+  background: #ffffff;
 }
 
-/* RESPONSIVE */
+/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
   .hero {
     flex-direction: column;
