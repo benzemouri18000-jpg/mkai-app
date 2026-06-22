@@ -1,21 +1,91 @@
-const prompt = `
-Tu es un styliste expert IA.
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "POST only" });
+  }
 
-Le client a un dressing uploadé : ${req.body.hasWardrobe ? "OUI" : "NON"}.
+  try {
+    const { style, weather, gender, hasWardrobe } = req.body || {};
 
-Tu dois adapter la tenue en fonction.
+    const prompt = `
+Tu es un styliste IA expert.
 
-Style: ${style}
-Météo: ${weather}
-Genre: ${gender}
+Le client a un dressing uploadé : ${hasWardrobe ? "OUI" : "NON"}.
 
-Réponds uniquement en JSON :
+Tu dois proposer UNE tenue réaliste et portable.
+
+Contexte :
+- Style : ${style || "streetwear"}
+- Météo : ${weather || "soleil"}
+- Genre : ${gender || "homme"}
+
+Réponds UNIQUEMENT en JSON valide, sans texte autour :
 
 {
-  "haut": "",
-  "bas": "",
-  "chaussures": "",
-  "accessoires": [],
-  "description": ""
+  "haut": "string",
+  "bas": "string",
+  "chaussures": "string",
+  "accessoires": ["string"],
+  "description": "string"
 }
 `;
+
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: "llama-3.3-70b-versatile",
+        messages: [
+          {
+            role: "user",
+            content: prompt
+          }
+        ],
+        temperature: 0.8
+      })
+    });
+
+    const data = await response.json();
+
+    // 🔥 DEBUG IMPORTANT
+    console.log("GROQ RESPONSE:", JSON.stringify(data, null, 2));
+
+    // erreur API
+    if (!response.ok) {
+      return res.status(500).json({
+        error: "Groq API error",
+        details: data
+      });
+    }
+
+    const text = data?.choices?.[0]?.message?.content;
+
+    if (!text) {
+      return res.status(500).json({
+        error: "No response content",
+        details: data
+      });
+    }
+
+    let outfit;
+
+    try {
+      outfit = JSON.parse(text);
+    } catch (e) {
+      return res.status(500).json({
+        error: "JSON parse error",
+        raw: text
+      });
+    }
+
+    return res.status(200).json({ outfit });
+
+  } catch (error) {
+    return res.status(500).json({
+      error: "Server crash",
+      message: error.message
+    });
+  }
+}
