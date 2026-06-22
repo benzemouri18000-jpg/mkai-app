@@ -1,65 +1,63 @@
-// ==========================
-// MKAI FINAL SAFE SCRIPT
-// (ANTI-BREAK VERSION)
-// ==========================
+// =========================
+// MKAI CLEAN SCRIPT SAFE
+// =========================
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ======================
-  // SMOOTH SCROLL SAFE
-  // ======================
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener("click", (e) => {
-      const target = document.querySelector(a.getAttribute("href"));
+  // =========================
+  // SMOOTH SCROLL
+  // =========================
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener("click", (e) => {
+      const target = document.querySelector(link.getAttribute("href"));
       if (!target) return;
-
       e.preventDefault();
       target.scrollIntoView({ behavior: "smooth" });
     });
   });
 
 
-  // ======================
-  // OUTIFT GENERATOR SAFE
-  // ======================
+  // =========================
+  // OUTFIT GENERATOR
+  // =========================
   window.generateOutfit = function () {
 
-    const titleEl = document.getElementById("outfit-title");
-    const listEl = document.getElementById("outfit-list");
+    const title = document.getElementById("outfit-title");
+    const list = document.getElementById("outfit-list");
 
-    if (!titleEl || !listEl) return;
+    if (!title || !list) return;
 
     const outfits = [
       {
-        title: "Old Money Casual",
-        items: ["👕 Chemise beige", "👖 Pantalon blanc", "👟 Sneakers clean", "⌚ Montre"]
+        name: "Old Money Casual",
+        items: ["👕 Chemise beige", "👖 Pantalon blanc", "👟 Sneakers", "⌚ Montre"]
       },
       {
-        title: "Street Minimal",
+        name: "Street Minimal",
         items: ["🧥 Hoodie noir", "👖 Cargo gris", "👟 Air Force 1", "🧢 Casquette"]
       },
       {
-        title: "Summer Clean Fit",
+        name: "Summer Clean Fit",
         items: ["👕 T-shirt blanc", "🩳 Short beige", "👟 Sneakers blanches", "🕶️ Lunettes"]
       }
     ];
 
     const random = outfits[Math.floor(Math.random() * outfits.length)];
 
-    titleEl.innerText = random.title;
-    listEl.innerHTML = "";
+    title.textContent = random.name;
+    list.innerHTML = "";
 
     random.items.forEach(item => {
       const li = document.createElement("li");
       li.textContent = item;
-      listEl.appendChild(li);
+      list.appendChild(li);
     });
   };
 
 
-  // ======================
-  // ADD CLOTHING SAFE
-  // ======================
+  // =========================
+  // ADD CLOTHING
+  // =========================
   window.addClothing = function () {
 
     const input = document.getElementById("fileInput");
@@ -67,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!input || !list) return;
 
-    if (!input.files || input.files.length === 0) {
+    if (!input.files.length) {
       alert("Ajoute un vêtement");
       return;
     }
@@ -83,34 +81,15 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
 
-  // ======================
-  // NAVBAR SAFE EFFECT
-  // ======================
-  const header = document.querySelector(".header");
-
-  if (header) {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 20) {
-        header.style.boxShadow = "0 10px 25px rgba(0,0,0,0.08)";
-      } else {
-        header.style.boxShadow = "none";
-      }
-    });
-  }
-
-
-  // ======================
-  // PHONE FLOAT SAFE (NO BREAK)
-  // ======================
+  // =========================
+  // PHONE FLOAT (SAFE)
+  // =========================
   const phone = document.querySelector(".phone-image");
 
   if (phone) {
-    phone.style.transition = "transform 0.2s ease";
-
     document.addEventListener("mousemove", (e) => {
-
-      const x = (window.innerWidth / 2 - e.clientX) / 50;
-      const y = (window.innerHeight / 2 - e.clientY) / 50;
+      const x = (window.innerWidth / 2 - e.clientX) / 60;
+      const y = (window.innerHeight / 2 - e.clientY) / 60;
 
       phone.style.transform = `translate(${x}px, ${y}px)`;
     });
