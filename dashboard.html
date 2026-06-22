@@ -2,40 +2,48 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>MKAI AI Stylist</title>
+<title>MKAI - AI Stylist</title>
 
 <style>
 body {
   margin: 0;
   font-family: Arial;
-  background: linear-gradient(135deg,#0f172a,#1e293b);
+  background: radial-gradient(circle at top, #1e293b, #0f172a);
   color: white;
   padding: 30px;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: auto;
 }
 
 h1 {
-  font-size: 32px;
-  margin-bottom: 10px;
+  font-size: 38px;
+  background: linear-gradient(90deg,#60a5fa,#a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .subtitle {
   opacity: 0.7;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .card {
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.1);
   padding: 15px;
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
-  margin-top: 10px;
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+  margin-top: 12px;
   animation: fadeIn 0.4s ease;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.12);
 }
 
 @keyframes fadeIn {
@@ -44,17 +52,18 @@ h1 {
 }
 
 button {
-  background: #3b82f6;
+  background: linear-gradient(90deg,#3b82f6,#8b5cf6);
   border: none;
-  padding: 12px 18px;
-  border-radius: 10px;
+  padding: 14px 20px;
+  border-radius: 12px;
   color: white;
   cursor: pointer;
   margin-top: 10px;
+  font-weight: bold;
 }
 
 button:hover {
-  background: #2563eb;
+  opacity: 0.9;
 }
 
 input {
@@ -69,15 +78,26 @@ input {
 }
 
 .preview img {
-  width: 80px;
-  height: 80px;
+  width: 85px;
+  height: 85px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.2);
 }
 
-#result {
+.outfit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 15px;
   margin-top: 20px;
+}
+
+.item-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
 }
 </style>
 </head>
@@ -86,8 +106,8 @@ input {
 
 <div class="container">
 
-<h1>🧠 MKAI AI Stylist</h1>
-<div class="subtitle">Upload tes vêtements et génère des outfits IA</div>
+<h1>🧠 MKAI Stylist AI</h1>
+<div class="subtitle">Ton styliste intelligent avec IA + visual outfits</div>
 
 <!-- UPLOAD -->
 <div class="card">
@@ -96,11 +116,9 @@ input {
   <div class="preview" id="preview"></div>
 </div>
 
-<!-- BUTTON -->
-<button onclick="generateOutfit()">🎯 Générer tenue IA</button>
+<button onclick="generateOutfit()">✨ Générer une tenue IA</button>
 
-<!-- RESULT -->
-<div id="result"></div>
+<div id="result" class="outfit-grid"></div>
 
 </div>
 
@@ -125,58 +143,65 @@ upload.addEventListener("change", (e) => {
   });
 });
 
+// 🎨 mapping simple vers images (style fashion)
+function getImage(item, type) {
+  const base = "https://source.unsplash.com/400x400/?";
+
+  if (type === "haut") return base + "hoodie,tshirt,streetwear";
+  if (type === "bas") return base + "jeans,pants,streetwear";
+  if (type === "chaussures") return base + "sneakers,shoes";
+  if (type === "accessoires") return base + "cap,watch,accessories";
+
+  return base + "fashion";
+}
+
 async function generateOutfit() {
   const result = document.getElementById("result");
-  result.innerHTML = "⏳ IA en cours...";
+  result.innerHTML = "⏳ IA création de ton outfit...";
 
-  try {
-    const res = await fetch("/api/generate-outfit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        style: "streetwear",
-        weather: "soleil",
-        gender: "homme",
-        hasWardrobe: uploadedImages.length > 0
-      })
-    });
+  const res = await fetch("/api/generate-outfit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      style: "streetwear",
+      weather: "soleil",
+      gender: "homme",
+      hasWardrobe: uploadedImages.length > 0
+    })
+  });
 
-    const data = await res.json();
+  const data = await res.json();
 
-    if (!data.outfit) {
-      result.innerHTML = "Erreur IA ❌";
-      console.log(data);
-      return;
-    }
-
-    const outfit = data.outfit;
-
-    result.innerHTML = "";
-
-    const items = [
-      { t: "Haut", v: outfit.haut },
-      { t: "Bas", v: outfit.bas },
-      { t: "Chaussures", v: outfit.chaussures },
-      { t: "Accessoires", v: outfit.accessoires?.join(", ") },
-      { t: "Description", v: outfit.description }
-    ];
-
-    items.forEach((item, i) => {
-      setTimeout(() => {
-        const div = document.createElement("div");
-        div.className = "card";
-        div.innerHTML = `
-          <b>${item.t}</b><br>
-          ${item.v}
-        `;
-        result.appendChild(div);
-      }, i * 120);
-    });
-
-  } catch (e) {
-    result.innerHTML = "Erreur serveur ❌";
-    console.log(e);
+  if (!data.outfit) {
+    result.innerHTML = "Erreur IA ❌";
+    console.log(data);
+    return;
   }
+
+  const o = data.outfit;
+
+  const items = [
+    { t: "Haut", v: o.haut, img: getImage(o.haut,"haut") },
+    { t: "Bas", v: o.bas, img: getImage(o.bas,"bas") },
+    { t: "Chaussures", v: o.chaussures, img: getImage(o.chaussures,"chaussures") },
+    { t: "Accessoires", v: o.accessoires?.join(", "), img: getImage("", "accessoires") }
+  ];
+
+  result.innerHTML = "";
+
+  items.forEach((item, i) => {
+    setTimeout(() => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <img class="item-img" src="${item.img}" />
+        <h3>${item.t}</h3>
+        <p>${item.v}</p>
+      `;
+      result.appendChild(div);
+    }, i * 150);
+  });
+
 }
 
 </script>
