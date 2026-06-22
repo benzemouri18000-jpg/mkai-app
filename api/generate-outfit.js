@@ -4,38 +4,44 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log("BODY:", req.body);
-
     const { style, weather, gender, hasWardrobe } = req.body || {};
 
-    if (!process.env.GROQ_API_KEY) {
-      return res.status(500).json({ error: "Missing GROQ_API_KEY" });
-    }
-
     const prompt = `
-Tu es un styliste expert mode 2025.
+Tu es un styliste mode expert (niveau Zara / Nike / Pinterest).
 
-RÈGLES:
-- Tenues modernes uniquement (2024-2026)
-- Aucune mode ancienne (pas années 2000, pas old school)
-- Tenues cohérentes, harmonieuses
-- Style: clean / streetwear / minimal / techwear
-- Tout doit matcher ensemble
+RÈGLES IMPORTANTES :
+- Les vêtements DOIVENT matcher ensemble
+- Cohérence obligatoire (couleurs + style)
+- Pas de mélange bizarre
+- Tenue moderne 2024-2026 uniquement
+- Style global unique par outfit
 
-Contexte:
-Style: ${style}
-Météo: ${weather}
-Genre: ${gender}
-Dressing utilisateur: ${hasWardrobe ? "OUI" : "NON"}
+Tu dois construire UNE TENUE COHÉRENTE.
 
-Réponds UNIQUEMENT en JSON valide:
+IMPORTANT :
+- Ajoute des keywords visuels précis pour chaque pièce
+- Harmonise les couleurs (ex: noir + blanc, beige + crème, bleu + blanc)
+- Même vibe sur toute la tenue
+
+Réponds UNIQUEMENT en JSON :
 
 {
   "style_global": "string",
+
+  "color_theme": "string (ex: monochrome noir/blanc, beige minimal, streetwear blue/white)",
+
   "haut": "string",
+  "haut_keywords": "string",
+
   "bas": "string",
+  "bas_keywords": "string",
+
   "chaussures": "string",
+  "shoes_keywords": "string",
+
   "accessoires": ["string"],
+  "acc_keywords": "string",
+
   "description": "string"
 }
 `;
@@ -49,18 +55,11 @@ Réponds UNIQUEMENT en JSON valide:
       body: JSON.stringify({
         model: "llama-3.3-70b-versatile",
         messages: [{ role: "user", content: prompt }],
-        temperature: 0.8
+        temperature: 0.7
       })
     });
 
     const data = await response.json();
-
-    if (!response.ok) {
-      return res.status(500).json({
-        error: "Groq API error",
-        details: data
-      });
-    }
 
     const text = data?.choices?.[0]?.message?.content;
 
@@ -74,7 +73,7 @@ Réponds UNIQUEMENT en JSON valide:
       outfit = JSON.parse(text);
     } catch (e) {
       return res.status(500).json({
-        error: "Invalid JSON from AI",
+        error: "Invalid JSON",
         raw: text
       });
     }
@@ -83,8 +82,7 @@ Réponds UNIQUEMENT en JSON valide:
 
   } catch (err) {
     return res.status(500).json({
-      error: "Server crash",
-      message: err.message
+      error: err.message
     });
   }
 }
