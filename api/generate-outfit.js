@@ -6,48 +6,51 @@ export default async function handler(req, res) {
   try {
     const { style, weather, gender } = req.body || {};
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [
-          {
-            role: "user",
-            content: `
-Donne une tenue complète.
+    const prompt = `
+Tu es un styliste expert.
+Crée une tenue complète réaliste et portable.
 
-Style: ${style}
-Météo: ${weather}
-Genre: ${gender}
+Contexte :
+- Style : ${style || "streetwear"}
+- Météo : ${weather || "soleil"}
+- Genre : ${gender || "homme"}
 
-Réponds UNIQUEMENT en JSON:
+Réponds UNIQUEMENT en JSON valide :
+
 {
   "haut": "string",
   "bas": "string",
   "chaussures": "string",
-  "accessoires": [],
+  "accessoires": ["string"],
   "description": "string"
 }
-            `
+`;
+
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: "llama-3.3-70b-versatile",
+        messages: [
+          {
+            role: "user",
+            content: prompt
           }
-        ]
+        ],
+        temperature: 0.8
       })
     });
 
     const data = await response.json();
 
-    // 🔥 ULTRA IMPORTANT : on affiche TOUT
-    console.log("OPENAI RAW RESPONSE:", data);
+    console.log("GROQ RESPONSE:", JSON.stringify(data, null, 2));
 
-    // ❌ erreur OpenAI explicite
     if (!response.ok) {
       return res.status(500).json({
-        error: "OpenAI FAILED",
-        status: response.status,
+        error: "Groq API error",
         details: data
       });
     }
@@ -56,12 +59,13 @@ Réponds UNIQUEMENT en JSON:
 
     if (!text) {
       return res.status(500).json({
-        error: "No content from OpenAI",
+        error: "No response content",
         details: data
       });
     }
 
     let outfit;
+
     try {
       outfit = JSON.parse(text);
     } catch (e) {
@@ -75,7 +79,7 @@ Réponds UNIQUEMENT en JSON:
 
   } catch (error) {
     return res.status(500).json({
-      error: "SERVER CRASH",
+      error: "Server crash",
       message: error.message
     });
   }
