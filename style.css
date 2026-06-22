@@ -1,115 +1,6 @@
-// ==========================
-// MKAI - SCRIPT STABLE CLEAN
-// ==========================
-
-// Smooth scroll (safe)
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener("click", (e) => {
-    const target = document.querySelector(a.getAttribute("href"));
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth" });
-    }
-  });
-});
-
-
-// ==========================
-// OUTFIT GENERATOR (SAFE)
-// ==========================
-function generateOutfit() {
-  const titles = [
-    "Old Money Casual",
-    "Street Minimal",
-    "Summer Clean Fit",
-    "Techwear Light"
-  ];
-
-  const outfits = [
-    ["👕 Chemise beige", "👖 Pantalon blanc", "👟 Sneakers clean", "⌚ Montre minimaliste"],
-    ["🧥 Hoodie noir", "👖 Cargo gris", "👟 Air Force 1", "🧢 Casquette"],
-    ["👕 T-shirt blanc", "🩳 Short beige", "👟 Sneakers blanches", "🕶️ Lunettes"],
-    ["🖤 Jacket tech", "🖤 Pants slim", "👟 Runner shoes", "🎧 Headset"]
-  ];
-
-  const i = Math.floor(Math.random() * titles.length);
-
-  const titleEl = document.getElementById("outfit-title");
-  const listEl = document.getElementById("outfit-list");
-
-  if (!titleEl || !listEl) return;
-
-  titleEl.innerText = titles[i];
-  listEl.innerHTML = "";
-
-  outfits[i].forEach(item => {
-    const li = document.createElement("li");
-    li.innerText = item;
-    listEl.appendChild(li);
-  });
-}
-
-
-// ==========================
-// ADD CLOTHING (SAFE)
-// ==========================
-function addClothing() {
-  const input = document.getElementById("fileInput");
-  const list = document.getElementById("clothing-list");
-
-  if (!input || !list) return;
-
-  if (!input.files || input.files.length === 0) {
-    alert("Ajoute un vêtement");
-    return;
-  }
-
-  const fileName = input.files[0].name;
-
-  const item = document.createElement("div");
-  item.innerText = "👕 " + fileName;
-
-  list.appendChild(item);
-
-  input.value = "";
-}
-
-
-// ==========================
-// NAVBAR EFFECT (SAFE)
-// ==========================
-const header = document.querySelector(".header");
-
-if (header) {
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 20) {
-      header.style.boxShadow = "0 10px 25px rgba(0,0,0,0.08)";
-    } else {
-      header.style.boxShadow = "none";
-    }
-  });
-}
-
-
-// ==========================
-// PHONE FLOAT SAFE (NO BREAK)
-// ==========================
-const phone = document.querySelector(".phone-image");
-
-if (phone) {
-  phone.style.transition = "transform 0.3s ease";
-
-  document.addEventListener("mousemove", (e) => {
-    const x = (window.innerWidth / 2 - e.clientX) / 40;
-    const y = (window.innerHeight / 2 - e.clientY) / 40;
-
-    phone.style.transform = `translate(${x}px, ${y}px)`;
-  });
-}
-
-/* ===================== */
-/* MKAI FIX BASE STABLE */
-/* ===================== */
+/* =========================
+   MKAI SAFE BASE FIX
+========================= */
 
 body {
   margin: 0;
@@ -118,7 +9,7 @@ body {
   color: #111;
 }
 
-/* phone fix */
+/* PHONE SAFE */
 .phone-image {
   width: 320px;
   height: auto;
@@ -126,7 +17,16 @@ body {
   filter: drop-shadow(0 25px 50px rgba(0,0,0,0.2));
 }
 
-/* dashboard safe */
+/* HERO SAFE FLEX */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 80px 10%;
+  flex-wrap: wrap;
+}
+
+/* DASHBOARD SAFE */
 .dashboard {
   display: flex;
   gap: 40px;
@@ -134,26 +34,25 @@ body {
   flex-wrap: wrap;
 }
 
-/* cards safe */
-.card, .benefit-card, .stat {
-  transition: all 0.3s ease;
-}
-
-/* buttons safe */
-.btn-primary, .btn-secondary, .nav-btn {
+/* BUTTON SAFE */
+.btn-primary,
+.btn-secondary,
+.nav-btn {
   cursor: pointer;
   transition: 0.2s ease;
 }
 
+/* HOVER SAFE */
 .btn-primary:hover {
   transform: translateY(-2px);
   opacity: 0.9;
 }
 
-/* mobile safe */
+/* MOBILE SAFE */
 @media (max-width: 768px) {
   .hero {
     flex-direction: column;
+    text-align: center;
   }
 
   .phone-image {
