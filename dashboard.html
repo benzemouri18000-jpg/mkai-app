@@ -2,13 +2,13 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>MKAI - AI Stylist</title>
+<title>MKAI AI Stylist</title>
 
 <style>
 body {
   margin: 0;
   font-family: Arial;
-  background: radial-gradient(circle at top, #1e293b, #0f172a);
+  background: radial-gradient(circle at top, #111827, #0f172a);
   color: white;
   padding: 30px;
 }
@@ -19,8 +19,8 @@ body {
 }
 
 h1 {
-  font-size: 38px;
-  background: linear-gradient(90deg,#60a5fa,#a78bfa);
+  font-size: 42px;
+  background: linear-gradient(90deg,#60a5fa,#a78bfa,#f472b6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -32,13 +32,13 @@ h1 {
 
 .card {
   background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.12);
   padding: 15px;
   border-radius: 18px;
   backdrop-filter: blur(12px);
   margin-top: 12px;
-  animation: fadeIn 0.4s ease;
   transition: 0.3s;
+  animation: fadeIn 0.4s ease;
 }
 
 .card:hover {
@@ -52,14 +52,14 @@ h1 {
 }
 
 button {
-  background: linear-gradient(90deg,#3b82f6,#8b5cf6);
+  background: linear-gradient(90deg,#3b82f6,#8b5cf6,#ec4899);
   border: none;
   padding: 14px 20px;
   border-radius: 12px;
   color: white;
   cursor: pointer;
-  margin-top: 10px;
   font-weight: bold;
+  margin-top: 10px;
 }
 
 button:hover {
@@ -87,16 +87,16 @@ input {
 
 .outfit-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
   gap: 15px;
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 .item-img {
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 14px;
   margin-bottom: 10px;
 }
 </style>
@@ -107,16 +107,15 @@ input {
 <div class="container">
 
 <h1>🧠 MKAI Stylist AI</h1>
-<div class="subtitle">Ton styliste intelligent avec IA + visual outfits</div>
+<div class="subtitle">IA de styling - outfits personnalisés + visuels</div>
 
-<!-- UPLOAD -->
 <div class="card">
   <h3>📸 Ton dressing</h3>
   <input type="file" id="upload" multiple accept="image/*">
   <div class="preview" id="preview"></div>
 </div>
 
-<button onclick="generateOutfit()">✨ Générer une tenue IA</button>
+<button onclick="generateOutfit()">✨ Générer mon outfit IA</button>
 
 <div id="result" class="outfit-grid"></div>
 
@@ -143,21 +142,24 @@ upload.addEventListener("change", (e) => {
   });
 });
 
-// 🎨 mapping simple vers images (style fashion)
-function getImage(item, type) {
-  const base = "https://source.unsplash.com/400x400/?";
+// 🔥 IMAGES RÉELLES (UNSPLASH STABLE API)
+function getImage(type) {
+  const base = "https://source.unsplash.com/600x600/?fashion,streetwear,";
 
-  if (type === "haut") return base + "hoodie,tshirt,streetwear";
-  if (type === "bas") return base + "jeans,pants,streetwear";
-  if (type === "chaussures") return base + "sneakers,shoes";
-  if (type === "accessoires") return base + "cap,watch,accessories";
+  const map = {
+    haut: "hoodie,tshirt,streetwear",
+    bas: "jeans,pants,streetwear",
+    chaussures: "sneakers,shoes,nike",
+    accessoires: "watch,cap,bag,accessories"
+  };
 
-  return base + "fashion";
+  return base + (map[type] || "fashion");
 }
 
 async function generateOutfit() {
+
   const result = document.getElementById("result");
-  result.innerHTML = "⏳ IA création de ton outfit...";
+  result.innerHTML = "⏳ Création de ton outfit IA...";
 
   const res = await fetch("/api/generate-outfit", {
     method: "POST",
@@ -181,10 +183,10 @@ async function generateOutfit() {
   const o = data.outfit;
 
   const items = [
-    { t: "Haut", v: o.haut, img: getImage(o.haut,"haut") },
-    { t: "Bas", v: o.bas, img: getImage(o.bas,"bas") },
-    { t: "Chaussures", v: o.chaussures, img: getImage(o.chaussures,"chaussures") },
-    { t: "Accessoires", v: o.accessoires?.join(", "), img: getImage("", "accessoires") }
+    { t: "Haut", v: o.haut, img: getImage("haut") },
+    { t: "Bas", v: o.bas, img: getImage("bas") },
+    { t: "Chaussures", v: o.chaussures, img: getImage("chaussures") },
+    { t: "Accessoires", v: o.accessoires?.join(", "), img: getImage("accessoires") }
   ];
 
   result.innerHTML = "";
