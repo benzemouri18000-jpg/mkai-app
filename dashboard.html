@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>MKAI Stylist AI</title>
+<title>MKAI Stylist</title>
 
 <style>
 body {
@@ -23,11 +23,6 @@ h1 {
   background: linear-gradient(90deg,#60a5fa,#a78bfa,#f472b6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.subtitle {
-  opacity: 0.7;
-  margin-bottom: 20px;
 }
 
 button {
@@ -52,7 +47,11 @@ button {
   border: 1px solid rgba(255,255,255,0.1);
   padding: 12px;
   border-radius: 16px;
-  animation: fade 0.3s ease;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
 }
 
 .card img {
@@ -60,12 +59,6 @@ button {
   height: 220px;
   object-fit: cover;
   border-radius: 12px;
-  margin-bottom: 10px;
-}
-
-@keyframes fade {
-  from {opacity:0; transform: translateY(10px);}
-  to {opacity:1; transform: translateY(0);}
 }
 </style>
 </head>
@@ -74,8 +67,7 @@ button {
 
 <div class="container">
 
-<h1>🧠 MKAI Stylist AI</h1>
-<div class="subtitle">IA mode stylist cohérent</div>
+<h1>🧠 MKAI Fashion AI</h1>
 
 <button onclick="generateOutfit()">✨ Générer outfit</button>
 
@@ -85,77 +77,83 @@ button {
 
 <script>
 
-// 🎯 IMAGES FIABLES (mapping FIXE = cohérence garantie)
-function getImage(value) {
+// 🎯 images STYLE JEUNE 20–25 ans (pas répétitives)
+function getImage(type) {
 
-  const map = {
-    "t-shirt blanc": "https://images.unsplash.com/photo-1520975916090-3105956dac38",
-    "t-shirt noir": "https://images.unsplash.com/photo-1523381210434-271e8be1f52b",
-    "jean noir": "https://images.unsplash.com/photo-1506629905607-d9c297d8e73c",
-    "jean bleu": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a",
-    "sneakers blanches": "https://images.unsplash.com/photo-1549298916-b41d501d3772",
-    "sneakers noires": "https://images.unsplash.com/photo-1600269452121-4f2416e55c28",
-    "watch": "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3",
-    "cap": "https://images.unsplash.com/photo-1511499767150-a48a237f3871"
+  const bank = {
+    haut: [
+      "https://images.unsplash.com/photo-1520975916090-3105956dac38",
+      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b",
+      "https://images.unsplash.com/photo-1503342394128-c104d54dba01"
+    ],
+    bas: [
+      "https://images.unsplash.com/photo-1473966968600-fa801b869a1a",
+      "https://images.unsplash.com/photo-1506629905607-d9c297d8e73c",
+      "https://images.unsplash.com/photo-1542272604-787c3835535d"
+    ],
+    shoes: [
+      "https://images.unsplash.com/photo-1549298916-b41d501d3772",
+      "https://images.unsplash.com/photo-1600269452121-4f2416e55c28",
+      "https://images.unsplash.com/photo-1528701800489-20be3c2ea1f2"
+    ],
+    acc: [
+      "https://images.unsplash.com/photo-1511499767150-a48a237f3871",
+      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3"
+    ]
   };
 
-  return map[value?.toLowerCase()] || "https://images.unsplash.com/photo-1520975916090-3105956dac38";
+  const list = bank[type] || bank.haut;
+
+  return list[Math.floor(Math.random() * list.length)] + "?auto=format&fit=crop&w=800&q=80";
 }
 
 async function generateOutfit() {
 
   const result = document.getElementById("result");
-  result.innerHTML = "⏳ IA en cours...";
+  result.innerHTML = "⏳ création outfit stylé...";
 
-  try {
+  const res = await fetch("/api/generate-outfit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      style: "streetwear",
+      weather: "sunny",
+      gender: "male"
+    })
+  });
 
-    const res = await fetch("/api/generate-outfit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        style: "streetwear",
-        weather: "soleil",
-        gender: "homme"
-      })
-    });
+  const data = await res.json();
 
-    const data = await res.json();
-
-    if (!res.ok || !data.outfit) {
-      result.innerHTML = "❌ Erreur IA";
-      console.log(data);
-      return;
-    }
-
-    const o = data.outfit;
-
-    const items = [
-      { t: "Style", v: o.style_global || "modern", i: getImage("t-shirt blanc") },
-      { t: "Haut", v: o.haut, i: getImage(o.haut) },
-      { t: "Bas", v: o.bas, i: getImage(o.bas) },
-      { t: "Shoes", v: o.shoes, i: getImage(o.shoes) },
-      { t: "Accessoires", v: o.accessories, i: getImage(o.accessories) }
-    ];
-
-    result.innerHTML = "";
-
-    items.forEach((item, i) => {
-      setTimeout(() => {
-        const div = document.createElement("div");
-        div.className = "card";
-        div.innerHTML = `
-          <img src="${item.i}">
-          <h3>${item.t}</h3>
-          <p>${item.v || ""}</p>
-        `;
-        result.appendChild(div);
-      }, i * 120);
-    });
-
-  } catch (e) {
-    console.log(e);
-    result.innerHTML = "❌ Erreur serveur";
+  if (!data.outfit) {
+    result.innerHTML = "Erreur IA";
+    return;
   }
+
+  const o = data.outfit;
+
+  const items = [
+    { t: "Style", v: o.style_global, i: getImage("haut") },
+    { t: "Haut", v: o.haut, i: getImage("haut") },
+    { t: "Bas", v: o.bas, i: getImage("bas") },
+    { t: "Shoes", v: o.shoes, i: getImage("shoes") },
+    { t: "Accessoires", v: o.accessories, i: getImage("acc") }
+  ];
+
+  result.innerHTML = "";
+
+  items.forEach((item, i) => {
+    setTimeout(() => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <img src="${item.i}">
+        <h3>${item.t}</h3>
+        <p>${item.v}</p>
+      `;
+      result.appendChild(div);
+    }, i * 120);
+  });
+
 }
 
 </script>
