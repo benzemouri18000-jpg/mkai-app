@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>MKAI Fashion AI</title>
+<title>AI Stylist Pro</title>
 
 <style>
 body {
@@ -10,222 +10,119 @@ body {
   font-family: system-ui;
   background: radial-gradient(circle at top, #0f172a, #020617);
   color: white;
-  overflow-x: hidden;
+  padding: 30px;
 }
 
-/* glow background */
-body::before {
-  content: "";
-  position: fixed;
-  top: -200px;
-  left: -200px;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(168,85,247,0.25), transparent 60%);
-  filter: blur(80px);
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  bottom: -200px;
-  right: -200px;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(59,130,246,0.25), transparent 60%);
-  filter: blur(80px);
-}
-
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 40px;
-  position: relative;
-  z-index: 2;
-}
+.container { max-width: 1000px; margin: auto; }
 
 h1 {
-  font-size: 48px;
-  font-weight: 800;
+  font-size: 44px;
   background: linear-gradient(90deg,#60a5fa,#a78bfa,#f472b6);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 10px;
 }
 
-.subtitle {
-  opacity: 0.7;
-  margin-bottom: 30px;
+.card {
+  background: rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 12px;
+  margin-top: 15px;
 }
 
-/* button */
 button {
   background: linear-gradient(90deg,#3b82f6,#a855f7);
   border: none;
-  padding: 14px 22px;
-  border-radius: 14px;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-}
-
-/* GRID */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-  gap: 18px;
-  margin-top: 30px;
-}
-
-/* CARD STYLE PREMIUM */
-.card {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 18px;
   padding: 14px;
-  backdrop-filter: blur(12px);
-  transition: 0.3s;
-  position: relative;
-  overflow: hidden;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
-.card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(168,85,247,0.4);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+input {
+  margin-top: 10px;
+  color: white;
 }
 
-/* image */
-.card img {
-  width: 100%;
-  height: 240px;
+.preview img {
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-  border-radius: 14px;
-  margin-bottom: 12px;
-  transition: 0.3s;
-}
-
-.card:hover img {
-  transform: scale(1.03);
-}
-
-/* title */
-.card h3 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-/* text */
-.card p {
-  opacity: 0.75;
-  font-size: 13px;
-  margin-top: 6px;
-  line-height: 1.4;
-}
-
-/* loader */
-.loader {
-  opacity: 0.6;
-  font-size: 16px;
-  padding: 20px;
+  border-radius: 10px;
+  margin-right: 5px;
 }
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>🧠 MKAI Fashion AI</h1>
-<div class="subtitle">Ton styliste IA personnel — outfits 20–25 ans</div>
+<h1>🧠 AI Stylist Next Level</h1>
 
-<button onclick="generateOutfit()">✨ Générer une tenue</button>
+<p>Météo actuelle + dressing + IA styliste</p>
 
-<div id="result" class="grid"></div>
+<input type="file" id="upload" multiple>
+<div class="preview" id="preview"></div>
+
+<button onclick="generate()">🎯 Générer tenue du jour</button>
+
+<div id="result"></div>
 
 </div>
 
 <script>
 
-function getImage(value) {
+let wardrobe = [];
 
-  const bank = {
-    "t-shirt blanc oversize": [
-      "https://images.unsplash.com/photo-1520975916090-3105956dac38",
-      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b"
-    ],
-    "jean bleu loose": [
-      "https://images.unsplash.com/photo-1473966968600-fa801b869a1a",
-      "https://images.unsplash.com/photo-1506629905607-d9c297d8e73c"
-    ],
-    "sneakers blanches": [
-      "https://images.unsplash.com/photo-1549298916-b41d501d3772",
-      "https://images.unsplash.com/photo-1600269452121-4f2416e55c28"
-    ],
-    "watch minimal silver": [
-      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3"
-    ]
-  };
+// 📸 upload dressing
+document.getElementById("upload").addEventListener("change", (e) => {
+  const preview = document.getElementById("preview");
+  preview.innerHTML = "";
+  wardrobe = [];
 
-  const list = bank[value?.toLowerCase()] || [
-    "https://images.unsplash.com/photo-1520975916090-3105956dac38"
-  ];
+  [...e.target.files].forEach(file => {
+    wardrobe.push(file.name);
 
-  return list[Math.floor(Math.random() * list.length)] + "?auto=format&fit=crop&w=900&q=80";
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(file);
+    preview.appendChild(img);
+  });
+});
+
+// 🌦️ météo simple (fallback local)
+function getWeather() {
+  const hour = new Date().getHours();
+  if (hour < 10) return "cold morning";
+  if (hour < 18) return "sunny day";
+  return "cool evening";
 }
 
-async function generateOutfit() {
-
-  const result = document.getElementById("result");
-  result.innerHTML = `<div class="loader">⏳ Création de ta tenue...</div>`;
+async function generate() {
 
   const res = await fetch("/api/generate-outfit", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({})
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      weather: getWeather(),
+      wardrobe
+    })
   });
 
   const data = await res.json();
 
-  if (!data.outfit) {
-    result.innerHTML = "❌ erreur IA";
-    console.log(data);
-    return;
-  }
-
   const o = data.outfit;
 
-  const items = [
-    { t: "Style", v: o.style, i: getImage(o.top) },
-    { t: "Haut", v: o.top, i: getImage(o.top) },
-    { t: "Bas", v: o.bottom, i: getImage(o.bottom) },
-    { t: "Chaussures", v: o.shoes, i: getImage(o.shoes) },
-    { t: "Accessoires", v: o.accessories, i: getImage(o.accessories) }
-  ];
-
-  result.innerHTML = "";
-
-  items.forEach((item, i) => {
-    setTimeout(() => {
-      const div = document.createElement("div");
-      div.className = "card";
-      div.innerHTML = `
-        <img src="${item.i}">
-        <h3>${item.t}</h3>
-        <p>${item.v}</p>
-      `;
-      result.appendChild(div);
-    }, i * 120);
-  });
-
+  document.getElementById("result").innerHTML = `
+    <div class="card">
+      <h2>${o.style}</h2>
+      <p><b>Top:</b> ${o.top}</p>
+      <p><b>Bottom:</b> ${o.bottom}</p>
+      <p><b>Shoes:</b> ${o.shoes}</p>
+      <p><b>Accessories:</b> ${o.accessories}</p>
+      <p><b>Vibe:</b> ${o.vibe}</p>
+    </div>
+  `;
 }
 
 </script>
