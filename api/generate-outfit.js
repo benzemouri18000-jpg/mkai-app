@@ -5,67 +5,33 @@ export default async function handler(req, res) {
 
   try {
 
-    const { images = [], weather = "sunny" } = req.body;
-
-    // ---------------------------
-    // 1. VISION IA (OpenAI)
-    // ---------------------------
-    const visionResults = [];
-
-    for (const img of images) {
-
-      const visionRes = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
-        },
-        body: JSON.stringify({
-          model: "gpt-4o-mini",
-          messages: [
-            {
-              role: "user",
-              content: [
-                { type: "text", text: "Analyse ce vêtement. Donne type + couleur + style." },
-                { type: "image_url", image_url: { url: img } }
-              ]
-            }
-          ]
-        })
-      });
-
-      const data = await visionRes.json();
-
-      const text = data?.choices?.[0]?.message?.content || "";
-
-      visionResults.push(text);
-    }
-
-    // ---------------------------
-    // 2. STYLIST IA (GROQ)
-    // ---------------------------
+    const { wardrobe = [], weather = "sunny" } = req.body;
 
     const prompt = `
-Tu es un styliste mode 20-25 ans (TikTok / Pinterest).
-
-DRESSING ANALYSÉ :
-${JSON.stringify(visionResults)}
-
-MÉTÉO :
-${weather}
+Tu es un styliste mode expert 20-25 ans (TikTok / Pinterest).
 
 OBJECTIF :
-Créer une tenue cohérente et stylée.
+Créer une tenue cohérente, moderne et portable IRL.
 
-Réponds JSON :
+CONTEXTE :
+- météo: ${weather}
+- dressing utilisateur: ${JSON.stringify(wardrobe)}
+
+RÈGLES :
+- style moderne (streetwear, minimal, classy, techwear)
+- couleurs harmonisées
+- tenue réaliste
+- utilise le dressing si possible
+
+Réponds UNIQUEMENT en JSON :
 
 {
-  "style": "streetwear | minimal | classy | techwear",
-  "top": "...",
-  "bottom": "...",
-  "shoes": "...",
-  "accessories": "...",
-  "vibe": "..."
+  "style": "string",
+  "top": "string",
+  "bottom": "string",
+  "shoes": "string",
+  "accessories": "string",
+  "vibe": "string"
 }
 `;
 
@@ -82,19 +48,19 @@ Réponds JSON :
       })
     });
 
-    const data2 = await response.json();
+    const data = await response.json();
 
-    const text2 = data2?.choices?.[0]?.message?.content;
+    const text = data?.choices?.[0]?.message?.content;
 
-    if (!text2) {
-      return res.status(500).json({ error: "No AI response", raw: data2 });
+    if (!text) {
+      return res.status(500).json({ error: "No AI response", raw: data });
     }
 
     let outfit;
     try {
-      outfit = JSON.parse(text2);
+      outfit = JSON.parse(text);
     } catch (e) {
-      return res.status(500).json({ error: "JSON error", raw: text2 });
+      return res.status(500).json({ error: "JSON parse error", raw: text });
     }
 
     return res.status(200).json({ outfit });
