@@ -5,36 +5,67 @@ export default async function handler(req, res) {
 
   try {
 
-    const { wardrobe = [], weather = "sunny" } = req.body;
+    const { images = [], weather = "sunny" } = req.body;
+
+    // ---------------------------
+    // 1. VISION IA (OpenAI)
+    // ---------------------------
+    const visionResults = [];
+
+    for (const img of images) {
+
+      const visionRes = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: [
+            {
+              role: "user",
+              content: [
+                { type: "text", text: "Analyse ce vêtement. Donne type + couleur + style." },
+                { type: "image_url", image_url: { url: img } }
+              ]
+            }
+          ]
+        })
+      });
+
+      const data = await visionRes.json();
+
+      const text = data?.choices?.[0]?.message?.content || "";
+
+      visionResults.push(text);
+    }
+
+    // ---------------------------
+    // 2. STYLIST IA (GROQ)
+    // ---------------------------
 
     const prompt = `
-Tu es un styliste mode expert 20-25 ans inspiré TikTok / Pinterest.
+Tu es un styliste mode 20-25 ans (TikTok / Pinterest).
+
+DRESSING ANALYSÉ :
+${JSON.stringify(visionResults)}
+
+MÉTÉO :
+${weather}
 
 OBJECTIF :
-Créer une tenue stylée cohérente et portable IRL.
+Créer une tenue cohérente et stylée.
 
-CONTEXTE :
-- météo: ${weather}
-- dressing utilisateur: ${JSON.stringify(wardrobe)}
-
-STYLES :
-streetwear, minimal, classy, techwear soft, workwear
-
-RÈGLES :
-- tenue cohérente
-- couleurs harmonisées
-- style moderne 2024-2026
-- utiliser le dressing si possible
-
-Réponds UNIQUEMENT en JSON :
+Réponds JSON :
 
 {
-  "style": "string",
-  "top": "string",
-  "bottom": "string",
-  "shoes": "string",
-  "accessories": "string",
-  "vibe": "string"
+  "style": "streetwear | minimal | classy | techwear",
+  "top": "...",
+  "bottom": "...",
+  "shoes": "...",
+  "accessories": "...",
+  "vibe": "..."
 }
 `;
 
@@ -51,19 +82,19 @@ Réponds UNIQUEMENT en JSON :
       })
     });
 
-    const data = await response.json();
+    const data2 = await response.json();
 
-    const text = data?.choices?.[0]?.message?.content;
+    const text2 = data2?.choices?.[0]?.message?.content;
 
-    if (!text) {
-      return res.status(500).json({ error: "No AI response", raw: data });
+    if (!text2) {
+      return res.status(500).json({ error: "No AI response", raw: data2 });
     }
 
     let outfit;
     try {
-      outfit = JSON.parse(text);
+      outfit = JSON.parse(text2);
     } catch (e) {
-      return res.status(500).json({ error: "JSON parse error", raw: text });
+      return res.status(500).json({ error: "JSON error", raw: text2 });
     }
 
     return res.status(200).json({ outfit });
