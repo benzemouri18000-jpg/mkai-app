@@ -1,12 +1,18 @@
 /* =========================
-   MKAI - ORIGINAL STYLE RESTORED
+   MKAI - FIX TOTAL DESIGN
 ========================= */
 
-body {
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   font-family: Arial, sans-serif;
   background: #ffffff;
   color: #111;
+  line-height: 1.5;
 }
 
 /* HEADER */
@@ -19,14 +25,13 @@ body {
 
 .logo {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: bold;
 }
 
 .nav a {
   margin-left: 20px;
   text-decoration: none;
   color: #111;
-  font-weight: 500;
 }
 
 .nav-btn {
@@ -44,30 +49,29 @@ body {
   gap: 40px;
 }
 
-/* LEFT */
 .hero-left {
   max-width: 520px;
 }
 
 .hero h1 {
   font-size: 52px;
-  line-height: 1.05;
-  margin: 10px 0;
+  line-height: 1.1;
+  margin-bottom: 15px;
 }
 
 .hero p {
-  font-size: 18px;
   color: #555;
+  font-size: 18px;
 }
 
 /* BADGE */
 .badge {
   display: inline-block;
+  background: #f3f3f3;
   padding: 8px 14px;
   border-radius: 999px;
-  background: #f2f2f2;
-  font-size: 13px;
   margin-bottom: 15px;
+  font-size: 13px;
 }
 
 /* BUTTONS */
@@ -76,11 +80,12 @@ body {
 }
 
 .btn-primary {
-  background: black;
+  background: #000;
   color: white;
   padding: 12px 18px;
   border-radius: 10px;
   text-decoration: none;
+  display: inline-block;
   border: none;
   cursor: pointer;
 }
@@ -102,17 +107,11 @@ body {
 }
 
 .stat h3 {
-  margin: 0;
+  font-size: 22px;
 }
 
-/* RIGHT HERO */
+/* PHONE */
 .hero-right {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.phone-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -120,7 +119,6 @@ body {
 
 .phone-image {
   width: 320px;
-  height: auto;
   filter: drop-shadow(0 30px 60px rgba(0,0,0,0.2));
   animation: float 4s ease-in-out infinite;
 }
@@ -136,7 +134,6 @@ body {
   padding: 80px 10%;
 }
 
-/* CARDS */
 .cards {
   display: flex;
   gap: 20px;
@@ -147,7 +144,7 @@ body {
   padding: 20px;
   border: 1px solid #eee;
   border-radius: 12px;
-  background: white;
+  background: #fff;
 }
 
 /* BENEFITS */
@@ -159,8 +156,8 @@ body {
 
 .benefit-card {
   padding: 20px;
-  border-radius: 12px;
   background: #f7f7f7;
+  border-radius: 12px;
 }
 
 /* OUTFIT */
