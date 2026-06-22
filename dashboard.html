@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>AI Vision Stylist</title>
+<title>AI Stylist</title>
 
 <style>
 body {
@@ -13,7 +13,10 @@ body {
   padding: 30px;
 }
 
-.container { max-width: 900px; margin: auto; }
+.container {
+  max-width: 900px;
+  margin: auto;
+}
 
 h1 {
   font-size: 42px;
@@ -22,11 +25,18 @@ h1 {
   -webkit-text-fill-color: transparent;
 }
 
-.card {
-  background: rgba(255,255,255,0.06);
-  padding: 14px;
-  border-radius: 16px;
-  margin-top: 15px;
+input {
+  margin-top: 10px;
+}
+
+button {
+  margin-top: 10px;
+  background: linear-gradient(90deg,#3b82f6,#a855f7);
+  border: none;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
 }
 
 .preview {
@@ -36,37 +46,33 @@ h1 {
 }
 
 .preview img {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   object-fit: cover;
   border-radius: 10px;
 }
 
-button {
-  margin-top: 10px;
-  background: linear-gradient(90deg,#3b82f6,#a855f7);
-  border: none;
-  padding: 12px;
-  border-radius: 12px;
-  color: white;
-  cursor: pointer;
+.card {
+  background: rgba(255,255,255,0.06);
+  padding: 14px;
+  border-radius: 16px;
+  margin-top: 15px;
 }
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>🧠 AI Vision Stylist</h1>
+<h1>🧠 AI Stylist</h1>
 
-<p>Upload tes vêtements (IA les comprend vraiment)</p>
+<p>Upload tes vêtements + génération tenue IA</p>
 
 <input type="file" id="upload" multiple>
 <div class="preview" id="preview"></div>
 
-<button onclick="generate()">🎯 Générer tenue IA</button>
+<button onclick="generate()">🎯 Générer tenue du jour</button>
 
 <div id="result"></div>
 
@@ -74,17 +80,17 @@ button {
 
 <script>
 
-let images = [];
+let wardrobe = [];
 
-// 📸 upload images réelles
+// 📸 upload vêtements
 document.getElementById("upload").addEventListener("change", (e) => {
 
   const preview = document.getElementById("preview");
   preview.innerHTML = "";
-  images = [];
+  wardrobe = [];
 
   [...e.target.files].forEach(file => {
-    images.push(file);
+    wardrobe.push(file.name);
 
     const img = document.createElement("img");
     img.src = URL.createObjectURL(file);
@@ -92,29 +98,34 @@ document.getElementById("upload").addEventListener("change", (e) => {
   });
 });
 
-// 🚀 génération IA vision
+// 🌦️ météo simple
+function getWeather() {
+  const h = new Date().getHours();
+  if (h < 10) return "morning cold";
+  if (h < 18) return "sunny";
+  return "evening cool";
+}
+
+// 🚀 génération IA
 async function generate() {
 
   const result = document.getElementById("result");
-  result.innerHTML = "⏳ analyse IA vision...";
-
-  const base64Images = await Promise.all(
-    images.map(file => toBase64(file))
-  );
+  result.innerHTML = "⏳ IA en cours...";
 
   const res = await fetch("/api/generate-outfit", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      images: base64Images,
-      weather: "sunny"
+      wardrobe,
+      weather: getWeather()
     })
   });
 
   const data = await res.json();
 
   if (!data.outfit) {
-    result.innerHTML = JSON.stringify(data, null, 2);
+    result.innerHTML = "❌ erreur IA";
+    console.log(data);
     return;
   }
 
@@ -122,23 +133,14 @@ async function generate() {
 
   result.innerHTML = `
     <div class="card">
-      <h2>Outfit IA</h2>
+      <h2>${o.style}</h2>
       <p><b>Top:</b> ${o.top}</p>
       <p><b>Bottom:</b> ${o.bottom}</p>
       <p><b>Shoes:</b> ${o.shoes}</p>
+      <p><b>Accessories:</b> ${o.accessories}</p>
       <p><b>Vibe:</b> ${o.vibe}</p>
     </div>
   `;
-}
-
-// 📦 convert image
-function toBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
 }
 
 </script>
