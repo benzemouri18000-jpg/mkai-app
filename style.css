@@ -1,118 +1,162 @@
-// =========================
-// MKAI - INTERACTIONS PRO
-// =========================
+// ==========================
+// MKAI - SCRIPT STABLE CLEAN
+// ==========================
 
-// 1. Smooth scroll (navigation fluide)
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener("click", function (e) {
-    e.preventDefault();
-
-    const target = document.querySelector(this.getAttribute("href"));
-
+// Smooth scroll (safe)
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener("click", (e) => {
+    const target = document.querySelector(a.getAttribute("href"));
     if (target) {
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth" });
     }
   });
 });
 
 
-// =========================
-// 2. ANIMATION AU SCROLL
-// =========================
+// ==========================
+// OUTFIT GENERATOR (SAFE)
+// ==========================
+function generateOutfit() {
+  const titles = [
+    "Old Money Casual",
+    "Street Minimal",
+    "Summer Clean Fit",
+    "Techwear Light"
+  ];
 
-const animatedElements = document.querySelectorAll(
-  ".card, .benefit-card, .stat, .outfit-card"
-);
+  const outfits = [
+    ["👕 Chemise beige", "👖 Pantalon blanc", "👟 Sneakers clean", "⌚ Montre minimaliste"],
+    ["🧥 Hoodie noir", "👖 Cargo gris", "👟 Air Force 1", "🧢 Casquette"],
+    ["👕 T-shirt blanc", "🩳 Short beige", "👟 Sneakers blanches", "🕶️ Lunettes"],
+    ["🖤 Jacket tech", "🖤 Pants slim", "👟 Runner shoes", "🎧 Headset"]
+  ];
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("show");
+  const i = Math.floor(Math.random() * titles.length);
+
+  const titleEl = document.getElementById("outfit-title");
+  const listEl = document.getElementById("outfit-list");
+
+  if (!titleEl || !listEl) return;
+
+  titleEl.innerText = titles[i];
+  listEl.innerHTML = "";
+
+  outfits[i].forEach(item => {
+    const li = document.createElement("li");
+    li.innerText = item;
+    listEl.appendChild(li);
+  });
+}
+
+
+// ==========================
+// ADD CLOTHING (SAFE)
+// ==========================
+function addClothing() {
+  const input = document.getElementById("fileInput");
+  const list = document.getElementById("clothing-list");
+
+  if (!input || !list) return;
+
+  if (!input.files || input.files.length === 0) {
+    alert("Ajoute un vêtement");
+    return;
+  }
+
+  const fileName = input.files[0].name;
+
+  const item = document.createElement("div");
+  item.innerText = "👕 " + fileName;
+
+  list.appendChild(item);
+
+  input.value = "";
+}
+
+
+// ==========================
+// NAVBAR EFFECT (SAFE)
+// ==========================
+const header = document.querySelector(".header");
+
+if (header) {
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 20) {
+      header.style.boxShadow = "0 10px 25px rgba(0,0,0,0.08)";
+    } else {
+      header.style.boxShadow = "none";
     }
   });
-}, {
-  threshold: 0.15
-});
-
-animatedElements.forEach(el => {
-  el.classList.add("hidden");
-  observer.observe(el);
-});
+}
 
 
-// =========================
-// 3. HERO PHONE FLOAT + MICRO INTERACTION
-// =========================
-
+// ==========================
+// PHONE FLOAT SAFE (NO BREAK)
+// ==========================
 const phone = document.querySelector(".phone-image");
 
 if (phone) {
+  phone.style.transition = "transform 0.3s ease";
+
   document.addEventListener("mousemove", (e) => {
-    const x = (window.innerWidth / 2 - e.clientX) / 30;
-    const y = (window.innerHeight / 2 - e.clientY) / 30;
+    const x = (window.innerWidth / 2 - e.clientX) / 40;
+    const y = (window.innerHeight / 2 - e.clientY) / 40;
 
-    phone.style.transform = `translate(${x}px, ${y}px) rotate(${x / 10}deg)`;
+    phone.style.transform = `translate(${x}px, ${y}px)`;
   });
 }
 
+/* ===================== */
+/* MKAI FIX BASE STABLE */
+/* ===================== */
 
-// =========================
-// 4. BUTTON FEEDBACK (UX PREMIUM)
-// =========================
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fff;
+  color: #111;
+}
 
-document.querySelectorAll(".btn-primary, .btn-secondary").forEach(btn => {
-  btn.addEventListener("click", () => {
-    btn.style.transform = "scale(0.96)";
+/* phone fix */
+.phone-image {
+  width: 320px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 25px 50px rgba(0,0,0,0.2));
+}
 
-    setTimeout(() => {
-      btn.style.transform = "scale(1)";
-    }, 120);
-  });
-});
+/* dashboard safe */
+.dashboard {
+  display: flex;
+  gap: 40px;
+  padding: 80px 10%;
+  flex-wrap: wrap;
+}
 
+/* cards safe */
+.card, .benefit-card, .stat {
+  transition: all 0.3s ease;
+}
 
-// =========================
-// 5. NAVBAR SHADOW ON SCROLL
-// =========================
+/* buttons safe */
+.btn-primary, .btn-secondary, .nav-btn {
+  cursor: pointer;
+  transition: 0.2s ease;
+}
 
-const header = document.querySelector(".header");
+.btn-primary:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
 
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 20) {
-    header.style.boxShadow = "0 10px 30px rgba(0,0,0,0.08)";
-    header.style.background = "rgba(255,255,255,0.9)";
-    header.style.backdropFilter = "blur(10px)";
-  } else {
-    header.style.boxShadow = "none";
-    header.style.background = "transparent";
-    header.style.backdropFilter = "none";
+/* mobile safe */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
   }
-});
 
-
-// =========================
-// 6. INITIAL LOAD ANIMATION
-// =========================
-
-window.addEventListener("load", () => {
-  document.body.style.opacity = 0;
-  document.body.style.transition = "0.6s ease";
-
-  setTimeout(() => {
-    document.body.style.opacity = 1;
-  }, 100);
-});
-
-    .hidden {
-  opacity: 0;
-  transform: translateY(25px);
-  transition: all 0.6s ease;
-}
-
-.show {
-  opacity: 1;
-  transform: translateY(0);
+  .phone-image {
+    width: 240px;
+  }
 }
