@@ -1,114 +1,161 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>MKAI Dashboard</title>
+<meta charset="UTF-8">
+<title>MKAI - AI Stylist</title>
 
-  <style>
-    body {
-      font-family: Arial;
-      background: #f5f5f5;
-      padding: 30px;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(135deg,#0f172a,#1e293b);
+  color: white;
+  padding: 30px;
+}
 
-    h1 {
-      margin-bottom: 20px;
-    }
+.container {
+  max-width: 900px;
+  margin: auto;
+}
 
-    button {
-      padding: 12px 20px;
-      border: none;
-      background: black;
-      color: white;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-    }
+h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
 
-    #outfit-container {
-      margin-top: 25px;
-      display: grid;
-      gap: 12px;
-    }
+.subtitle {
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
 
-    .card {
-      background: white;
-      padding: 16px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      opacity: 0;
-      transform: translateY(10px);
-      animation: fadeIn 0.4s forwards;
-    }
+.card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 15px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  margin-top: 10px;
+  animation: fadeIn 0.4s ease;
+}
 
-    .card h3 {
-      margin: 0;
-      font-size: 13px;
-      color: #888;
-    }
+@keyframes fadeIn {
+  from {opacity:0; transform: translateY(10px);}
+  to {opacity:1; transform: translateY(0);}
+}
 
-    .card p {
-      margin: 5px 0 0;
-      font-size: 16px;
-      font-weight: bold;
-    }
+button {
+  background: #3b82f6;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+}
 
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
+button:hover {
+  background: #2563eb;
+}
+
+input {
+  margin-top: 10px;
+}
+
+.preview {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.preview img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+</style>
 </head>
 
 <body>
 
-  <h1>🧠 MKAI Outfit Generator</h1>
+<div class="container">
 
-  <button onclick="generateOutfit()">Générer tenue</button>
+<h1>🧠 MKAI Stylist AI</h1>
+<div class="subtitle">Upload tes vêtements et laisse l’IA créer tes outfits</div>
 
-  <div id="outfit-container"></div>
+<!-- UPLOAD -->
+<div class="card">
+  <h3>📸 Ton dressing</h3>
+  <input type="file" id="upload" multiple accept="image/*">
+  <div class="preview" id="preview"></div>
+</div>
 
-  <script>
-    async function generateOutfit() {
-      const res = await fetch("/api/generate-outfit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          style: "streetwear",
-          weather: "soleil",
-          gender: "homme"
-        })
-      });
+<!-- BUTTON -->
+<button onclick="generateOutfit()">🎯 Générer tenue IA</button>
 
-      const data = await res.json();
-      const outfit = data.outfit;
+<!-- RESULT -->
+<div id="result"></div>
 
-      const container = document.getElementById("outfit-container");
-      container.innerHTML = "";
+</div>
 
-      const items = [
-        { title: "Haut", value: outfit.haut },
-        { title: "Bas", value: outfit.bas },
-        { title: "Chaussures", value: outfit.chaussures },
-        { title: "Accessoires", value: outfit.accessoires?.join(", ") },
-        { title: "Description", value: outfit.description }
-      ];
+<script>
+// --------------------
+// PREVIEW IMAGES
+// --------------------
+const upload = document.getElementById("upload");
+const preview = document.getElementById("preview");
 
-      items.forEach((item, i) => {
-        setTimeout(() => {
-          const card = document.createElement("div");
-          card.className = "card";
-          card.innerHTML = `
-            <h3>${item.title}</h3>
-            <p>${item.value}</p>
-          `;
-          container.appendChild(card);
-        }, i * 120);
-      });
-    }
-  </script>
+upload.addEventListener("change", (e) => {
+  preview.innerHTML = "";
+  [...e.target.files].forEach(file => {
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(file);
+    preview.appendChild(img);
+  });
+});
+
+// --------------------
+// IA CALL
+// --------------------
+async function generateOutfit() {
+
+  const res = await fetch("/api/generate-outfit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      style: "streetwear",
+      weather: "soleil",
+      gender: "homme"
+    })
+  });
+
+  const data = await res.json();
+  const outfit = data.outfit;
+
+  const result = document.getElementById("result");
+  result.innerHTML = "";
+
+  const items = [
+    { t: "Haut", v: outfit.haut },
+    { t: "Bas", v: outfit.bas },
+    { t: "Chaussures", v: outfit.chaussures },
+    { t: "Accessoires", v: outfit.accessoires?.join(", ") },
+    { t: "Description", v: outfit.description }
+  ];
+
+  items.forEach((item, i) => {
+    setTimeout(() => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `<b>${item.t}</b><br>${item.v}`;
+      result.appendChild(div);
+    }, i * 120);
+  });
+}
+
+</script>
 
 </body>
 </html>
