@@ -2,156 +2,167 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>AI Stylist App</title>
+<title>AI Fashion Studio</title>
 
 <style>
 
-/* 🌌 BACKGROUND */
+/* 🌌 GLOBAL */
 body {
   margin: 0;
-  font-family: system-ui;
-  background: radial-gradient(circle at top, #0f172a, #020617);
+  font-family: Inter, system-ui;
+  background: #050816;
   color: white;
-  overflow-x: hidden;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
 }
 
-/* ✨ GLOW */
-.bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
+/* 🧊 SIDEBAR */
+.sidebar {
+  width: 260px;
+  background: rgba(255,255,255,0.03);
+  border-right: 1px solid rgba(255,255,255,0.06);
+  padding: 20px;
+  backdrop-filter: blur(20px);
 }
 
-.glow1 {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(99,102,241,0.25), transparent 60%);
-  top: -150px;
-  left: -150px;
-  filter: blur(70px);
-}
-
-.glow2 {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(236,72,153,0.20), transparent 60%);
-  bottom: -150px;
-  right: -150px;
-  filter: blur(70px);
-}
-
-/* 📦 CONTAINER */
-.container {
-  position: relative;
-  z-index: 2;
-  max-width: 1000px;
-  margin: auto;
-  padding: 50px 25px;
-}
-
-/* 🧠 TITLE */
-h1 {
-  font-size: 52px;
+.logo {
+  font-size: 20px;
   font-weight: 800;
-  margin-bottom: 8px;
   background: linear-gradient(90deg,#60a5fa,#a78bfa,#f472b6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-bottom: 30px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu div {
+  padding: 10px;
+  border-radius: 10px;
+  opacity: 0.7;
+}
+
+/* 📦 MAIN */
+.main {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+/* 🧠 HEADER */
+h1 {
+  font-size: 34px;
+  margin: 0;
 }
 
 .subtitle {
-  opacity: 0.7;
-  margin-bottom: 25px;
+  opacity: 0.6;
+  margin-bottom: 20px;
 }
 
-/* 📤 INPUT */
-input {
-  margin-top: 10px;
-  color: white;
-}
-
-/* 🎛 BUTTON */
-button {
-  margin-top: 15px;
-  background: linear-gradient(90deg,#3b82f6,#a855f7);
-  border: none;
-  padding: 14px 20px;
-  border-radius: 14px;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-button:hover {
-  transform: translateY(-2px);
+/* 📤 UPLOAD */
+.uploadBox {
+  border: 1px dashed rgba(255,255,255,0.2);
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 15px;
+  background: rgba(255,255,255,0.02);
 }
 
 /* 👕 PREVIEW */
 .preview {
   display: flex;
-  gap: 12px;
-  margin-top: 15px;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .preview img {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
   object-fit: cover;
+}
+
+/* 🎛 BUTTON */
+button {
+  background: linear-gradient(90deg,#3b82f6,#a855f7);
+  border: none;
+  padding: 12px 16px;
   border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
-/* 🧊 RESULT CARD */
+/* 🧊 RESULT GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* CARD ULTRA PRO */
 .card {
-  margin-top: 25px;
-  background: rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 18px;
-  padding: 18px;
-  backdrop-filter: blur(12px);
-  animation: fade 0.3s ease;
+  padding: 15px;
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  transition: 0.2s;
 }
 
-.card h2 {
-  margin: 0 0 10px 0;
+.card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(168,85,247,0.4);
+}
+
+.card h3 {
+  margin: 0 0 5px 0;
 }
 
 .card p {
-  opacity: 0.8;
-  margin: 6px 0;
-}
-
-/* ✨ ANIMATION */
-@keyframes fade {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  opacity: 0.7;
+  font-size: 13px;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="bg">
-  <div class="glow1"></div>
-  <div class="glow2"></div>
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="logo">AI Fashion</div>
+
+  <div class="menu">
+    <div>👕 Dressing</div>
+    <div>✨ Outfit IA</div>
+    <div>🔥 Inspirations</div>
+    <div>⚙️ Settings</div>
+  </div>
 </div>
 
-<div class="container">
+<!-- MAIN -->
+<div class="main">
 
-<h1>🧠 AI Stylist</h1>
-<div class="subtitle">Ton assistant mode intelligent (20–25 ans vibe)</div>
+<h1>Ton styliste IA</h1>
+<div class="subtitle">Outfits 20–25 ans / TikTok / Pinterest vibe</div>
 
-<input type="file" id="upload" multiple>
+<div class="uploadBox">
+  <input type="file" id="upload" multiple>
+  <div class="preview" id="preview"></div>
+</div>
 
-<div class="preview" id="preview"></div>
+<button onclick="generate()">Générer outfit</button>
 
-<button onclick="generate()">✨ Générer tenue</button>
-
-<div id="result"></div>
+<div class="grid" id="result"></div>
 
 </div>
 
@@ -159,7 +170,7 @@ button:hover {
 
 let wardrobe = [];
 
-/* 📸 UPLOAD */
+// upload
 document.getElementById("upload").addEventListener("change", (e) => {
 
   const preview = document.getElementById("preview");
@@ -175,47 +186,38 @@ document.getElementById("upload").addEventListener("change", (e) => {
   });
 });
 
-/* 🌦️ WEATHER SIMPLE */
-function getWeather() {
-  const h = new Date().getHours();
-  if (h < 10) return "morning cold";
-  if (h < 18) return "sunny";
-  return "evening cool";
+// weather
+function weather() {
+  return "sunny";
 }
 
-/* 🚀 GENERATE OUTFIT */
+// generate
 async function generate() {
-
-  const result = document.getElementById("result");
-  result.innerHTML = "⏳ génération IA...";
 
   const res = await fetch("/api/generate-outfit", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {"Content-Type":"application/json"},
     body: JSON.stringify({
       wardrobe,
-      weather: getWeather()
+      weather: weather()
     })
   });
 
   const data = await res.json();
 
-  if (!data.outfit) {
-    result.innerHTML = "❌ erreur IA";
-    console.log(data);
-    return;
-  }
+  if (!data.outfit) return;
 
   const o = data.outfit;
 
+  const result = document.getElementById("result");
+
   result.innerHTML = `
     <div class="card">
-      <h2>${o.style}</h2>
-      <p><b>Top:</b> ${o.top}</p>
-      <p><b>Bottom:</b> ${o.bottom}</p>
-      <p><b>Shoes:</b> ${o.shoes}</p>
-      <p><b>Accessories:</b> ${o.accessories}</p>
-      <p><b>Vibe:</b> ${o.vibe}</p>
+      <h3>${o.style}</h3>
+      <p>${o.top}</p>
+      <p>${o.bottom}</p>
+      <p>${o.shoes}</p>
+      <p>${o.accessories}</p>
     </div>
   `;
 }
