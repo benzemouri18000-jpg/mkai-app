@@ -11,7 +11,7 @@ color:#2b2118;
 overflow-x:hidden;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 .header{
 display:flex;
 justify-content:space-between;
@@ -22,6 +22,7 @@ backdrop-filter:blur(20px);
 position:sticky;
 top:0;
 border-bottom:1px solid rgba(217,194,172,0.6);
+z-index:10;
 }
 
 .logo{
@@ -29,10 +30,10 @@ font-size:28px;
 font-weight:800;
 }
 
-/* NAV */
 .nav{
 display:flex;
 gap:18px;
+align-items:center;
 }
 
 .nav a{
@@ -47,12 +48,12 @@ border:1px solid rgba(217,194,172,0.8);
 border-radius:12px;
 }
 
-/* HERO */
+/* ================= HERO ================= */
 .hero{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:140px 8%;
+padding:120px 8%;
 gap:70px;
 background:
 radial-gradient(circle at top right, rgba(217,194,172,0.75), transparent 55%),
@@ -103,17 +104,22 @@ border-radius:16px;
 border:1px solid rgba(217,194,172,0.7);
 }
 
-/* ================= PHONE ================= */
+/* ================= PHONE FIX PROPRE ================= */
 .hero-right{
 display:flex;
 justify-content:center;
 position:relative;
+flex:1;
 }
 
+/* CONTENEUR */
 .phone-container{
 position:relative;
+transform:scale(0.85);
+transform-origin:center;
 }
 
+/* GLOW */
 .phone-glow{
 position:absolute;
 width:420px;
@@ -125,18 +131,20 @@ transform:translate(-50%,-50%);
 z-index:0;
 }
 
+/* FRAME */
 .phone-frame{
-width:360px;
-height:720px;
+width:320px;
+height:640px;
 background:#fffaf5;
-border:14px solid #2b2118;
-border-radius:45px;
+border:12px solid #2b2118;
+border-radius:40px;
 overflow:hidden;
 position:relative;
 z-index:2;
 box-shadow:0 50px 120px rgba(0,0,0,0.25);
 }
 
+/* TOP BAR */
 .phone-top{
 display:flex;
 justify-content:space-between;
@@ -145,31 +153,33 @@ font-size:12px;
 border-bottom:1px solid rgba(217,194,172,0.5);
 }
 
+/* SCREEN */
 .phone-screen{
-padding:16px;
+padding:14px;
 display:flex;
 flex-direction:column;
-gap:12px;
+gap:10px;
 background:linear-gradient(180deg,#fffaf5,#f3e7d8);
 height:100%;
 }
 
 .screen-title{
-font-size:22px;
+font-size:20px;
 font-weight:800;
 }
 
 .screen-sub{
-font-size:14px;
+font-size:13px;
 color:#6b5543;
 }
 
 .outfit-card{
 background:white;
-padding:12px;
-border-radius:14px;
+padding:10px;
+border-radius:12px;
 border:1px solid rgba(217,194,172,0.8);
 box-shadow:0 10px 20px rgba(0,0,0,0.05);
+font-size:13px;
 }
 
 .highlight{
@@ -177,7 +187,7 @@ background:#2b2118;
 color:white;
 }
 
-/* SECTIONS */
+/* ================= SECTIONS ================= */
 .section{
 padding:120px 8%;
 }
@@ -237,6 +247,7 @@ color:#6b5543;
 
 /* RESPONSIVE */
 @media(max-width:900px){
+
 .hero{
 flex-direction:column;
 text-align:center;
@@ -252,5 +263,9 @@ grid-template-columns:1fr;
 
 .benefits-grid{
 grid-template-columns:1fr;
+}
+
+.phone-container{
+transform:scale(0.7);
 }
 }
