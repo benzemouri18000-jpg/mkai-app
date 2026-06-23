@@ -413,3 +413,76 @@ color:#2b2118;
 color:#2b2118;
 opacity:0.95;
 }
+
+html{
+scroll-behavior:smooth;
+}
+
+/* ================= SCROLL REVEAL ================= */
+.section{
+opacity:0;
+transform:translateY(40px);
+transition:all 0.8s ease;
+}
+
+.section.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* ================= HERO AMÉLIORÉ ================= */
+.hero{
+min-height:100vh;
+align-items:center;
+}
+
+/* glow doux derrière le hero */
+.hero::after{
+content:"";
+position:absolute;
+left:50%;
+top:20%;
+transform:translateX(-50%);
+width:500px;
+height:500px;
+background:radial-gradient(circle,#e8d8c4,transparent 70%);
+filter:blur(60px);
+opacity:0.5;
+z-index:-1;
+}
+
+/* ================= CARDS PLUS VIVANTES ================= */
+.card, .stat, .comparison-card, .benefit-card{
+transition:all 0.3s ease;
+}
+
+.card:hover{
+transform:translateY(-8px) scale(1.02);
+box-shadow:0 20px 60px rgba(0,0,0,0.12);
+}
+
+/* ================= PHONE PLUS “VIVANT” ================= */
+.mkai-phone{
+animation:float 6s ease-in-out infinite, glow 4s ease-in-out infinite;
+}
+
+@keyframes glow{
+0%{box-shadow:0 40px 100px rgba(0,0,0,0.25);}
+50%{box-shadow:0 50px 130px rgba(232,216,196,0.4);}
+100%{box-shadow:0 40px 100px rgba(0,0,0,0.25);}
+}
+
+/* ================= TITRES PLUS PREMIUM ================= */
+.section h2{
+font-weight:800;
+letter-spacing:-1px;
+}
+
+/* ================= MICRO INTERACTIONS ================= */
+.btn-primary, .btn-secondary{
+transition:all 0.25s ease;
+}
+
+.btn-primary:active{
+transform:scale(0.96);
+}
