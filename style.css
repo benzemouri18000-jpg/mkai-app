@@ -363,3 +363,53 @@ grid-template-columns:1fr;
 grid-template-columns:1fr;
 }
 }
+
+.section{
+padding:140px 8%;
+position:relative;
+margin:0;
+}
+
+/* alternance VISUELLE forte entre sections */
+.section:nth-of-type(odd){
+background:transparent;
+}
+
+.section:nth-of-type(even){
+background:#fffaf9;
+border-top:1px solid rgba(232,216,196,0.6);
+border-bottom:1px solid rgba(232,216,196,0.6);
+}
+
+/* grosse séparation visuelle entre blocs */
+.section + .section{
+margin-top:40px;
+}
+
+/* “respiration” plus forte */
+.section h2{
+margin-bottom:80px;
+}
+
+/* séparation douce entre blocs */
+.section::before{
+content:"";
+position:absolute;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:70%;
+height:1px;
+background:linear-gradient(to right,transparent,#e8d8c4,transparent);
+opacity:0.6;
+}
+
+/* améliore contraste lecture */
+.section:nth-of-type(even) h2{
+color:#2b2118;
+}
+
+.section:nth-of-type(odd) h2{
+color:#2b2118;
+opacity:0.95;
+}
