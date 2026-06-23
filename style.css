@@ -254,3 +254,91 @@ grid-template-columns:1fr;
 grid-template-columns:1fr;
 }
 }
+
+
+/* ===================================
+   MKAI PHONE APP
+=================================== */
+
+.mkai-phone{
+width:280px;
+height:560px;
+background:#fffaf5;
+border:8px solid #2b2118;
+border-radius:40px;
+overflow:hidden;
+box-shadow:
+0 25px 60px rgba(0,0,0,0.15),
+0 10px 25px rgba(0,0,0,0.08);
+animation:floatPhone 5s ease-in-out infinite;
+}
+
+.phone-header{
+height:60px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+font-weight:700;
+background:#f3e7d8;
+border-bottom:1px solid #e5d5c3;
+}
+
+.phone-content{
+padding:20px;
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.phone-content .weather{
+background:#efe2d2;
+padding:12px;
+border-radius:14px;
+text-align:center;
+font-weight:600;
+color:#5b4333;
+}
+
+.phone-content .outfit-card{
+background:white;
+padding:16px;
+border-radius:16px;
+border:1px solid #eadcca;
+box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.phone-content .outfit-card h3{
+margin-bottom:12px;
+}
+
+.phone-content ul{
+list-style:none;
+padding:0;
+margin:0;
+}
+
+.phone-content li{
+padding:8px 0;
+border-bottom:1px solid #f3ede7;
+}
+
+.phone-content li:last-child{
+border-bottom:none;
+}
+
+@keyframes floatPhone{
+
+0%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-12px);
+}
+
+100%{
+transform:translateY(0);
+}
+
+}
