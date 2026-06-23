@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // Smooth Scroll
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener("click", e => {
       e.preventDefault();
@@ -20,9 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const outfits = [
 
     {
-      weather: "☀️ 26°C • Paris",
-      style: "Old Money Casual",
-      clothes: [
+      weather:"☀️ 26°C • Paris",
+      score:"94",
+      style:"Old Money Casual",
+      clothes:[
         "👕 Chemise beige oversize",
         "👖 Pantalon crème",
         "👟 New Balance 530",
@@ -31,81 +31,76 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     {
-      weather: "🌤️ 20°C • Paris",
-      style: "Quiet Luxury",
-      clothes: [
+      weather:"🌤️ 20°C • Paris",
+      score:"91",
+      style:"Quiet Luxury",
+      clothes:[
         "👕 Polo beige",
-        "👖 Pantalon blanc cassé",
-        "👟 Sneakers cuir blanches",
-        "🕶️ Lunettes minimalistes"
+        "👖 Chino sable",
+        "👟 Sneakers cuir",
+        "🕶️ Lunettes premium"
       ]
     },
 
     {
-      weather: "🌧️ 14°C • Paris",
-      style: "Smart Casual",
-      clothes: [
+      weather:"🌧️ 14°C • Paris",
+      score:"88",
+      style:"Smart Casual",
+      clothes:[
         "🧥 Veste légère",
         "👕 T-shirt premium",
-        "👖 Chino beige",
+        "👖 Jean droit",
         "👟 Sneakers noires"
-      ]
-    },
-
-    {
-      weather: "☀️ 29°C • Sète",
-      style: "Summer Clean",
-      clothes: [
-        "👕 Chemise lin",
-        "🩳 Short beige",
-        "👟 Veja blanche",
-        "🕶️ Lunettes soleil"
       ]
     }
 
   ];
 
-  const button =
-    document.querySelector(".btn-primary");
+  const discoverBtn =
+    document.querySelector(".hero .btn-primary");
 
-  if (!button) return;
+  if (!discoverBtn) return;
 
-  button.addEventListener("click", () => {
+  discoverBtn.addEventListener("click", () => {
 
-    const random =
-      outfits[Math.floor(
-        Math.random() * outfits.length
-      )];
+    const outfit =
+      outfits[Math.floor(Math.random() * outfits.length)];
 
     const weather =
-      document.querySelector(".weather");
+      document.querySelector(".phone-content .weather");
 
     const title =
-      document.querySelector(".outfit-card h3");
+      document.querySelector(".phone-content h3");
 
     const list =
-      document.querySelector(".outfit-card ul");
+      document.querySelector(".phone-content ul");
 
     if (!weather || !title || !list) return;
 
-    weather.textContent =
-      random.weather;
+    weather.textContent = "🤖 Analyse du dressing...";
 
-    title.textContent =
-      random.style;
+    setTimeout(() => {
 
-    list.innerHTML = "";
+      weather.textContent =
+        outfit.weather;
 
-    random.clothes.forEach(item => {
+      title.textContent =
+        outfit.style;
 
-      const li =
-        document.createElement("li");
+      list.innerHTML = "";
 
-      li.textContent = item;
+      outfit.clothes.forEach(item => {
 
-      list.appendChild(li);
+        const li =
+          document.createElement("li");
 
-    });
+        li.textContent = item;
+
+        list.appendChild(li);
+
+      });
+
+    }, 1200);
 
   });
 
