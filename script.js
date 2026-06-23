@@ -1,77 +1,111 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // =========================
-  // SMOOTH SCROLL
-  // =========================
+  // Smooth Scroll
   document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener("click", function (e) {
+    link.addEventListener("click", e => {
       e.preventDefault();
-      const target = document.querySelector(this.getAttribute("href"));
+
+      const target = document.querySelector(
+        link.getAttribute("href")
+      );
+
       if (target) {
-        target.scrollIntoView({ behavior: "smooth" });
+        target.scrollIntoView({
+          behavior: "smooth"
+        });
       }
     });
   });
 
-  // =========================
-  // OUTFITS MKAI
-  // =========================
   const outfits = [
+
     {
       weather: "☀️ 26°C • Paris",
       style: "Old Money Casual",
-      items: [
+      clothes: [
         "👕 Chemise beige oversize",
         "👖 Pantalon crème",
-        "👟 Sneakers blanches",
+        "👟 New Balance 530",
         "⌚ Montre minimaliste"
       ]
     },
+
     {
-      weather: "🌤️ 18°C • Paris",
-      style: "Clean Streetwear",
-      items: [
-        "🧥 Veste beige",
-        "👕 T-shirt blanc",
-        "👖 Jean droit",
-        "👟 Sneakers New Balance"
+      weather: "🌤️ 20°C • Paris",
+      style: "Quiet Luxury",
+      clothes: [
+        "👕 Polo beige",
+        "👖 Pantalon blanc cassé",
+        "👟 Sneakers cuir blanches",
+        "🕶️ Lunettes minimalistes"
       ]
     },
+
     {
-      weather: "🌧️ 12°C • Paris",
-      style: "Winter Minimal",
-      items: [
-        "🧥 Manteau laine",
-        "🧶 Pull beige",
-        "👖 Pantalon sombre",
-        "🥾 Boots"
+      weather: "🌧️ 14°C • Paris",
+      style: "Smart Casual",
+      clothes: [
+        "🧥 Veste légère",
+        "👕 T-shirt premium",
+        "👖 Chino beige",
+        "👟 Sneakers noires"
+      ]
+    },
+
+    {
+      weather: "☀️ 29°C • Sète",
+      style: "Summer Clean",
+      clothes: [
+        "👕 Chemise lin",
+        "🩳 Short beige",
+        "👟 Veja blanche",
+        "🕶️ Lunettes soleil"
       ]
     }
+
   ];
 
-  // =========================
-  // BUTTON ACTION
-  // =========================
-  const btn = document.querySelector(".btn-primary");
-  const screen = document.querySelector(".phone-screen");
+  const button =
+    document.querySelector(".btn-primary");
 
-  if (!btn || !screen) return;
+  if (!button) return;
 
-  btn.addEventListener("click", () => {
+  button.addEventListener("click", () => {
 
-    const outfit = outfits[Math.floor(Math.random() * outfits.length)];
+    const random =
+      outfits[Math.floor(
+        Math.random() * outfits.length
+      )];
 
-    screen.innerHTML = `
-      <div class="screen-title">MKAI</div>
-      <div class="screen-sub">Tenue du jour</div>
+    const weather =
+      document.querySelector(".weather");
 
-      <div class="outfit-card">${outfit.weather}</div>
-      <div class="outfit-card highlight">${outfit.style}</div>
+    const title =
+      document.querySelector(".outfit-card h3");
 
-      ${outfit.items.map(item => `
-        <div class="outfit-card">${item}</div>
-      `).join("")}
-    `;
+    const list =
+      document.querySelector(".outfit-card ul");
+
+    if (!weather || !title || !list) return;
+
+    weather.textContent =
+      random.weather;
+
+    title.textContent =
+      random.style;
+
+    list.innerHTML = "";
+
+    random.clothes.forEach(item => {
+
+      const li =
+        document.createElement("li");
+
+      li.textContent = item;
+
+      list.appendChild(li);
+
+    });
 
   });
 
