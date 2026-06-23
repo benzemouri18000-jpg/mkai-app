@@ -6,27 +6,29 @@ box-sizing:border-box;
 
 body{
 font-family:Arial, sans-serif;
-background:#f7f1e8;
+background:linear-gradient(180deg,#f6efe4,#f3e7d8);
 color:#111;
 overflow-x:hidden;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 .header{
 display:flex;
 justify-content:space-between;
 align-items:center;
 padding:20px 8%;
-background:rgba(255,255,255,0.8);
-backdrop-filter:blur(15px);
+background:rgba(255,255,255,0.75);
+backdrop-filter:blur(18px);
 position:sticky;
 top:0;
-border-bottom:1px solid #eee;
+border-bottom:1px solid #eadfce;
+z-index:10;
 }
 
 .logo{
 font-size:28px;
 font-weight:800;
+letter-spacing:-1px;
 }
 
 .nav{
@@ -43,27 +45,43 @@ font-weight:500;
 
 .nav-btn{
 padding:10px 14px;
-border-radius:10px;
+border-radius:12px;
 background:white;
-border:1px solid #ddd;
+border:1px solid #e2d2bc;
+box-shadow:0 8px 20px rgba(0,0,0,0.05);
 }
 
-/* HERO */
+/* ================= HERO ================= */
 .hero{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:120px 8%;
-gap:60px;
+padding:140px 8%;
+gap:70px;
+background:
+radial-gradient(circle at top right, rgba(230,210,180,0.6), transparent 55%),
+radial-gradient(circle at bottom left, rgba(243,231,216,0.9), transparent 60%);
 }
 
 .hero-left{
 max-width:600px;
 }
 
+.badge{
+display:inline-block;
+padding:10px 16px;
+background:white;
+border:1px solid #e6d6c2;
+border-radius:999px;
+margin-bottom:20px;
+font-weight:600;
+box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
+
 .hero h1{
-font-size:70px;
+font-size:78px;
 line-height:1;
+letter-spacing:-2px;
 margin-bottom:20px;
 }
 
@@ -73,91 +91,96 @@ color:#555;
 margin-bottom:25px;
 }
 
-.badge{
-display:inline-block;
-padding:8px 14px;
-background:#fff;
-border:1px solid #e6d6c2;
-border-radius:999px;
-margin-bottom:15px;
-}
-
-/* BUTTONS */
 .hero-buttons{
 display:flex;
 gap:12px;
-margin-bottom:30px;
+margin-bottom:35px;
 }
 
 .btn-primary{
 background:#111;
 color:white;
-padding:14px 20px;
+padding:14px 22px;
+border-radius:14px;
 border:none;
-border-radius:12px;
 cursor:pointer;
 font-weight:600;
+box-shadow:0 15px 30px rgba(0,0,0,0.15);
 }
 
 .btn-secondary{
 background:white;
-border:1px solid #ddd;
-padding:14px 20px;
-border-radius:12px;
+border:1px solid #e5d6c2;
+padding:14px 22px;
+border-radius:14px;
 cursor:pointer;
+box-shadow:0 10px 25px rgba(0,0,0,0.05);
 }
 
-/* STATS */
+/* ================= STATS ================= */
 .stats{
 display:flex;
-gap:30px;
+gap:35px;
 margin-top:20px;
 }
 
 .stat h3{
-font-size:24px;
+font-size:26px;
 }
 
-/* HERO RIGHT */
+.stat p{
+color:#666;
+}
+
+/* ================= PHONE ================= */
 .hero-right{
 flex:1;
 display:flex;
 justify-content:center;
+position:relative;
 }
 
 .phone-image{
-width:320px;
-filter:drop-shadow(0 30px 60px rgba(0,0,0,0.2));
+width:340px;
+filter:drop-shadow(0 40px 80px rgba(0,0,0,0.25));
 }
 
-/* SECTIONS */
+/* ================= SECTIONS ================= */
 .section{
-padding:100px 8%;
+padding:120px 8%;
 }
 
 .section h2{
 text-align:center;
-font-size:40px;
-margin-bottom:50px;
+font-size:48px;
+margin-bottom:60px;
+letter-spacing:-1px;
 }
 
-/* CARDS */
+/* ================= CARDS ================= */
 .cards{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:20px;
+gap:22px;
 }
 
 .card{
 background:white;
-padding:25px;
-border-radius:18px;
-border:1px solid #eee;
+padding:30px;
+border-radius:22px;
+border:1px solid #eadfce;
+box-shadow:0 20px 50px rgba(0,0,0,0.06);
+transition:0.3s ease;
 }
 
-/* BENEFITS */
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 30px 70px rgba(0,0,0,0.1);
+}
+
+/* ================= BENEFITS ================= */
 .beige{
-background:#f3e7d8;
+background:linear-gradient(180deg,#f3e7d8,#efe0cc);
 }
 
 .benefits-grid{
@@ -168,22 +191,18 @@ gap:20px;
 
 .benefit-card{
 background:white;
-padding:25px;
-border-radius:18px;
-border:1px solid #e7d7c3;
+padding:28px;
+border-radius:22px;
+border:1px solid #eadfce;
+box-shadow:0 15px 40px rgba(0,0,0,0.06);
 }
 
-/* CTA */
+/* ================= CTA ================= */
 .cta{
 background:#111;
 color:white;
 text-align:center;
-padding:100px 8%;
-}
-
-.btn-primary{
-background:#111;
-color:white;
+padding:120px 8%;
 }
 
 .cta .btn-primary{
@@ -191,15 +210,16 @@ background:white;
 color:black;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 footer{
 text-align:center;
 padding:40px;
 color:#777;
 }
 
-/* RESPONSIVE */
+/* ================= RESPONSIVE ================= */
 @media(max-width:900px){
+
 .hero{
 flex-direction:column;
 text-align:center;
