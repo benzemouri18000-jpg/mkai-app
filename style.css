@@ -6,8 +6,8 @@ box-sizing:border-box;
 
 body{
 font-family:Arial, sans-serif;
-background:linear-gradient(180deg,#f6efe4,#f3e7d8);
-color:#111;
+background:linear-gradient(180deg,#fbf7f2,#f3e7d8);
+color:#2b2118;
 overflow-x:hidden;
 }
 
@@ -17,38 +17,37 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:20px 8%;
-background:rgba(255,255,255,0.75);
-backdrop-filter:blur(18px);
+background:rgba(255,255,255,0.6);
+backdrop-filter:blur(20px);
 position:sticky;
 top:0;
-border-bottom:1px solid #eadfce;
-z-index:10;
+border-bottom:1px solid #e6d7c3;
 }
 
 .logo{
 font-size:28px;
 font-weight:800;
-letter-spacing:-1px;
+color:#3a2a1f;
 }
 
 .nav{
 display:flex;
-gap:20px;
+gap:18px;
 align-items:center;
 }
 
 .nav a{
 text-decoration:none;
-color:#222;
+color:#4a382a;
 font-weight:500;
 }
 
 .nav-btn{
 padding:10px 14px;
 border-radius:12px;
-background:white;
-border:1px solid #e2d2bc;
-box-shadow:0 8px 20px rgba(0,0,0,0.05);
+background:#fffaf5;
+border:1px solid #e6d7c3;
+box-shadow:0 10px 25px rgba(0,0,0,0.05);
 }
 
 /* ================= HERO ================= */
@@ -59,7 +58,7 @@ align-items:center;
 padding:140px 8%;
 gap:70px;
 background:
-radial-gradient(circle at top right, rgba(230,210,180,0.6), transparent 55%),
+radial-gradient(circle at top right, rgba(217,196,170,0.6), transparent 55%),
 radial-gradient(circle at bottom left, rgba(243,231,216,0.9), transparent 60%);
 }
 
@@ -70,11 +69,12 @@ max-width:600px;
 .badge{
 display:inline-block;
 padding:10px 16px;
-background:white;
-border:1px solid #e6d6c2;
+background:#fffaf5;
+border:1px solid #e6d7c3;
 border-radius:999px;
 margin-bottom:20px;
 font-weight:600;
+color:#5a4332;
 box-shadow:0 10px 25px rgba(0,0,0,0.05);
 }
 
@@ -83,11 +83,12 @@ font-size:78px;
 line-height:1;
 letter-spacing:-2px;
 margin-bottom:20px;
+color:#2b2118;
 }
 
 .hero p{
 font-size:18px;
-color:#555;
+color:#5c4a3a;
 margin-bottom:25px;
 }
 
@@ -98,8 +99,8 @@ margin-bottom:35px;
 }
 
 .btn-primary{
-background:#111;
-color:white;
+background:#3a2a1f;
+color:#fffaf5;
 padding:14px 22px;
 border-radius:14px;
 border:none;
@@ -109,11 +110,12 @@ box-shadow:0 15px 30px rgba(0,0,0,0.15);
 }
 
 .btn-secondary{
-background:white;
-border:1px solid #e5d6c2;
+background:#fffaf5;
+border:1px solid #e6d7c3;
 padding:14px 22px;
 border-radius:14px;
 cursor:pointer;
+color:#3a2a1f;
 box-shadow:0 10px 25px rgba(0,0,0,0.05);
 }
 
@@ -124,12 +126,21 @@ gap:35px;
 margin-top:20px;
 }
 
+.stat{
+background:#fffaf5;
+padding:12px 16px;
+border-radius:14px;
+border:1px solid #e6d7c3;
+box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
+
 .stat h3{
-font-size:26px;
+font-size:24px;
+color:#3a2a1f;
 }
 
 .stat p{
-color:#666;
+color:#6b5543;
 }
 
 /* ================= PHONE ================= */
@@ -142,7 +153,7 @@ position:relative;
 
 .phone-image{
 width:340px;
-filter:drop-shadow(0 40px 80px rgba(0,0,0,0.25));
+filter:drop-shadow(0 40px 80px rgba(0,0,0,0.2));
 }
 
 /* ================= SECTIONS ================= */
@@ -154,7 +165,7 @@ padding:120px 8%;
 text-align:center;
 font-size:48px;
 margin-bottom:60px;
-letter-spacing:-1px;
+color:#2b2118;
 }
 
 /* ================= CARDS ================= */
@@ -165,22 +176,22 @@ gap:22px;
 }
 
 .card{
-background:white;
+background:#fffaf5;
 padding:30px;
 border-radius:22px;
-border:1px solid #eadfce;
-box-shadow:0 20px 50px rgba(0,0,0,0.06);
+border:1px solid #e6d7c3;
+box-shadow:0 18px 45px rgba(0,0,0,0.06);
 transition:0.3s ease;
 }
 
 .card:hover{
-transform:translateY(-8px);
-box-shadow:0 30px 70px rgba(0,0,0,0.1);
+transform:translateY(-6px);
+box-shadow:0 25px 60px rgba(0,0,0,0.1);
 }
 
 /* ================= BENEFITS ================= */
 .beige{
-background:linear-gradient(180deg,#f3e7d8,#efe0cc);
+background:linear-gradient(180deg,#f3e7d8,#e9d6bf);
 }
 
 .benefits-grid{
@@ -190,31 +201,32 @@ gap:20px;
 }
 
 .benefit-card{
-background:white;
+background:#fffaf5;
 padding:28px;
 border-radius:22px;
-border:1px solid #eadfce;
+border:1px solid #e6d7c3;
 box-shadow:0 15px 40px rgba(0,0,0,0.06);
 }
 
 /* ================= CTA ================= */
 .cta{
-background:#111;
-color:white;
+background:#3a2a1f;
+color:#fffaf5;
 text-align:center;
 padding:120px 8%;
 }
 
 .cta .btn-primary{
-background:white;
-color:black;
+background:#fffaf5;
+color:#3a2a1f;
 }
 
 /* ================= FOOTER ================= */
 footer{
 text-align:center;
 padding:40px;
-color:#777;
+color:#6b5543;
+background:#fbf7f2;
 }
 
 /* ================= RESPONSIVE ================= */
@@ -235,5 +247,10 @@ grid-template-columns:1fr;
 
 .benefits-grid{
 grid-template-columns:1fr;
+}
+
+.stats{
+justify-content:center;
+flex-wrap:wrap;
 }
 }
