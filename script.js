@@ -1,22 +1,24 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // Smooth scroll (garde ton UX propre)
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener("click", e => {
-      const target = document.querySelector(a.getAttribute("href"));
-      if (!target) return;
+  // =========================
+  // SMOOTH SCROLL
+  // =========================
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener("click", function (e) {
       e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth" });
+      const target = document.querySelector(this.getAttribute("href"));
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
     });
   });
 
-  // ================================
-  // MKAI OUTFIT GENERATOR
-  // ================================
-
+  // =========================
+  // OUTFITS MKAI
+  // =========================
   const outfits = [
     {
-      weather: "☀️ 26°C • Sète",
+      weather: "☀️ 26°C • Paris",
       style: "Old Money Casual",
       items: [
         "👕 Chemise beige oversize",
@@ -27,17 +29,17 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       weather: "🌤️ 18°C • Paris",
-      style: "Street chic",
+      style: "Clean Streetwear",
       items: [
         "🧥 Veste beige",
         "👕 T-shirt blanc",
         "👖 Jean droit",
-        "👟 New Balance"
+        "👟 Sneakers New Balance"
       ]
     },
     {
-      weather: "🌧️ 12°C • Lyon",
-      style: "Winter clean",
+      weather: "🌧️ 12°C • Paris",
+      style: "Winter Minimal",
       items: [
         "🧥 Manteau laine",
         "🧶 Pull beige",
@@ -47,27 +49,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
+  // =========================
+  // BUTTON ACTION
+  // =========================
   const btn = document.querySelector(".btn-primary");
   const screen = document.querySelector(".phone-screen");
 
-  if (btn && screen) {
-    btn.addEventListener("click", () => {
+  if (!btn || !screen) return;
 
-      const random = outfits[Math.floor(Math.random() * outfits.length)];
+  btn.addEventListener("click", () => {
 
-      screen.innerHTML = `
-        <div class="screen-title">MKAI</div>
-        <div class="screen-sub">Tenue générée</div>
+    const outfit = outfits[Math.floor(Math.random() * outfits.length)];
 
-        <div class="outfit-card">${random.weather}</div>
-        <div class="outfit-card highlight">${random.style}</div>
+    screen.innerHTML = `
+      <div class="screen-title">MKAI</div>
+      <div class="screen-sub">Tenue du jour</div>
 
-        ${random.items.map(i => `
-          <div class="outfit-card">${i}</div>
-        `).join("")}
-      `;
+      <div class="outfit-card">${outfit.weather}</div>
+      <div class="outfit-card highlight">${outfit.style}</div>
 
-    });
-  }
+      ${outfit.items.map(item => `
+        <div class="outfit-card">${item}</div>
+      `).join("")}
+    `;
+
+  });
 
 });
