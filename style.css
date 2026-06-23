@@ -286,3 +286,96 @@ box-shadow:0 20px 60px rgba(0,0,0,0.06);
 border:12px solid #2b2118;
 box-shadow:0 60px 140px rgba(0,0,0,0.25);
 }
+
+
+/* ================= GLOBAL RHYTHM RESET ================= */
+.section{
+padding:180px 8%;
+position:relative;
+}
+
+/* alternance forte (clé du style agence) */
+.section:nth-of-type(odd){
+background:#fffaf9;
+}
+
+.section:nth-of-type(even){
+background:linear-gradient(180deg,#f6efe6,#fffaf9);
+}
+
+/* ================= HERO PLUS “EDITORIAL” ================= */
+.hero{
+min-height:100vh;
+padding:180px 8%;
+gap:100px;
+}
+
+.hero h1{
+font-size:88px;
+line-height:0.9;
+letter-spacing:-3px;
+}
+
+/* sous-texte plus compact */
+.hero p{
+font-size:19px;
+max-width:520px;
+}
+
+/* ================= SECTIONS TITRES TYPE AGENCY ================= */
+.section h2{
+font-size:64px;
+text-align:left;
+margin-bottom:80px;
+letter-spacing:-2px;
+}
+
+/* ================= CARDS VARIÉES (IMPORTANT) ================= */
+.cards{
+gap:28px;
+}
+
+/* 1er card plus grand (hiérarchie) */
+.card:first-child{
+grid-column:span 2;
+}
+
+/* variation visuelle */
+.card{
+background:#fffaf9;
+border:1px solid rgba(232,216,196,0.8);
+transition:0.35s;
+}
+
+/* hover plus “luxe” */
+.card:hover{
+transform:translateY(-12px);
+box-shadow:0 30px 80px rgba(0,0,0,0.12);
+}
+
+/* ================= SECTION “BREAK VISUEL” ================= */
+.section::before{
+content:"";
+position:absolute;
+top:0;
+left:8%;
+width:120px;
+height:2px;
+background:#2b2118;
+opacity:0.2;
+}
+
+/* ================= PHONE PLUS “OBJET DESIGN” ================= */
+.mkai-phone{
+transform:rotate(-2deg);
+transition:0.4s;
+}
+
+.mkai-phone:hover{
+transform:rotate(0deg) scale(1.02);
+}
+
+/* ================= STATS PLUS PREMIUM ================= */
+.stat{
+border-left:4px solid #2b2118;
+}
