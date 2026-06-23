@@ -325,3 +325,45 @@ grid-template-columns:1fr;
 font-size:42px;
 }
 }
+
+/* ================= SECTION SEPARATION (FIX VISUEL V2) ================= */
+
+.section{
+margin:80px 0;
+position:relative;
+}
+
+/* alternance légère pour casser l'effet "bloc unique" */
+.section:nth-of-type(even){
+background:linear-gradient(180deg,#fffaf9,#f8f4ee);
+border-top:1px solid rgba(232,216,196,0.4);
+border-bottom:1px solid rgba(232,216,196,0.4);
+}
+
+/* améliore la lecture des titres */
+.section h2{
+margin-bottom:60px;
+letter-spacing:-0.5px;
+}
+
+/* ajout d’espace interne pour les sections */
+.section{
+padding-top:120px;
+padding-bottom:120px;
+}
+
+/* séparation visuelle douce entre blocs */
+.section + .section{
+position:relative;
+}
+
+.section + .section::before{
+content:"";
+position:absolute;
+top:-40px;
+left:50%;
+transform:translateX(-50%);
+width:60%;
+height:1px;
+background:rgba(232,216,196,0.5);
+}
