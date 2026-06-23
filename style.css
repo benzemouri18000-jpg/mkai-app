@@ -7,7 +7,7 @@ font-family:Arial, sans-serif;
 
 body{
 background:
-radial-gradient(circle at top,#f8f4ee,#f1e6d8 40%,#efe0cf);
+radial-gradient(circle at top,#f8f3ee,#f1e4d4,#efe0cf);
 color:#2b2118;
 overflow-x:hidden;
 }
@@ -18,53 +18,28 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:18px 8%;
-background:rgba(255,253,249,0.7);
-backdrop-filter:blur(25px);
 position:sticky;
 top:0;
-z-index:100;
+background:rgba(255,253,249,0.7);
+backdrop-filter:blur(25px);
 border-bottom:1px solid rgba(232,216,196,0.4);
+z-index:100;
 }
 
 .logo{
-font-size:30px;
+font-size:28px;
 font-weight:900;
-letter-spacing:2px;
 }
 
 .nav{
 display:flex;
-gap:20px;
-align-items:center;
+gap:18px;
 }
 
 .nav a{
 text-decoration:none;
 color:#4a3a2a;
 font-weight:500;
-position:relative;
-}
-
-.nav a::after{
-content:"";
-position:absolute;
-bottom:-4px;
-left:0;
-width:0%;
-height:1px;
-background:#2b2118;
-transition:0.3s;
-}
-
-.nav a:hover::after{
-width:100%;
-}
-
-.nav-btn{
-padding:10px 14px;
-background:#fffaf9;
-border:1px solid #e8d8c4;
-border-radius:999px;
 }
 
 /* ================= HERO ================= */
@@ -72,471 +47,40 @@ border-radius:999px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:140px 8%;
-gap:60px;
-position:relative;
-}
-
-.hero::before{
-content:"";
-position:absolute;
-top:-100px;
-right:-100px;
-width:400px;
-height:400px;
-background:radial-gradient(circle,#e8d8c4,transparent 70%);
-filter:blur(40px);
-opacity:0.8;
-}
-
-.hero-left{
-max-width:600px;
-}
-
-.badge{
-display:inline-block;
-padding:10px 16px;
-background:#fffaf9;
-border:1px solid #e8d8c4;
-border-radius:999px;
-font-weight:600;
-margin-bottom:20px;
-}
-
-.hero h1{
-font-size:74px;
-line-height:0.95;
-letter-spacing:-2px;
-}
-
-.hero p{
-margin:25px 0;
-font-size:18px;
-color:#5a4636;
-line-height:1.6;
-}
-
-/* ================= BUTTONS ================= */
-.hero-buttons{
-display:flex;
-gap:14px;
-margin-bottom:30px;
-}
-
-.btn-primary{
-background:#2b2118;
-color:white;
-padding:14px 24px;
-border-radius:14px;
-border:none;
-font-weight:600;
-cursor:pointer;
-transition:0.25s;
-box-shadow:0 10px 30px rgba(0,0,0,0.15);
-}
-
-.btn-primary:hover{
-transform:translateY(-2px) scale(1.02);
-}
-
-.btn-secondary{
-background:#fffaf9;
-border:1px solid #e8d8c4;
-padding:14px 24px;
-border-radius:14px;
-cursor:pointer;
-transition:0.25s;
-}
-
-.btn-secondary:hover{
-transform:translateY(-2px);
-}
-
-/* ================= STATS ================= */
-.stats{
-display:flex;
-gap:16px;
-margin-top:25px;
-}
-
-.stat{
-background:#fffaf9;
-padding:16px 20px;
-border-radius:18px;
-border:1px solid #e8d8c4;
-box-shadow:0 10px 30px rgba(0,0,0,0.05);
-transition:0.3s;
-}
-
-.stat:hover{
-transform:translateY(-4px);
-}
-
-/* ================= PHONE ================= */
-.hero-right{
-display:flex;
-justify-content:center;
-align-items:center;
-}
-
-.mkai-phone{
-width:310px;
-height:600px;
-background:#fffaf9;
-border:10px solid #2b2118;
-border-radius:45px;
-overflow:hidden;
-box-shadow:0 60px 120px rgba(0,0,0,0.25);
-transform:rotate(1deg);
-animation:float 6s ease-in-out infinite;
-}
-
-.phone-header{
-height:60px;
-display:flex;
-justify-content:center;
-align-items:center;
-font-weight:800;
-background:#f3e6d8;
-border-bottom:1px solid #e8d8c4;
-}
-
-.phone-content{
-padding:20px;
-display:flex;
-flex-direction:column;
-gap:16px;
-}
-
-.weather{
-background:linear-gradient(135deg,#f0e2d2,#fffaf9);
-padding:14px;
-border-radius:14px;
-font-weight:600;
-text-align:center;
-}
-
-.outfit-card{
-background:white;
-padding:18px;
-border-radius:18px;
-border:1px solid #ead8c4;
-box-shadow:0 10px 30px rgba(0,0,0,0.08);
-}
-
-/* ================= SECTIONS ================= */
-.section{
-padding:140px 8%;
-position:relative;
-}
-
-.section h2{
-text-align:center;
-font-size:52px;
-margin-bottom:70px;
-letter-spacing:-1px;
-}
-
-/* ================= CARDS ================= */
-.cards{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:22px;
-}
-
-.card{
-background:#fffaf9;
-padding:28px;
-border-radius:22px;
-border:1px solid #e8d8c4;
-box-shadow:0 15px 40px rgba(0,0,0,0.06);
-transition:0.3s;
-}
-
-.card:hover{
-transform:translateY(-6px);
-}
-
-.card .icon{
-font-size:24px;
-margin-bottom:10px;
-}
-
-/* ================= IA GRID ================= */
-.benefits-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-}
-
-.benefit-card{
-background:#fffaf9;
-padding:24px;
-border-radius:18px;
-border:1px solid #e8d8c4;
-text-align:center;
-transition:0.3s;
-}
-
-.benefit-card:hover{
-transform:scale(1.03);
-}
-
-/* ================= COMPARISON ================= */
-.comparison{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:25px;
-}
-
-.comparison-card{
-background:#fffaf9;
-padding:30px;
-border-radius:22px;
-border:1px solid #e8d8c4;
-box-shadow:0 10px 30px rgba(0,0,0,0.05);
-}
-
-/* ================= CTA ================= */
-.cta{
-background:linear-gradient(135deg,#2b2118,#3a2c1f);
-color:white;
-text-align:center;
-padding:120px 8%;
-}
-
-.cta .btn-primary{
-background:white;
-color:#2b2118;
-}
-
-/* ================= FOOTER ================= */
-footer{
-padding:80px 8%;
-background:#fffaf9;
-}
-
-.footer-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:30px;
-}
-
-/* ================= FAQ ================= */
-.faq-item{
-background:#fffaf9;
-padding:22px;
-border-radius:16px;
-border:1px solid #e8d8c4;
-margin-bottom:12px;
-box-shadow:0 10px 25px rgba(0,0,0,0.04);
-}
-
-/* ================= ANIMATION ================= */
-@keyframes float{
-0%{transform:translateY(0px);}
-50%{transform:translateY(-14px);}
-100%{transform:translateY(0px);}
-}
-
-/* ================= RESPONSIVE ================= */
-@media(max-width:900px){
-
-.hero{
-flex-direction:column;
-text-align:center;
-}
-
-.hero h1{
-font-size:44px;
-}
-
-.cards{
-grid-template-columns:1fr;
-}
-
-.benefits-grid{
-grid-template-columns:1fr;
-}
-
-.comparison{
-grid-template-columns:1fr;
-}
-}
-
-.section{
-padding:140px 8%;
-position:relative;
-margin:0;
-}
-
-/* alternance VISUELLE forte entre sections */
-.section:nth-of-type(odd){
-background:transparent;
-}
-
-.section:nth-of-type(even){
-background:#fffaf9;
-border-top:1px solid rgba(232,216,196,0.6);
-border-bottom:1px solid rgba(232,216,196,0.6);
-}
-
-/* grosse séparation visuelle entre blocs */
-.section + .section{
-margin-top:40px;
-}
-
-/* “respiration” plus forte */
-.section h2{
-margin-bottom:80px;
-}
-
-/* séparation douce entre blocs */
-.section::before{
-content:"";
-position:absolute;
-top:0;
-left:50%;
-transform:translateX(-50%);
-width:70%;
-height:1px;
-background:linear-gradient(to right,transparent,#e8d8c4,transparent);
-opacity:0.6;
-}
-
-/* améliore contraste lecture */
-.section:nth-of-type(even) h2{
-color:#2b2118;
-}
-
-.section:nth-of-type(odd) h2{
-color:#2b2118;
-opacity:0.95;
-}
-
-html{
-scroll-behavior:smooth;
-}
-
-/* ================= SCROLL REVEAL ================= */
-.section{
-opacity:0;
-transform:translateY(40px);
-transition:all 0.8s ease;
-}
-
-.section.show{
-opacity:1;
-transform:translateY(0);
-}
-
-/* ================= HERO AMÉLIORÉ ================= */
-.hero{
+padding:150px 8%;
 min-height:100vh;
-align-items:center;
+position:relative;
 }
 
-/* glow doux derrière le hero */
-.hero::after{
-content:"";
-position:absolute;
-left:50%;
-top:20%;
-transform:translateX(-50%);
-width:500px;
-height:500px;
-background:radial-gradient(circle,#e8d8c4,transparent 70%);
-filter:blur(60px);
-opacity:0.5;
-z-index:-1;
-}
-
-/* ================= CARDS PLUS VIVANTES ================= */
-.card, .stat, .comparison-card, .benefit-card{
-transition:all 0.3s ease;
-}
-
-.card:hover{
-transform:translateY(-8px) scale(1.02);
-box-shadow:0 20px 60px rgba(0,0,0,0.12);
-}
-
-/* ================= PHONE PLUS “VIVANT” ================= */
-.mkai-phone{
-animation:float 6s ease-in-out infinite, glow 4s ease-in-out infinite;
-}
-
-@keyframes glow{
-0%{box-shadow:0 40px 100px rgba(0,0,0,0.25);}
-50%{box-shadow:0 50px 130px rgba(232,216,196,0.4);}
-100%{box-shadow:0 40px 100px rgba(0,0,0,0.25);}
-}
-
-/* ================= TITRES PLUS PREMIUM ================= */
-.section h2{
-font-weight:800;
-letter-spacing:-1px;
-}
-
-/* ================= MICRO INTERACTIONS ================= */
-.btn-primary, .btn-secondary{
-transition:all 0.25s ease;
-}
-
-.btn-primary:active{
-transform:scale(0.96);
-}
-
-body::before{
-content:"";
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:
-radial-gradient(circle at 20% 20%, rgba(232,216,196,0.25), transparent 40%),
-radial-gradient(circle at 80% 30%, rgba(241,224,200,0.25), transparent 45%),
-radial-gradient(circle at 50% 80%, rgba(255,255,255,0.4), transparent 50%);
-z-index:-1;
-pointer-events:none;
-}
-
-/* HERO beaucoup plus premium */
 .hero h1{
-font-size:78px;
-font-weight:800;
+font-size:76px;
 letter-spacing:-2px;
+line-height:0.95;
 background:linear-gradient(135deg,#2b2118,#5a4636);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
 
-/* cards plus “luxe” */
-.card, .comparison-card, .benefit-card{
-background:rgba(255,253,249,0.9);
-backdrop-filter:blur(10px);
-border:1px solid rgba(232,216,196,0.7);
+.hero p{
+margin-top:20px;
+font-size:18px;
+color:#5a4636;
+line-height:1.6;
 }
 
-/* hover plus vivant */
-.card:hover{
-transform:translateY(-10px) scale(1.03);
-box-shadow:0 25px 70px rgba(0,0,0,0.12);
+.hero::after{
+content:"";
+position:absolute;
+right:-200px;
+top:100px;
+width:500px;
+height:500px;
+background:radial-gradient(circle,#e8d8c4,transparent 70%);
+filter:blur(70px);
+opacity:0.6;
 }
 
-/* sections plus respirantes */
-.section{
-padding:160px 8%;
-}
-
-/* titres plus impact */
-.section h2{
-font-size:56px;
-letter-spacing:-1.5px;
-}
-
-
+/* ================= BADGES ================= */
 .hero-badges{
 display:flex;
 gap:10px;
@@ -550,36 +94,148 @@ border-radius:999px;
 background:#fffaf9;
 border:1px solid #e8d8c4;
 font-size:13px;
-font-weight:500;
 }
 
-/* images app */
-.preview-image{
-width:100%;
+/* ================= BUTTONS ================= */
+.hero-buttons{
+display:flex;
+gap:12px;
+margin-top:25px;
+}
+
+.btn-primary{
+background:#2b2118;
+color:white;
+padding:14px 22px;
 border-radius:14px;
-margin-bottom:10px;
+border:none;
+cursor:pointer;
+transition:0.3s;
 }
 
-/* hover cards plus premium */
+.btn-primary:hover{
+transform:translateY(-3px);
+}
+
+.btn-secondary{
+background:#fffaf9;
+border:1px solid #e8d8c4;
+padding:14px 22px;
+border-radius:14px;
+}
+
+/* ================= PHONE ================= */
+.mkai-phone{
+width:320px;
+height:620px;
+background:#fffaf9;
+border-radius:45px;
+border:10px solid #2b2118;
+overflow:hidden;
+box-shadow:0 60px 120px rgba(0,0,0,0.25);
+animation:float 6s ease-in-out infinite;
+}
+
+.phone-header{
+height:60px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#f3e6d8;
+font-weight:800;
+}
+
+.phone-content{
+padding:20px;
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.weather{
+background:#f0e2d2;
+padding:12px;
+border-radius:14px;
+text-align:center;
+}
+
+.outfit-card{
+background:white;
+padding:16px;
+border-radius:16px;
+border:1px solid #ead8c4;
+}
+
+/* ================= SECTIONS ================= */
+.section{
+padding:140px 8%;
+opacity:0;
+transform:translateY(40px);
+transition:0.8s ease;
+}
+
+.section.show{
+opacity:1;
+transform:translateY(0);
+}
+
+.section h2{
+font-size:54px;
+text-align:center;
+margin-bottom:70px;
+}
+
+/* ================= CARDS ================= */
+.cards{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
 .card{
-transition:0.3s ease;
+background:#fffaf9;
+padding:26px;
+border-radius:20px;
+border:1px solid #e8d8c4;
+transition:0.3s;
 }
 
 .card:hover{
-transform:translateY(-8px) scale(1.02);
-box-shadow:0 20px 60px rgba(0,0,0,0.12);
+transform:translateY(-10px);
+box-shadow:0 25px 70px rgba(0,0,0,0.12);
 }
 
-/* séparation sections plus propre */
-.section{
-padding:140px 8%;
-border-bottom:1px solid rgba(232,216,196,0.4);
+/* ================= GRID ================= */
+.benefits-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
 }
 
-/* CTA plus impact */
+.benefit-card{
+background:#fffaf9;
+padding:22px;
+border-radius:16px;
+border:1px solid #e8d8c4;
+text-align:center;
+}
+
+/* ================= CTA ================= */
 .cta{
 text-align:center;
 padding:120px 8%;
 background:#2b2118;
 color:white;
+}
+
+footer{
+text-align:center;
+padding:50px;
+}
+
+/* ================= ANIMATION ================= */
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-15px);}
+100%{transform:translateY(0);}
 }
