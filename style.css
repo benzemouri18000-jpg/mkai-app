@@ -535,3 +535,51 @@ padding:160px 8%;
 font-size:56px;
 letter-spacing:-1.5px;
 }
+
+
+.hero-badges{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:15px;
+}
+
+.mini-badge{
+padding:8px 12px;
+border-radius:999px;
+background:#fffaf9;
+border:1px solid #e8d8c4;
+font-size:13px;
+font-weight:500;
+}
+
+/* images app */
+.preview-image{
+width:100%;
+border-radius:14px;
+margin-bottom:10px;
+}
+
+/* hover cards plus premium */
+.card{
+transition:0.3s ease;
+}
+
+.card:hover{
+transform:translateY(-8px) scale(1.02);
+box-shadow:0 20px 60px rgba(0,0,0,0.12);
+}
+
+/* séparation sections plus propre */
+.section{
+padding:140px 8%;
+border-bottom:1px solid rgba(232,216,196,0.4);
+}
+
+/* CTA plus impact */
+.cta{
+text-align:center;
+padding:120px 8%;
+background:#2b2118;
+color:white;
+}
