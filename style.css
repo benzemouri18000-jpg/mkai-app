@@ -486,3 +486,52 @@ transition:all 0.25s ease;
 .btn-primary:active{
 transform:scale(0.96);
 }
+
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 20% 20%, rgba(232,216,196,0.25), transparent 40%),
+radial-gradient(circle at 80% 30%, rgba(241,224,200,0.25), transparent 45%),
+radial-gradient(circle at 50% 80%, rgba(255,255,255,0.4), transparent 50%);
+z-index:-1;
+pointer-events:none;
+}
+
+/* HERO beaucoup plus premium */
+.hero h1{
+font-size:78px;
+font-weight:800;
+letter-spacing:-2px;
+background:linear-gradient(135deg,#2b2118,#5a4636);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+/* cards plus “luxe” */
+.card, .comparison-card, .benefit-card{
+background:rgba(255,253,249,0.9);
+backdrop-filter:blur(10px);
+border:1px solid rgba(232,216,196,0.7);
+}
+
+/* hover plus vivant */
+.card:hover{
+transform:translateY(-10px) scale(1.03);
+box-shadow:0 25px 70px rgba(0,0,0,0.12);
+}
+
+/* sections plus respirantes */
+.section{
+padding:160px 8%;
+}
+
+/* titres plus impact */
+.section h2{
+font-size:56px;
+letter-spacing:-1.5px;
+}
