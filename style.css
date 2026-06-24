@@ -379,3 +379,83 @@ transform:rotate(0deg) scale(1.02);
 .stat{
 border-left:4px solid #2b2118;
 }
+
+/* ==========================
+   MKAI COLOR BENDS
+========================== */
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+z-index:-2;
+
+background:
+radial-gradient(
+circle at 15% 20%,
+rgba(233,220,205,0.8),
+transparent 45%
+),
+
+radial-gradient(
+circle at 80% 15%,
+rgba(217,194,172,0.75),
+transparent 50%
+),
+
+radial-gradient(
+circle at 20% 80%,
+rgba(243,231,216,0.9),
+transparent 55%
+),
+
+radial-gradient(
+circle at 90% 70%,
+rgba(200,175,150,0.6),
+transparent 45%
+);
+
+filter:blur(80px);
+
+animation:mkaiBends 18s ease-in-out infinite alternate;
+}
+
+body::after{
+content:"";
+position:fixed;
+inset:0;
+z-index:-1;
+
+background:
+linear-gradient(
+120deg,
+rgba(255,250,245,0.25),
+transparent,
+rgba(232,216,196,0.18)
+);
+
+mix-blend-mode:soft-light;
+pointer-events:none;
+}
+
+@keyframes mkaiBends{
+
+0%{
+transform:
+translate(0px,0px)
+scale(1);
+}
+
+50%{
+transform:
+translate(-40px,20px)
+scale(1.15);
+}
+
+100%{
+transform:
+translate(30px,-30px)
+scale(1.05);
+}
+
+}
