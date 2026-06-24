@@ -2,460 +2,440 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial, sans-serif;
+font-family:Arial,sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
 }
 
 body{
-background:
-radial-gradient(circle at top,#f8f3ee,#f1e4d4,#efe0cf);
+background:#f8f3ee;
 color:#2b2118;
 overflow-x:hidden;
-}
-
-/* ================= HEADER ================= */
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 8%;
-position:sticky;
-top:0;
-background:rgba(255,253,249,0.7);
-backdrop-filter:blur(25px);
-border-bottom:1px solid rgba(232,216,196,0.4);
-z-index:100;
-}
-
-.logo{
-font-size:28px;
-font-weight:900;
-}
-
-.nav{
-display:flex;
-gap:18px;
-}
-
-.nav a{
-text-decoration:none;
-color:#4a3a2a;
-font-weight:500;
-}
-
-/* ================= HERO ================= */
-.hero{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:150px 8%;
-min-height:100vh;
 position:relative;
-}
-
-.hero h1{
-font-size:76px;
-letter-spacing:-2px;
-line-height:0.95;
-background:linear-gradient(135deg,#2b2118,#5a4636);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-.hero p{
-margin-top:20px;
-font-size:18px;
-color:#5a4636;
-line-height:1.6;
-}
-
-.hero::after{
-content:"";
-position:absolute;
-right:-200px;
-top:100px;
-width:500px;
-height:500px;
-background:radial-gradient(circle,#e8d8c4,transparent 70%);
-filter:blur(70px);
-opacity:0.6;
-}
-
-/* ================= BADGES ================= */
-.hero-badges{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-margin-top:15px;
-}
-
-.mini-badge{
-padding:8px 12px;
-border-radius:999px;
-background:#fffaf9;
-border:1px solid #e8d8c4;
-font-size:13px;
-}
-
-/* ================= BUTTONS ================= */
-.hero-buttons{
-display:flex;
-gap:12px;
-margin-top:25px;
-}
-
-.btn-primary{
-background:#2b2118;
-color:white;
-padding:14px 22px;
-border-radius:14px;
-border:none;
-cursor:pointer;
-transition:0.3s;
-}
-
-.btn-primary:hover{
-transform:translateY(-3px);
-}
-
-.btn-secondary{
-background:#fffaf9;
-border:1px solid #e8d8c4;
-padding:14px 22px;
-border-radius:14px;
-}
-
-/* ================= PHONE ================= */
-.mkai-phone{
-width:320px;
-height:620px;
-background:#fffaf9;
-border-radius:45px;
-border:10px solid #2b2118;
-overflow:hidden;
-box-shadow:0 60px 120px rgba(0,0,0,0.25);
-animation:float 6s ease-in-out infinite;
-}
-
-.phone-header{
-height:60px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#f3e6d8;
-font-weight:800;
-}
-
-.phone-content{
-padding:20px;
-display:flex;
-flex-direction:column;
-gap:15px;
-}
-
-.weather{
-background:#f0e2d2;
-padding:12px;
-border-radius:14px;
-text-align:center;
-}
-
-.outfit-card{
-background:white;
-padding:16px;
-border-radius:16px;
-border:1px solid #ead8c4;
-}
-
-/* ================= SECTIONS ================= */
-.section{
-padding:140px 8%;
-opacity:0;
-transform:translateY(40px);
-transition:0.8s ease;
-}
-
-.section.show{
-opacity:1;
-transform:translateY(0);
-}
-
-.section h2{
-font-size:54px;
-text-align:center;
-margin-bottom:70px;
-}
-
-/* ================= CARDS ================= */
-.cards{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-}
-
-.card{
-background:#fffaf9;
-padding:26px;
-border-radius:20px;
-border:1px solid #e8d8c4;
-transition:0.3s;
-}
-
-.card:hover{
-transform:translateY(-10px);
-box-shadow:0 25px 70px rgba(0,0,0,0.12);
-}
-
-/* ================= GRID ================= */
-.benefits-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px;
-}
-
-.benefit-card{
-background:#fffaf9;
-padding:22px;
-border-radius:16px;
-border:1px solid #e8d8c4;
-text-align:center;
-}
-
-/* ================= CTA ================= */
-.cta{
-text-align:center;
-padding:120px 8%;
-background:#2b2118;
-color:white;
-}
-
-footer{
-text-align:center;
-padding:50px;
-}
-
-/* ================= ANIMATION ================= */
-@keyframes float{
-0%{transform:translateY(0);}
-50%{transform:translateY(-15px);}
-100%{transform:translateY(0);}
-}
-
-/* V7.1 LAYERS FIX */
-.card,
-.benefit-card,
-.stat,
-.outfit-card{
-background:#fffaf9;
-border:1px solid rgba(232,216,196,0.9);
-box-shadow:
-0 10px 25px rgba(0,0,0,0.06),
-inset 0 1px 0 rgba(255,255,255,0.7);
-position:relative;
-}
-
-.section{
-border-top:1px solid rgba(232,216,196,0.35);
-border-bottom:1px solid rgba(232,216,196,0.35);
-background:linear-gradient(180deg, rgba(255,255,255,0.4), rgba(255,250,245,0.9));
-}
-
-.cards, .benefits-grid{
-padding:20px;
-border-radius:24px;
-background:rgba(255,255,255,0.4);
-backdrop-filter:blur(10px);
-border:1px solid rgba(232,216,196,0.5);
-}
-
-.card:hover,
-.benefit-card:hover{
-transform:translateY(-10px) scale(1.02);
-box-shadow:0 20px 60px rgba(0,0,0,0.12);
-}
-
-.hero-left{
-padding:30px;
-background:rgba(255,250,245,0.55);
-border:1px solid rgba(232,216,196,0.6);
-border-radius:28px;
-backdrop-filter:blur(12px);
-box-shadow:0 20px 60px rgba(0,0,0,0.06);
-}
-
-.mkai-phone{
-border:12px solid #2b2118;
-box-shadow:0 60px 140px rgba(0,0,0,0.25);
-}
-
-
-/* ================= GLOBAL RHYTHM RESET ================= */
-.section{
-padding:180px 8%;
-position:relative;
-}
-
-/* alternance forte (clé du style agence) */
-.section:nth-of-type(odd){
-background:#fffaf9;
-}
-
-.section:nth-of-type(even){
-background:linear-gradient(180deg,#f6efe6,#fffaf9);
-}
-
-/* ================= HERO PLUS “EDITORIAL” ================= */
-.hero{
-min-height:100vh;
-padding:180px 8%;
-gap:100px;
-}
-
-.hero h1{
-font-size:88px;
-line-height:0.9;
-letter-spacing:-3px;
-}
-
-/* sous-texte plus compact */
-.hero p{
-font-size:19px;
-max-width:520px;
-}
-
-/* ================= SECTIONS TITRES TYPE AGENCY ================= */
-.section h2{
-font-size:64px;
-text-align:left;
-margin-bottom:80px;
-letter-spacing:-2px;
-}
-
-/* ================= CARDS VARIÉES (IMPORTANT) ================= */
-.cards{
-gap:28px;
-}
-
-/* 1er card plus grand (hiérarchie) */
-.card:first-child{
-grid-column:span 2;
-}
-
-/* variation visuelle */
-.card{
-background:#fffaf9;
-border:1px solid rgba(232,216,196,0.8);
-transition:0.35s;
-}
-
-/* hover plus “luxe” */
-.card:hover{
-transform:translateY(-12px);
-box-shadow:0 30px 80px rgba(0,0,0,0.12);
-}
-
-/* ================= SECTION “BREAK VISUEL” ================= */
-.section::before{
-content:"";
-position:absolute;
-top:0;
-left:8%;
-width:120px;
-height:2px;
-background:#2b2118;
-opacity:0.2;
-}
-
-/* ================= PHONE PLUS “OBJET DESIGN” ================= */
-.mkai-phone{
-transform:rotate(-2deg);
-transition:0.4s;
-}
-
-.mkai-phone:hover{
-transform:rotate(0deg) scale(1.02);
-}
-
-/* ================= STATS PLUS PREMIUM ================= */
-.stat{
-border-left:4px solid #2b2118;
 }
 
 /* ==========================
-   MKAI COLOR BENDS
+BACKGROUND PREMIUM
 ========================== */
 
 body::before{
 content:"";
 position:fixed;
-inset:0;
+inset:-20%;
 z-index:-2;
 
 background:
-radial-gradient(
-circle at 15% 20%,
-rgba(233,220,205,0.8),
-transparent 45%
-),
+radial-gradient(circle at 10% 20%, #e8d8c4 0%, transparent 40%),
+radial-gradient(circle at 85% 15%, #d6bca2 0%, transparent 45%),
+radial-gradient(circle at 20% 90%, #f4e7d7 0%, transparent 40%),
+radial-gradient(circle at 90% 80%, #c9b098 0%, transparent 40%);
 
-radial-gradient(
-circle at 80% 15%,
-rgba(217,194,172,0.75),
-transparent 50%
-),
+filter:blur(120px);
 
-radial-gradient(
-circle at 20% 80%,
-rgba(243,231,216,0.9),
-transparent 55%
-),
-
-radial-gradient(
-circle at 90% 70%,
-rgba(200,175,150,0.6),
-transparent 45%
-);
-
-filter:blur(80px);
-
-animation:mkaiBends 18s ease-in-out infinite alternate;
+animation:bgFlow 25s ease-in-out infinite alternate;
 }
 
-body::after{
-content:"";
-position:fixed;
-inset:0;
-z-index:-1;
-
-background:
-linear-gradient(
-120deg,
-rgba(255,250,245,0.25),
-transparent,
-rgba(232,216,196,0.18)
-);
-
-mix-blend-mode:soft-light;
-pointer-events:none;
-}
-
-@keyframes mkaiBends{
+@keyframes bgFlow{
 
 0%{
-transform:
-translate(0px,0px)
-scale(1);
+transform:translate(-60px,-30px) scale(1);
 }
 
 50%{
-transform:
-translate(-40px,20px)
-scale(1.15);
+transform:translate(40px,30px) scale(1.15);
 }
 
 100%{
-transform:
-translate(30px,-30px)
-scale(1.05);
+transform:translate(80px,-40px) scale(1.08);
+}
+
+}
+
+/* ================= HEADER ================= */
+
+.header{
+position:sticky;
+top:0;
+z-index:999;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:20px 8%;
+
+background:rgba(255,250,245,.7);
+backdrop-filter:blur(18px);
+
+border-bottom:1px solid rgba(232,216,196,.5);
+}
+
+.logo{
+font-size:30px;
+font-weight:900;
+letter-spacing:-1px;
+}
+
+.nav{
+display:flex;
+gap:24px;
+align-items:center;
+}
+
+.nav a{
+text-decoration:none;
+color:#4a3a2a;
+font-weight:600;
+}
+
+.nav-btn{
+padding:12px 18px;
+border-radius:14px;
+background:white;
+border:1px solid #e8d8c4;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+min-height:100vh;
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+gap:120px;
+
+padding:140px 8%;
+}
+
+.hero-left{
+max-width:650px;
+}
+
+.badge{
+display:inline-flex;
+align-items:center;
+gap:8px;
+
+padding:12px 18px;
+
+background:rgba(255,255,255,.75);
+backdrop-filter:blur(12px);
+
+border-radius:999px;
+border:1px solid #e8d8c4;
+
+margin-bottom:25px;
+}
+
+.hero h1{
+font-size:92px;
+line-height:.9;
+letter-spacing:-4px;
+margin-bottom:25px;
+}
+
+.hero p{
+font-size:20px;
+line-height:1.7;
+color:#5d4c3c;
+max-width:550px;
+}
+
+.hero-badges{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+margin-top:25px;
+}
+
+.mini-badge{
+padding:10px 14px;
+background:white;
+border-radius:999px;
+border:1px solid #e8d8c4;
+font-size:14px;
+}
+
+.hero-buttons{
+display:flex;
+gap:14px;
+margin-top:35px;
+}
+
+.btn-primary{
+background:#2b2118;
+color:white;
+border:none;
+padding:16px 24px;
+border-radius:14px;
+cursor:pointer;
+font-weight:700;
+}
+
+.btn-secondary{
+background:white;
+border:1px solid #e8d8c4;
+padding:16px 24px;
+border-radius:14px;
+cursor:pointer;
+}
+
+/* ================= PHONE ================= */
+
+.mkai-phone{
+width:320px;
+height:650px;
+
+background:#fffaf8;
+
+border-radius:45px;
+border:12px solid #2b2118;
+
+overflow:hidden;
+
+box-shadow:
+0 80px 150px rgba(0,0,0,.18),
+0 20px 40px rgba(0,0,0,.08);
+
+transform:rotate(-3deg);
+
+animation:floatPhone 6s ease-in-out infinite;
+}
+
+@keyframes floatPhone{
+
+0%{
+transform:translateY(0) rotate(-3deg);
+}
+
+50%{
+transform:translateY(-15px) rotate(-1deg);
+}
+
+100%{
+transform:translateY(0) rotate(-3deg);
+}
+
+}
+
+.phone-header{
+height:70px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-weight:800;
+
+background:#f1e4d5;
+}
+
+.phone-content{
+padding:20px;
+}
+
+.weather{
+background:#f0dfcc;
+padding:12px;
+border-radius:14px;
+text-align:center;
+margin-bottom:15px;
+}
+
+.outfit-card{
+background:white;
+border-radius:18px;
+padding:18px;
+
+border:1px solid #e7d5c2;
+
+box-shadow:0 10px 25px rgba(0,0,0,.05);
+}
+
+.outfit-card ul{
+list-style:none;
+margin-top:12px;
+}
+
+.outfit-card li{
+padding:10px 0;
+border-bottom:1px solid #f3ede6;
+}
+
+.outfit-card li:last-child{
+border-bottom:none;
+}
+
+/* ================= SECTIONS ================= */
+
+.section{
+padding:180px 8%;
+position:relative;
+}
+
+.section::before{
+content:"";
+position:absolute;
+
+top:0;
+left:50%;
+
+transform:translateX(-50%);
+
+width:150px;
+height:2px;
+
+background:#d8c0a7;
+}
+
+.section h2{
+font-size:68px;
+letter-spacing:-3px;
+margin-bottom:70px;
+text-align:center;
+}
+
+/* alternance forte */
+
+.section:nth-child(even){
+background:rgba(255,255,255,.55);
+backdrop-filter:blur(10px);
+}
+
+.section:nth-child(odd){
+background:rgba(245,237,229,.65);
+backdrop-filter:blur(10px);
+}
+
+/* ================= CARDS ================= */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:28px;
+}
+
+.card{
+background:rgba(255,255,255,.9);
+
+border:1px solid #e8d8c4;
+
+padding:32px;
+
+border-radius:24px;
+
+transition:.35s;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,.05);
+}
+
+.card:hover{
+transform:translateY(-12px);
+
+box-shadow:
+0 30px 80px rgba(0,0,0,.12);
+}
+
+.icon{
+font-size:34px;
+margin-bottom:15px;
+}
+
+.card h3{
+margin-bottom:12px;
+}
+
+/* ================= BENEFITS ================= */
+
+.benefits-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.benefit-card{
+background:white;
+
+padding:28px;
+
+border-radius:20px;
+
+border:1px solid #e8d8c4;
+
+text-align:center;
+
+font-weight:600;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,.05);
+}
+
+/* ================= APP IMAGES ================= */
+
+.preview-image{
+width:100%;
+height:280px;
+object-fit:cover;
+border-radius:16px;
+margin-bottom:15px;
+}
+
+/* ================= CTA ================= */
+
+.cta{
+padding:140px 8%;
+text-align:center;
+
+background:#2b2118;
+color:white;
+}
+
+.cta h2{
+font-size:64px;
+margin-bottom:30px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+padding:50px;
+text-align:center;
+background:#f5ece2;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:1000px){
+
+.hero{
+flex-direction:column;
+text-align:center;
+}
+
+.hero h1{
+font-size:62px;
+}
+
+.cards{
+grid-template-columns:1fr;
+}
+
+.benefits-grid{
+grid-template-columns:1fr;
+}
+
+.mkai-phone{
+width:290px;
+height:590px;
+}
+
+.section h2{
+font-size:42px;
 }
 
 }
