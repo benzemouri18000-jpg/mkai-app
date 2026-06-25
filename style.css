@@ -1032,3 +1032,26 @@ body {
     transform: translateY(0);
   }
 }
+
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  background:
+    radial-gradient(circle at 20% 30%, rgba(196,138,116,0.20), transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(248,247,245,0.9), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(243,233,225,0.9), transparent 40%),
+    linear-gradient(180deg, #F8F7F5, #F3E9E1);
+}
+
+.hero-left,
+.hero-right {
+  position: relative;
+  z-index: 2;
+}
