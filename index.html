@@ -4,317 +4,158 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MKAI - Styliste IA</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="logo">MK<span class="logo-accent">ai</span></div>
-    <nav class="nav">
-      <a href="#how">Comment ça marche</a>
-      <a href="#ai">IA</a>
-      <a href="#testimonials">Avis</a>
-      <a href="#pricing">Tarifs</a>
-      <a href="dashboard.html" class="nav-btn">Mon Dressing →</a>
-    </nav>
-    <button class="nav-mobile-toggle" aria-label="Menu">☰</button>
-  </header>
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">MK<span class="logo-accent">ai</span></div>
 
-  <!-- HERO -->
-  <section class="hero">
+  <nav class="nav">
+    <a href="#how">Comment ça marche</a>
+    <a href="#ai">IA</a>
+    <a href="#testimonials">Avis</a>
+    <a href="#pricing">Tarifs</a>
+    <a href="dashboard.html" class="nav-btn">Mon Dressing →</a>
+  </nav>
+
+  <button class="nav-mobile-toggle">☰</button>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+
   <div class="hero-bg" id="grainient"></div>
-    <div class="hero-left">
-      <div class="badge">✨ IA de style nouvelle génération</div>
-      <h1 class="title split-text">
-  <span class="split-line">Le style parfait.</span>
-  <span class="split-line title-muted">Sans réfléchir.</span>
-  <span class="split-line">Chaque jour.</span>
-</h1>
-      <p class="hero-sub">
-        MKAI analyse ton dressing, la météo du jour et tes habitudes pour composer ta tenue idéale — en quelques secondes.
-      </p>
-      <div class="hero-buttons">
-        <button class="btn-primary">Commencer gratuitement</button>
-        <button class="btn-secondary">Voir comment ça marche</button>
-      </div>
-      <div class="hero-social-proof">
-        <div class="avatars">
-          <span class="avatar">👤</span>
-          <span class="avatar">👤</span>
-          <span class="avatar">👤</span>
-        </div>
-        <span class="proof-text">+2 400 personnes ont adopté MKAI</span>
-      </div>
-    </div>
 
-    <!-- PHONE MOCKUP -->
-    <div class="hero-right">
-      <div class="phone-wrap">
-        <div class="mkai-phone">
-          <div class="phone-status">
-            <span>9:41</span>
-            <span>●●●</span>
-          </div>
-          <div class="phone-header">
-            <span class="phone-logo">MKai</span>
-            <span class="phone-day">Lun. 23 juin</span>
-          </div>
-          <div class="phone-content">
-            <div class="weather-pill">☀️ 26°C · Paris — Ensoleillé</div>
-            <div class="outfit-label">Tenue suggérée</div>
-            <div class="outfit-card">
-              <div class="outfit-tag">Old Money Casual</div>
-              <ul class="outfit-list">
-                <li><span class="dot"></span>Chemise beige lin</li>
-                <li><span class="dot"></span>Pantalon crème taille haute</li>
-                <li><span class="dot"></span>Sneakers blanches cuir</li>
-                <li><span class="dot"></span>Montre cadran minimaliste</li>
-              </ul>
-              <button class="phone-cta">Porter cette tenue ✓</button>
-            </div>
-            <div class="phone-alts">
-              <div class="alt-chip">🌧 Version pluie</div>
-              <div class="alt-chip">🎯 Version soirée</div>
-            </div>
-          </div>
-        </div>
-        <div class="phone-glow"></div>
-      </div>
-    </div>
-  </section>
+  <div class="hero-left">
+    <div class="badge">✨ IA de style nouvelle génération</div>
 
-  <!-- LOGOS / SOCIAL PROOF BAR -->
-  <div class="proof-bar">
-    <span>Vu dans</span>
-    <span class="proof-logo">Vogue FR</span>
-    <span class="proof-sep">·</span>
-    <span class="proof-logo">Madame Figaro</span>
-    <span class="proof-sep">·</span>
-    <span class="proof-logo">GQ France</span>
-    <span class="proof-sep">·</span>
-    <span class="proof-logo">Marie Claire</span>
+    <h1 class="title split-text">
+      <span class="split-line">Le style parfait.</span>
+      <span class="split-line title-muted">Sans réfléchir.</span>
+      <span class="split-line">Chaque jour.</span>
+    </h1>
+
+    <p class="hero-sub">
+      MKAI analyse ton dressing, la météo du jour et tes habitudes pour composer ta tenue idéale.
+    </p>
+
+    <div class="hero-buttons">
+      <button class="btn-primary">Commencer gratuitement</button>
+      <button class="btn-secondary">Voir comment ça marche</button>
+    </div>
   </div>
 
-  <!-- HOW IT WORKS -->
-  <section id="how" class="section">
-    <div class="section-eyebrow">Processus</div>
-    <h2>Trois étapes. Zéro effort.</h2>
-    <p class="section-sub">De ton armoire à la tenue du jour, MKAI gère tout.</p>
-    <div class="steps">
-      <div class="step-card">
-        <div class="step-icon">📸</div>
-        <div class="step-num">01</div>
-        <h3>Scanne ton dressing</h3>
-        <p>Photographie chaque pièce. MKAI identifie la couleur, la matière et le style automatiquement.</p>
+  <div class="hero-right">
+    <div class="mkai-phone">
+      <div class="phone-status">
+        <span>9:41</span>
+        <span>●●●</span>
       </div>
-      <div class="step-arrow">→</div>
-      <div class="step-card">
-        <div class="step-icon">🧠</div>
-        <div class="step-num">02</div>
-        <h3>L'IA apprend</h3>
-        <p>Plus tu portes, plus l'IA affine ta silhouette : elle comprend tes préférences et les adapte.</p>
-      </div>
-      <div class="step-arrow">→</div>
-      <div class="step-card">
-        <div class="step-icon">✨</div>
-        <div class="step-num">03</div>
-        <h3>Ta tenue t'attend</h3>
-        <p>Chaque matin, une suggestion parfaite t'attend — adaptée à la météo, à l'occasion et à ton humeur.</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- AI SECTION -->
-  <section id="ai" class="section section-ai">
-    <div class="section-eyebrow">Intelligence</div>
-    <h2>Une IA qui te comprend vraiment</h2>
-    <p class="section-sub">MKAI croise six sources de données pour des suggestions qui te ressemblent.</p>
-    <div class="ai-grid">
-      <div class="ai-feature">
-        <div class="ai-icon">👗</div>
-        <h4>Dressing complet</h4>
-        <p>Chaque pièce scannée, cataloguée et analysée selon ses caractéristiques.</p>
+      <div class="phone-header">
+        <span>MKAI</span>
+        <span>Lun. 23 juin</span>
       </div>
-      <div class="ai-feature">
-        <div class="ai-icon">🌤</div>
-        <h4>Météo en temps réel</h4>
-        <p>Connectée à ta ville, l'IA anticipe la température et les précipitations.</p>
-      </div>
-      <div class="ai-feature">
-        <div class="ai-icon">🎨</div>
-        <h4>Harmonie des couleurs</h4>
-        <p>Associations chromatiques validées selon les règles du color theory.</p>
-      </div>
-      <div class="ai-feature">
-        <div class="ai-icon">📅</div>
-        <h4>Historique de port</h4>
-        <p>Évite les répétitions et maximise la rotation de ton dressing.</p>
-      </div>
-      <div class="ai-feature">
-        <div class="ai-icon">💫</div>
-        <h4>Profil de style</h4>
-        <p>Minimaliste, streetwear, old money… l'IA colle à ta personnalité.</p>
-      </div>
-      <div class="ai-feature">
-        <div class="ai-icon">📈</div>
-        <h4>Tendances du moment</h4>
-        <p>Actualisée chaque semaine avec les dernières tendances mode.</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- APP SCREENSHOTS -->
-  <section id="app" class="section section-app">
-    <div class="section-eyebrow">Application</div>
-    <h2>L'application MKAI</h2>
-    <p class="section-sub">Conçue pour être aussi belle que rapide.</p>
-    <div class="app-screens">
-      <div class="screen-card">
-        <div class="screen-preview screen-1">
-          <div class="screen-label">Mon Dressing</div>
-          <div class="screen-items">
-            <div class="screen-item"></div>
-            <div class="screen-item"></div>
-            <div class="screen-item"></div>
-            <div class="screen-item"></div>
-          </div>
-        </div>
-        <p>Catalogue complet</p>
-      </div>
-      <div class="screen-card screen-card--main">
-        <div class="screen-preview screen-2">
-          <div class="screen-label">Tenue du jour</div>
-          <div class="screen-outfit">
-            <div class="outfit-visual"></div>
-            <div class="outfit-info">
-              <span class="outfit-style-tag">Casual Chic</span>
-              <div class="outfit-score">⭐ 94% match</div>
-            </div>
-          </div>
-        </div>
-        <p>Suggestions IA</p>
-      </div>
-      <div class="screen-card">
-        <div class="screen-preview screen-3">
-          <div class="screen-label">Mon Profil</div>
-          <div class="profile-stats">
-            <div class="stat-row"><span>Pièces</span><span>48</span></div>
-            <div class="stat-row"><span>Styles</span><span>Casual, Chic</span></div>
-            <div class="stat-row"><span>Favoris</span><span>12 tenues</span></div>
-          </div>
-        </div>
-        <p>Profil & statistiques</p>
-      </div>
-    </div>
-  </section>
+      <div class="phone-content">
+        <div class="weather-pill">☀️ 26°C — Ensoleillé</div>
 
-  <!-- TESTIMONIALS -->
-  <section id="testimonials" class="section section-soft">
-    <div class="section-eyebrow">Avis</div>
-    <h2>Ils ont adopté MKAI</h2>
-    <div class="testimonials">
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p>"Je ne m'habille plus sans MKAI. En 30 secondes, j'ai une tenue que j'aurais mis 20 minutes à trouver."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">SL</div>
-          <div>
-            <strong>Sophie L.</strong>
-            <span>Paris, 28 ans</span>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card testi-card--featured">
-        <div class="testi-stars">★★★★★</div>
-        <p>"L'IA m'a fait redécouvrir des pièces que j'avais oubliées. Mon dressing n'a jamais été aussi bien exploité."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">MR</div>
-          <div>
-            <strong>Marc R.</strong>
-            <span>Lyon, 34 ans</span>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <p>"Parfait pour les matins où j'ai la tête ailleurs. MKAI propose toujours quelque chose de cohérent."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">AC</div>
-          <div>
-            <strong>Amandine C.</strong>
-            <span>Bordeaux, 31 ans</span>
-          </div>
+        <div class="outfit-card">
+          <div class="outfit-tag">Casual Chic</div>
+
+          <ul class="outfit-list">
+            <li>👕 Chemise beige</li>
+            <li>👖 Pantalon crème</li>
+            <li>👟 Sneakers blanches</li>
+          </ul>
+
+          <button class="phone-cta">Porter cette tenue</button>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- PRICING -->
-  <section id="pricing" class="section">
-    <div class="section-eyebrow">Tarifs</div>
-    <h2>Simple et transparent</h2>
-    <p class="section-sub">Commence gratuitement, upgrade quand tu veux.</p>
-    <div class="pricing-grid">
-      <div class="pricing-card">
-        <div class="pricing-plan">Gratuit</div>
-        <div class="pricing-price">0 €<span>/mois</span></div>
-        <ul class="pricing-features">
-          <li>✓ Jusqu'à 30 pièces</li>
-          <li>✓ 1 suggestion par jour</li>
-          <li>✓ Météo de base</li>
-          <li class="disabled">✗ Profil de style avancé</li>
-          <li class="disabled">✗ Historique illimité</li>
-        </ul>
-        <button class="btn-secondary pricing-btn">Commencer</button>
-      </div>
-      <div class="pricing-card pricing-card--featured">
-        <div class="pricing-badge">Populaire</div>
-        <div class="pricing-plan">Premium</div>
-        <div class="pricing-price">7,99 €<span>/mois</span></div>
-        <ul class="pricing-features">
-          <li>✓ Dressing illimité</li>
-          <li>✓ Suggestions illimitées</li>
-          <li>✓ Météo avancée</li>
-          <li>✓ Profil de style complet</li>
-          <li>✓ Historique & statistiques</li>
-        </ul>
-        <button class="btn-primary pricing-btn">Essayer 14 jours gratuits</button>
-      </div>
+</section>
+
+<!-- PROOF -->
+<div class="proof-bar">
+  <span>Vus dans</span>
+  <span>Vogue FR</span>
+  <span>·</span>
+  <span>GQ</span>
+  <span>·</span>
+  <span>Figaro</span>
+</div>
+
+<!-- HOW -->
+<section id="how" class="section">
+  <h2>3 étapes simples</h2>
+
+  <div class="steps">
+    <div class="step-card">
+      <h3>Scan</h3>
+      <p>Photographie ton dressing</p>
     </div>
-  </section>
 
-  <!-- CTA FINAL -->
-  <section class="cta">
-    <div class="cta-inner">
-      <div class="cta-badge">✨ Rejoins 2 400+ utilisateurs</div>
-      <h2>Ton style commence maintenant</h2>
-      <p>Scanne tes premières pièces en moins de 5 minutes.</p>
-      <button class="btn-cta">Créer mon compte gratuitement</button>
-      <div class="cta-note">Sans carte bancaire · Annulation à tout moment</div>
+    <div class="step-card">
+      <h3>IA</h3>
+      <p>Analyse automatique</p>
     </div>
-  </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="logo">MK<span class="logo-accent">ai</span></div>
-        <p>Le styliste IA qui apprend avec toi.</p>
-      </div>
-      <div class="footer-links">
-        <a href="#how">Comment ça marche</a>
-        <a href="#pricing">Tarifs</a>
-        <a href="#">Confidentialité</a>
-        <a href="#">CGU</a>
-      </div>
+    <div class="step-card">
+      <h3>Style</h3>
+      <p>Tenue parfaite chaque jour</p>
     </div>
-    <div class="footer-copy">© 2026 MKAI · Tous droits réservés</div>
-  </footer>
+  </div>
+</section>
 
-  <script src="script.js"></script>
+<!-- AI -->
+<section id="ai" class="section">
+  <h2>Une IA intelligente</h2>
+
+  <div class="ai-grid">
+    <div class="ai-feature">Dressing</div>
+    <div class="ai-feature">Météo</div>
+    <div class="ai-feature">Style</div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="section">
+  <h2>Tarifs</h2>
+
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <h3>Free</h3>
+      <p>0€</p>
+    </div>
+
+    <div class="pricing-card">
+      <h3>Premium</h3>
+      <p>7.99€</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>Commence maintenant</h2>
+  <button class="btn-primary">Créer un compte</button>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2026 MKAI</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
